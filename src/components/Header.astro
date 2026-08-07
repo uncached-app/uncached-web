@@ -1,7 +1,7 @@
 ---
 ---
 
-<header class="relative w-full max-w-6xl mx-auto px-6 py-6 flex items-center justify-between z-10">
+<header class="relative w-full max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
   <a href="/" class="flex items-center gap-3 group">
     <!-- Uncached Logo swapping dynamically per theme -->
     <img 
@@ -29,7 +29,7 @@
       Get Uncached
     </a>
 
-    <!-- Mobile Animated Hamburger Toggle Button (Positioned relative in header at rest, switches to fixed z-70 only when open) -->
+    <!-- Mobile Animated Hamburger Toggle Button -->
     <button
       id="mobile-menu-toggle"
       type="button"
@@ -45,7 +45,7 @@
   </div>
 </header>
 
-<!-- Mobile Sidebar Backdrop Overlay with backdrop-blur-xs (z-40 sits above header z-10) -->
+<!-- Mobile Sidebar Backdrop Overlay with backdrop-blur-xs (z-40 sits above header logo z-0) -->
 <div
   id="mobile-sidebar-backdrop"
   class="fixed inset-0 bg-black/30 backdrop-blur-xs z-40 transition-opacity duration-300 opacity-0 pointer-events-none md:hidden"
@@ -100,7 +100,7 @@
     transform-origin: center;
   }
 
-  /* When menu is open: switch button to position fixed z-70 and morph lines into X */
+  /* When menu is open: switch button to fixed top-6 right-6 z-70 (root stacking context) & morph to X */
   :global(#mobile-menu-toggle.menu-open) {
     position: fixed;
     top: 1.5rem;
