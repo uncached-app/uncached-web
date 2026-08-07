@@ -29,3 +29,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# agent superpowers tracking
+.superpowers/
+
