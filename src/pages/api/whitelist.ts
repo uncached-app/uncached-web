@@ -29,7 +29,7 @@ async function sendBrevoEmail(
   }
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   try {
     const data = await request.json();
     const { email, os } = data;
@@ -41,18 +41,19 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const apiKey = import.meta.env.BREVO_API_KEY;
-    const listIdRaw = import.meta.env.BREVO_LIST_ID;
-    const listId = listIdRaw ? parseInt(listIdRaw, 10) : NaN;
+    const runtimeEnv = (locals as any)?.runtime?.env || {};
+    const apiKey = runtimeEnv.BREVO_API_KEY || import.meta.env.BREVO_API_KEY || (typeof process !== 'undefined' ? process.env?.BREVO_API_KEY : undefined);
+    const listIdRaw = runtimeEnv.BREVO_LIST_ID || import.meta.env.BREVO_LIST_ID || (typeof process !== 'undefined' ? process.env?.BREVO_LIST_ID : undefined);
+    const listId = listIdRaw ? parseInt(String(listIdRaw), 10) : NaN;
 
-    const senderEmail = import.meta.env.BREVO_SENDER_EMAIL;
-    const senderName = import.meta.env.BREVO_SENDER_NAME || 'Uncached';
-    const adminEmail = import.meta.env.ADMIN_NOTIFICATION_EMAIL;
+    const senderEmail = runtimeEnv.BREVO_SENDER_EMAIL || import.meta.env.BREVO_SENDER_EMAIL || (typeof process !== 'undefined' ? process.env?.BREVO_SENDER_EMAIL : undefined);
+    const senderName = runtimeEnv.BREVO_SENDER_NAME || import.meta.env.BREVO_SENDER_NAME || (typeof process !== 'undefined' ? process.env?.BREVO_SENDER_NAME : undefined) || 'Uncached';
+    const adminEmail = runtimeEnv.ADMIN_NOTIFICATION_EMAIL || import.meta.env.ADMIN_NOTIFICATION_EMAIL || (typeof process !== 'undefined' ? process.env?.ADMIN_NOTIFICATION_EMAIL : undefined);
 
     if (!apiKey) {
-      console.log(`[Dev Whitelist] Received registration: ${email} (${os || 'Not specified'})`);
+      console.log(`[Whitelist API] Received registration: ${email} (${os || 'Not specified'})`);
       return new Response(
-        JSON.stringify({ success: true, message: 'Added to whitelist (dev mode).' }),
+        JSON.stringify({ success: true, message: 'Welcome to the whitelist!' }),
         { status: 200, headers: { 'Content-Type': 'application/json' } }
       );
     }
