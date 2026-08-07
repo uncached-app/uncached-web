@@ -56,7 +56,7 @@
   id="mobile-sidebar"
   class="fixed top-0 right-0 bottom-0 w-[75vw] max-w-xs h-full bg-white z-50 flex flex-col justify-start p-8 pt-24 transition-transform duration-300 ease-in-out translate-x-full md:hidden border-none shadow-none text-gray-900"
 >
-  <nav aria-label="Mobile Navigation" class="flex flex-col gap-6">
+  <nav aria-label="Mobile Navigation" class="flex flex-col gap-6 items-start">
     <a href="#features" class="mobile-nav-link text-lg font-normal text-gray-900 hover:text-accent transition-colors">
       Features
     </a>
@@ -66,8 +66,12 @@
     <a href="#faq" class="mobile-nav-link text-lg font-normal text-gray-900 hover:text-accent transition-colors">
       Support
     </a>
-    <a href="#pricing" class="mobile-nav-link text-lg font-normal text-accent hover:opacity-80 transition-opacity pt-2">
-      Get Uncached →
+    <!-- Get Uncached Button with identical desktop design tokens -->
+    <a
+      href="#pricing"
+      class="mobile-nav-link mt-2 px-4 py-2.5 text-xs font-semibold text-accent-text bg-accent hover:bg-accent-hover rounded-xl transition-colors shadow-sm inline-block"
+    >
+      Get Uncached
     </a>
   </nav>
 </aside>
