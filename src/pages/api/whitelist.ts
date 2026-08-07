@@ -17,6 +17,13 @@ interface BrevoContactPayload {
   listIds?: number[];
 }
 
+interface BrevoListResponse {
+  contacts?: {
+    failure?: string[];
+    success?: string[];
+  };
+}
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_EMAIL_LENGTH = 254;
 const ALLOWED_OPERATING_SYSTEMS = new Set(['macOS', 'Windows', 'Linux']);
@@ -34,17 +41,15 @@ function jsonResponse(data: { success: boolean; message: string }, status = 200)
 }
 
 function getEnvVar(key: string): string | undefined {
-  const sources: Array<Record<string, unknown>> = [
-    cloudflareEnv as Record<string, unknown>,
-    import.meta.env as unknown as Record<string, unknown>,
-  ];
-
-  if (typeof process !== 'undefined') {
-    sources.push(process.env as Record<string, unknown>);
+  const runtimeValue = (cloudflareEnv as Record<string, unknown>)[key];
+  if (typeof runtimeValue === 'string' && runtimeValue.trim()) {
+    return runtimeValue.trim();
   }
 
-  for (const source of sources) {
-    const value = source[key];
+  // Cloudflare runtime values stay outside the production bundle. Process env
+  // fallback is only needed when running the endpoint with a local Node adapter.
+  if (import.meta.env.DEV && typeof process !== 'undefined') {
+    const value = process.env[key];
     if (typeof value === 'string' && value.trim()) return value.trim();
   }
 
@@ -149,6 +154,19 @@ export const POST: APIRoute = async (context) => {
       const errData = await response.json().catch(() => ({}));
       console.error('[Whitelist API Brevo Error]', response.status, errData);
       return jsonResponse({ success: false, message: 'Unable to register your email right now.' }, 502);
+    }
+
+    if (listId) {
+      const listResponse = await brevoRequest(apiKey, `/contacts/lists/${listId}/contacts/add`, {
+        emails: [trimmedEmail],
+      });
+      const listData = (await listResponse.json().catch(() => ({}))) as BrevoListResponse;
+      const failedEmails = listData.contacts?.failure || [];
+
+      if (!listResponse.ok || failedEmails.includes(trimmedEmail)) {
+        console.error('[Whitelist API Brevo List Error]', listResponse.status, listData);
+        return jsonResponse({ success: false, message: 'Unable to add your email to the whitelist.' }, 502);
+      }
     }
 
     if (senderEmail && EMAIL_REGEX.test(senderEmail)) {
