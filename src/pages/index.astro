@@ -7,17 +7,87 @@ import PricingSection from '../components/PricingSection.astro';
 import FaqSection from '../components/FaqSection.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+
+const siteTitle = "Uncached — Build Cache Cleaner for macOS, Windows & Linux";
+const siteDescription = "Uncached scans your local repositories for disposable build targets, package caches, and toolchain artifacts to reclaim gigabytes of SSD space.";
+const canonicalURL = "https://uncached.app/";
+const siteKeywords = "build cache cleaner, node_modules cleaner, rust target cleaner, developer disk cleanup, reclaim SSD space, macOS cache cleaner, windows build cleaner, tauri developer tool, disk bloat cleaner";
+const authorName = "Natan Viana";
+const authorUrl = "https://natanviana.dev";
+
+const schemaJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Uncached",
+  "operatingSystem": "macOS, Windows, Linux",
+  "applicationCategory": "DeveloperApplication",
+  "url": canonicalURL,
+  "description": siteDescription,
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Free Tier",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Pro Monthly",
+      "price": "4.99",
+      "priceCurrency": "USD"
+    },
+    {
+      "@type": "Offer",
+      "name": "Pro Lifetime",
+      "price": "59.90",
+      "priceCurrency": "USD"
+    }
+  ],
+  "author": {
+    "@type": "Person",
+    "name": authorName,
+    "url": authorUrl
+  }
+});
 ---
 
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <title>Uncached — Developer Build Cache Cleaner for macOS, Windows & Linux</title>
-    <meta name="description" content="Uncached scans your local repositories for disposable build targets, package caches, and toolchain artifacts to reclaim gigabytes of SSD space." />
-    
+
+    <!-- Primary Meta Tags -->
+    <title>{siteTitle}</title>
+    <meta name="title" content={siteTitle} />
+    <meta name="description" content={siteDescription} />
+    <meta name="keywords" content={siteKeywords} />
+    <meta name="author" content={authorName} />
+    <meta name="publisher" content={authorName} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={siteTitle} />
+    <meta property="og:description" content={siteDescription} />
+    <meta property="og:image" content="https://uncached.app/brand/UNCACHED-LOGO-LIGHT-NOBG.svg" />
+    <meta property="og:site_name" content="Uncached" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={siteTitle} />
+    <meta name="twitter:description" content={siteDescription} />
+    <meta name="twitter:image" content="https://uncached.app/brand/UNCACHED-LOGO-LIGHT-NOBG.svg" />
+    <meta name="twitter:creator" content="@natanviana" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={schemaJson} />
+
     <!-- Google Fonts: Hanken Grotesk & Geist Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
