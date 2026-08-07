@@ -11,6 +11,8 @@ interface ReclaimedStepProps {
 
 export default function ReclaimedStep({ count, size, onReset }: ReclaimedStepProps) {
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     const burst = (origin: { x: number; y: number }, angle: number) => {
       confetti({ particleCount: 28, angle, spread: 48, startVelocity: 22, gravity: 1.2, origin, colors: ['#b9d98d', '#ffc2b5', '#edf0eb'], zIndex: 100 });
     };

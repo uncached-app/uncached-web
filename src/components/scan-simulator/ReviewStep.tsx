@@ -1,5 +1,5 @@
 import { Box, Check, Folder, Layers, Package, Square, CheckSquare, LoaderCircle, Trash2 } from 'lucide-react';
-import { INITIAL_TARGETS, type TargetItem } from './scanSimulatorData';
+import { INITIAL_TARGETS, TARGET_COUNT, TOTAL_SIZE, type TargetItem } from './scanSimulatorData';
 
 interface ReviewStepProps {
   selectedIds: Set<string>;
@@ -24,8 +24,8 @@ export default function ReviewStep({ selectedIds, selectedTargets, formattedSele
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div>
           <div className="flex items-center gap-2">
-            <h3 className="text-base sm:text-2xl font-semibold text-text-primary tracking-tight">{INITIAL_TARGETS.length} targets</h3>
-            <span className="rounded-md border border-accent bg-canvas px-2 py-0.5 font-mono text-[10px] sm:text-xs font-medium text-accent">15.12 GB total</span>
+            <h3 className="text-base sm:text-2xl font-semibold text-text-primary tracking-tight">{TARGET_COUNT} targets</h3>
+            <span className="rounded-md border border-accent bg-canvas px-2 py-0.5 font-mono text-[10px] sm:text-xs font-medium text-accent">{TOTAL_SIZE} total</span>
           </div>
           <p className="text-[11px] font-sans text-text-muted mt-0.5 hidden xs:block">Selected targets move to the Recycle Bin. Restorable from there.</p>
         </div>

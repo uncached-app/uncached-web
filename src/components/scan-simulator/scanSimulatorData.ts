@@ -42,6 +42,10 @@ export const INITIAL_TARGETS: TargetItem[] = [
   },
 ];
 
+export const TARGET_COUNT = INITIAL_TARGETS.length;
+export const TOTAL_BYTES = INITIAL_TARGETS.reduce((total, target) => total + target.bytes, 0);
+export const TOTAL_SIZE = `${(TOTAL_BYTES / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+
 export const STEPS = ['Workspace', 'Scan', 'Review', 'Reclaimed'] as const;
 
 export type ScanStep = 1 | 2 | 3 | 4;

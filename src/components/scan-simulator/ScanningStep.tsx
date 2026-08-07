@@ -1,4 +1,5 @@
 import { Ban, LoaderCircle } from 'lucide-react';
+import { TARGET_COUNT } from './scanSimulatorData';
 
 interface ScanningStepProps {
   rootPath: string;
@@ -23,7 +24,7 @@ export default function ScanningStep({ rootPath, dirCount, onCancel }: ScanningS
         </div>
         <div className="w-px h-7 sm:h-8 bg-border-theme" />
         <div>
-          <strong className="block font-mono text-xl sm:text-3xl font-medium tracking-tight text-accent">4</strong>
+          <strong className="block font-mono text-xl sm:text-3xl font-medium tracking-tight text-accent">{TARGET_COUNT}</strong>
           <span className="mt-0.5 sm:mt-1 block font-sans text-[10px] sm:text-xs text-text-muted">targets found</span>
         </div>
       </div>

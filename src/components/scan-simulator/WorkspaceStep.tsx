@@ -23,19 +23,16 @@ export default function WorkspaceStep({ rootPath, onRootPathChange, onScan }: Wo
           <FolderOpen size={16} className="ml-2 shrink-0 text-text-muted transition-colors group-focus-within:text-accent" strokeWidth={1.8} />
           <input
             type="text"
+            aria-label="Workspace path"
             value={rootPath}
             onChange={(event) => onRootPathChange(event.target.value)}
             className="min-w-0 flex-1 bg-transparent px-1.5 py-1 font-mono text-xs sm:text-sm text-text-primary outline-none placeholder:text-text-muted"
             placeholder="Select or paste workspace path..."
           />
-          <button type="button" onClick={() => {}} className="inline-flex shrink-0 items-center gap-1.5 rounded-lg sm:rounded-xl bg-raised px-3 py-1.5 sm:py-2 text-xs font-medium text-text-secondary hover:bg-border-theme hover:text-accent transition-colors cursor-pointer border border-border-theme">
-            <FolderOpen size={13} strokeWidth={1.8} />
-            <span>Browse</span>
-          </button>
         </div>
       </div>
 
-      <button onClick={onScan} className="inline-flex min-h-10 sm:min-h-11 w-full max-w-2xl items-center justify-center gap-2 rounded-xl bg-accent hover:bg-accent-hover px-5 text-xs sm:text-sm font-semibold text-accent-text transition-colors cursor-pointer">
+      <button type="button" onClick={onScan} className="inline-flex min-h-10 sm:min-h-11 w-full max-w-2xl items-center justify-center gap-2 rounded-xl bg-accent hover:bg-accent-hover px-5 text-xs sm:text-sm font-semibold text-accent-text transition-colors cursor-pointer">
         <ScanSearch size={16} />
         <span>Scan workspace</span>
       </button>

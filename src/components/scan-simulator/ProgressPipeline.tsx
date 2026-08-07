@@ -16,6 +16,7 @@ export default function ProgressPipeline({ step }: ProgressPipelineProps) {
         return (
           <span
             key={label}
+            aria-current={isCurrent ? 'step' : undefined}
             className={`inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-2 sm:px-3 py-0.5 sm:py-1 font-medium transition-colors ${
               isCurrent ? 'bg-raised text-accent' : isPassed ? 'text-text-secondary' : 'text-text-muted'
             }`}

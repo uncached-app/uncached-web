@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { INITIAL_TARGETS, type ScanStep } from './scanSimulatorData';
+import { INITIAL_TARGETS, TARGET_COUNT, TOTAL_SIZE, type ScanStep } from './scanSimulatorData';
 
 const INITIAL_SELECTED_IDS = new Set(INITIAL_TARGETS.map((target) => target.id));
 
@@ -9,7 +9,7 @@ export default function useScanSimulator() {
   const [dirCount, setDirCount] = useState(0);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set(INITIAL_SELECTED_IDS));
   const [isCleaning, setIsCleaning] = useState(false);
-  const [reclaimedSummary, setReclaimedSummary] = useState({ count: 4, size: '15.12 GB' });
+  const [reclaimedSummary, setReclaimedSummary] = useState({ count: TARGET_COUNT, size: TOTAL_SIZE });
   const cleaningTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
