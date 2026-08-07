@@ -1,0 +1,51 @@
+# https://uncached.app
+# Static marketing site. Everything public except the server-rendered API.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# AI crawlers are allowed on purpose: being cited in assistant answers is a
+# primary discovery channel for a developer tool. See /llms.txt for a
+# machine-readable summary.
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /api/
+
+User-agent: Claude-SearchBot
+Allow: /
+Disallow: /api/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /api/
+
+User-agent: Bytespider
+Allow: /
+Disallow: /api/
+
+Sitemap: https://uncached.app/sitemap-index.xml

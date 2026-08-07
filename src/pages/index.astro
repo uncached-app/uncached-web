@@ -6,6 +6,7 @@ import FeaturesSection from '../components/FeaturesSection.astro';
 import FaqSection from '../components/FaqSection.astro';
 import ProTeaser from '../components/ProTeaser.astro';
 import Footer from '../components/Footer.astro';
+import { faqs } from '../data/faqs';
 import '../styles/global.css';
 
 const siteTitle = "Uncached — Reclaim gigabytes from the code you ship";
@@ -15,36 +16,86 @@ const siteKeywords = "build cache cleaner, node_modules cleaner, rust target cle
 const authorName = "Natan Viana";
 const authorUrl = "https://natanviana.dev";
 
+// Must be a raster format — no social platform renders SVG in link previews.
+// Regenerate with `npm run og` after changing the tagline or brand colors.
+const ogImage = "https://uncached.app/og-image.png";
+
+// One @graph so the entities cross-reference by @id instead of repeating data.
 const schemaJson = JSON.stringify({
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Uncached",
-  "operatingSystem": "macOS, Windows, Linux",
-  "applicationCategory": "DeveloperApplication",
-  "url": canonicalURL,
-  "description": siteDescription,
-  "offers": [
+  "@graph": [
     {
-      "@type": "Offer",
-      "name": "Early access",
-      "price": "0",
-      "priceCurrency": "USD",
-      "availability": "https://schema.org/PreOrder"
+      "@type": "WebSite",
+      "@id": "https://uncached.app/#website",
+      "url": canonicalURL,
+      "name": "Uncached",
+      "description": siteDescription,
+      "inLanguage": "en-US",
+      "publisher": { "@id": "https://uncached.app/#author" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://uncached.app/#author",
+      "name": authorName,
+      "url": authorUrl
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://uncached.app/#app",
+      "name": "Uncached",
+      "operatingSystem": "macOS, Windows, Linux",
+      "applicationCategory": "DeveloperApplication",
+      "url": canonicalURL,
+      "image": ogImage,
+      "description": siteDescription,
+      "featureList": [
+        "Scans developer workspaces for regenerable build artifacts",
+        "Reports measured sizes per target before any removal",
+        "Moves selected targets to the system Trash or Recycle Bin",
+        "Runs locally without uploading project contents"
+      ],
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Early access",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/PreOrder"
+        }
+      ],
+      "author": { "@id": "https://uncached.app/#author" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://uncached.app/#faq",
+      "mainEntity": faqs.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
     }
-  ],
-  "author": {
-    "@type": "Person",
-    "name": authorName,
-    "url": authorUrl
-  }
+  ]
 });
 ---
 
 <html lang="en" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- Theme init below forces light unless the visitor opted into dark. -->
+    <meta name="theme-color" content="#f4f6f1" />
+
     <meta name="generator" content={Astro.generator} />
 
     <!-- Primary Meta Tags -->
@@ -54,15 +105,20 @@ const schemaJson = JSON.stringify({
     <meta name="keywords" content={siteKeywords} />
     <meta name="author" content={authorName} />
     <meta name="publisher" content={authorName} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={siteTitle} />
     <meta property="og:description" content={siteDescription} />
-    <meta property="og:image" content="https://uncached.app/brand/UNCACHED-LOGO-LIGHT-NOBG.svg" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Uncached — reclaim disk from build artifacts" />
     <meta property="og:site_name" content="Uncached" />
     <meta property="og:locale" content="en_US" />
 
@@ -71,7 +127,8 @@ const schemaJson = JSON.stringify({
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={siteTitle} />
     <meta name="twitter:description" content={siteDescription} />
-    <meta name="twitter:image" content="https://uncached.app/brand/UNCACHED-LOGO-LIGHT-NOBG.svg" />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Uncached — reclaim disk from build artifacts" />
     <meta name="twitter:creator" content="@natanviana" />
 
     <!-- Structured Data (JSON-LD) -->
@@ -99,10 +156,10 @@ const schemaJson = JSON.stringify({
 
     <main class="flex-1">
       <section class="mx-auto max-w-4xl px-6 pb-12 pt-14 text-center sm:pt-20">
-        <h1 class="mx-auto max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tighter text-text-primary sm:text-5xl md:text-6xl">
+        <h1 class="mx-auto max-w-4xl text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-balance sm:text-5xl sm:leading-[1.05] md:text-6xl">
           Reclaim disk from build artifacts.
         </h1>
-        <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-text-secondary sm:text-lg">
+        <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
           Uncached finds regenerable targets in your developer workspaces, shows exactly what can leave, and moves selected targets to Trash or Recycle Bin.
         </p>
         <div class="mx-auto mt-8 max-w-xl">

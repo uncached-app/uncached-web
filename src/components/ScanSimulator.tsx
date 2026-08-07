@@ -169,7 +169,7 @@ export default function ScanSimulator() {
   }
 
   return (
-    <div className="w-full max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto rounded-2xl sm:rounded-3xl bg-surface border border-border-theme p-4 sm:p-8 overflow-hidden min-h-[440px] sm:h-[480px] md:h-[510px] flex flex-col justify-between select-none text-text-primary transition-colors">
+    <div className="w-full max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto rounded-2xl sm:rounded-3xl bg-surface border border-border-theme p-4 sm:p-8 overflow-hidden min-h-110 sm:h-120 md:h-127.5 flex flex-col justify-between select-none text-text-primary transition-colors">
       {/* Titlebar Header */}
       <div className="flex items-center justify-center pb-3 sm:pb-4 shrink-0 border-b border-border-theme">
         {/* Progress Pipeline */}
@@ -222,10 +222,10 @@ export default function ScanSimulator() {
             >
               <div>
                 <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight text-text-primary">
-                  Reclaim disk from build artifacts.
+                  Select a workspace
                 </h2>
-                <p className="mt-1.5 sm:mt-2 text-xs sm:text-sm text-text-muted">
-                  Finds dependency, build, and cache directories your toolchains can regenerate.
+                <p className="mt-1.5 sm:mt-2 text-pretty text-xs sm:text-sm text-text-muted">
+                  Uncached scans it for dependency, build, and cache directories your toolchains can regenerate.
                 </p>
               </div>
 
@@ -290,7 +290,7 @@ export default function ScanSimulator() {
                   </strong>
                   <span className="mt-0.5 sm:mt-1 block font-sans text-[10px] sm:text-xs text-text-muted">directories checked</span>
                 </div>
-                <div className="w-[1px] h-7 sm:h-8 bg-border-theme"></div>
+                <div className="w-px h-7 sm:h-8 bg-border-theme"></div>
                 <div>
                   <strong className="block font-mono text-xl sm:text-3xl font-medium tracking-tight text-accent">
                     4
@@ -386,7 +386,7 @@ export default function ScanSimulator() {
                             </span>
                             <span className="text-xs sm:text-sm text-text-secondary font-medium truncate">{item.name}</span>
                           </div>
-                          <p className="mt-0.5 truncate font-mono text-[10px] sm:text-xs text-text-muted max-w-[180px] xs:max-w-[260px] sm:max-w-none">
+                          <p className="mt-0.5 truncate font-mono text-[10px] sm:text-xs text-text-muted max-w-45 xs:max-w-[260px] sm:max-w-none">
                             {item.path}
                           </p>
                         </div>

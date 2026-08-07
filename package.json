@@ -10,12 +10,14 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "og": "node scripts/generate-og.mjs",
     "deploy": "astro build && wrangler deploy --config dist/server/wrangler.json"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.0",
     "@astrojs/node": "^11.1.0",
     "@astrojs/react": "^6.0.2",
+    "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.0",
     "canvas-confetti": "^1.9.4",
@@ -26,9 +28,11 @@
     "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "@types/canvas-confetti": "^1.9.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "satori": "^0.29.0",
     "wrangler": "^4.119.0"
   }
 }

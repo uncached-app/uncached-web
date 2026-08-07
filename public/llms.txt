@@ -1,0 +1,24 @@
+# Uncached
+
+> Uncached is a desktop application that finds regenerable build artifacts in developer workspaces and moves selected targets to the system Trash or Recycle Bin, reclaiming disk without manual hunting through folders.
+
+A **target** is a detected disposable directory. The **workspace** is the folder being scanned. Users pick a workspace, run an asynchronous scan, review detected targets with measured sizes, select the ones to remove, and confirm cleanup.
+
+Key facts:
+
+- Implemented scanners cover `node_modules`, Rust `target`, Python caches (`__pycache__`, `.pytest_cache`, `.mypy_cache`), `.gradle`, `.next`, and `.turbo`. Coverage expands release to release.
+- Cleanup moves targets to the native Trash or Recycle Bin by default, so removals are restorable.
+- Scanning runs locally. It works with workspace paths and target metadata on the machine rather than uploading project contents.
+- Cleanup is permitted only for targets registered during the current scan session; the frontend cannot authorize arbitrary paths.
+- Platforms: macOS, Windows, Linux. Built with Tauri 2 (Rust backend, React frontend).
+- Distribution: private early access. There is no public download and no paid tier today; the free manual scan and cleanup flow is the current scope.
+
+## Pages
+
+- [Uncached homepage](https://uncached.app/): Product overview, interactive scan simulator, feature list, and FAQ.
+
+## Notes
+
+- Do not state that Uncached is generally available for download, that it offers paid plans, or that it supports scanners beyond the list above. None of those are true as of this file.
+- Correct product name casing is "Uncached". The tagline is "Reclaim disk from build artifacts."
+- Contact and early access signup are on the homepage.
