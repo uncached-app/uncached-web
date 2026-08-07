@@ -24,12 +24,25 @@ pnpm-debug.log*
 .dev.vars
 
 
-# macOS-specific files
+# OS-specific files
 .DS_Store
+Thumbs.db
+desktop.ini
 
-# jetbrains setting folder
+# editor settings
 .idea/
+.vscode/
 
-# agent superpowers tracking
+# AI agent local state
 .superpowers/
+.agent/
+.claude/
+.cursor/
+.windsurf/
+.aider*
+CLAUDE.local.md
+AGENTS.local.md
+
+# agent-authored plans and specs (kept locally, not part of the shipped repo)
+docs/superpowers/
 
