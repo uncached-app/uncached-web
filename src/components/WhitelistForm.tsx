@@ -58,7 +58,7 @@ export default function WhitelistForm() {
   if (savedEmail) {
     return (
       <div id="whitelist" className="w-full max-w-lg mx-auto scroll-mt-[22vh] px-1 text-center font-mono text-xs sm:text-sm text-accent py-3">
-        Você já está na whitelist ({savedEmail}).
+        Early access is reserved for {savedEmail}.
       </div>
     );
   }
@@ -100,7 +100,7 @@ export default function WhitelistForm() {
             disabled={status === 'loading' || status === 'success'}
             className="absolute right-1.5 px-3 py-2 sm:px-4 sm:py-2.5 bg-accent hover:bg-accent-hover text-accent-text font-semibold text-xs rounded-lg transition-all cursor-pointer disabled:opacity-50"
           >
-            {status === 'loading' ? 'Registering...' : 'Request Early Access'}
+            {status === 'loading' ? 'Joining...' : 'Get early access'}
           </button>
         </div>
 

@@ -1,28 +1,28 @@
 ---
 const faqs = [
   {
-    question: "How does Uncached safely handle filesystem deletion?",
-    answer: "Uncached canonicalizes target directory paths, rejects symlinks, and strictly verifies project roots before touching any folder. By default, build targets move directly to your OS Recycle Bin / Trash for instant restoration. Permanent Nuke mode requires explicit confirmation before executing backend directory removal."
+    question: "What happens when I clean a target?",
+    answer: "Uncached verifies the target against the current scan session, then moves it to your native Trash or Recycle Bin by default. You can restore it there if a build needs it again."
   },
   {
-    question: "Which build artifacts and developer ecosystems are supported?",
-    answer: "Uncached implements modular scanners for major developer ecosystems including JavaScript/TypeScript, Rust, Python, Java/Android, and .NET. The Pro tier adds deep cleaners for IDE system caches, Xcode, and Docker artifacts."
+    question: "Which targets are supported now?",
+    answer: "The current scanner set covers node_modules, Rust target directories, Python caches, .gradle, .next, and .turbo. Coverage will expand as new scanners are implemented."
   },
   {
-    question: "What differentiates the Free Tier from Uncached Pro?",
-    answer: "The Free Tier includes full manual scanning and one-click cleanup for standard build targets. Uncached Pro adds background daemon auto-purging, Xcode & Docker deep cleaners, multi-drive parallel scanning (NVMe, NAS), and disk reclaim analytics."
+    question: "Is Uncached available to download?",
+    answer: "Uncached is currently opening private early access. Join the list to hear when the free tier is ready for testers."
   },
   {
-    question: "How does the $59.90 Pro Lifetime License Key work?",
-    answer: "Purchasing the Lifetime License generates an offline Ed25519 cryptographically signed license key bound to your Hardware ID (HWID). It activates up to 3 personal machines without requiring online servers to run."
+    question: "Does Uncached upload workspace data?",
+    answer: "The scanner is designed to run locally. It works with workspace paths and target data on your machine rather than requiring project contents in the cloud."
   },
   {
-    question: "What is the memory and CPU footprint of the scanner engine?",
-    answer: "Uncached is compiled in Rust using Tauri 2. It launches instantly, maintains a RAM footprint under 30MB, and executes asynchronous non-blocking directory walks that leave CPU resources completely free for active compilation."
+    question: "What is included in early access?",
+    answer: "Early access focuses on the free manual scan and cleanup flow. Future capabilities such as deeper cleaners, scheduled cleanup, and history will be announced separately when they are implemented."
   },
   {
-    question: "Can I manage or cancel the $4.99/month Pro subscription?",
-    answer: "Yes, subscription management and 1-click cancellation are available anytime through the merchant portal. Pro features remain active through the end of the paid billing period."
+    question: "Who is Uncached for?",
+    answer: "Developers maintaining local workspaces who want to reclaim build and dependency artifacts without manually hunting through folders."
   }
 ];
 ---
@@ -33,10 +33,10 @@ const faqs = [
       Support
     </span>
     <h2 class="text-3xl md:text-4xl font-semibold tracking-[-0.04em] text-text-primary">
-      Frequently Asked Questions
+      Questions before early access
     </h2>
     <p class="mt-2.5 text-xs text-text-muted leading-relaxed">
-      Technical specifications on security, licensing, and filesystem execution.
+      Straight answers about availability, safety, and the current free tier.
     </p>
   </div>
 

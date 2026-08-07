@@ -3,13 +3,13 @@ import Header from '../components/Header.astro';
 import WhitelistForm from '../components/WhitelistForm';
 import ScanSimulator from '../components/ScanSimulator';
 import FeaturesSection from '../components/FeaturesSection.astro';
-import PricingSection from '../components/PricingSection.astro';
 import FaqSection from '../components/FaqSection.astro';
+import ProTeaser from '../components/ProTeaser.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
-const siteTitle = "Uncached — Build Cache Cleaner for macOS, Windows & Linux";
-const siteDescription = "Uncached scans your local repositories for disposable build targets, package caches, and toolchain artifacts to reclaim gigabytes of SSD space.";
+const siteTitle = "Uncached — Reclaim gigabytes from the code you ship";
+const siteDescription = "Uncached finds regenerable build artifacts in developer workspaces and safely moves selected targets to your system Trash or Recycle Bin.";
 const canonicalURL = "https://uncached.app/";
 const siteKeywords = "build cache cleaner, node_modules cleaner, rust target cleaner, developer disk cleanup, reclaim SSD space, macOS cache cleaner, windows build cleaner, tauri developer tool, disk bloat cleaner";
 const authorName = "Natan Viana";
@@ -26,21 +26,10 @@ const schemaJson = JSON.stringify({
   "offers": [
     {
       "@type": "Offer",
-      "name": "Free Tier",
+      "name": "Early access",
       "price": "0",
-      "priceCurrency": "USD"
-    },
-    {
-      "@type": "Offer",
-      "name": "Pro Monthly",
-      "price": "4.99",
-      "priceCurrency": "USD"
-    },
-    {
-      "@type": "Offer",
-      "name": "Pro Lifetime",
-      "price": "59.90",
-      "priceCurrency": "USD"
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/PreOrder"
     }
   ],
   "author": {
@@ -109,30 +98,30 @@ const schemaJson = JSON.stringify({
     <Header />
 
     <main class="flex-1">
-      {/* Hero Section */}
-      <section class="max-w-4xl mx-auto px-6 pt-16 pb-12 text-center">
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-text-primary mb-6 leading-[1.1] max-w-3xl mx-auto">
-          Obliterate build bloat.<br class="hidden sm:block" /> Reclaim your SSD space.
+      <section class="mx-auto max-w-4xl px-6 pb-12 pt-14 text-center sm:pt-20">
+        <h1 class="mx-auto max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tighter text-text-primary sm:text-5xl md:text-6xl">
+          Reclaim disk from build artifacts.
         </h1>
-        
-        <p class="text-base sm:text-lg text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
-          Uncached scans your local repositories for disposable build targets, package caches, and toolchain artifacts — giving you 1-click control to safely recycle or permanently clear gigabytes of wasted storage.
+        <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-text-secondary sm:text-lg">
+          Uncached finds regenerable targets in your developer workspaces, shows exactly what can leave, and moves selected targets to Trash or Recycle Bin.
         </p>
-
-        {/* Brevo Whitelist Component */}
-        <WhitelistForm client:load />
+        <div class="mx-auto mt-8 max-w-xl">
+          <WhitelistForm client:load />
+        </div>
+        <div class="mt-5 flex justify-center gap-5 font-mono text-[11px] text-text-muted">
+          <span>Local-first</span>
+          <span>Trash by default</span>
+        </div>
       </section>
 
-      {/* Simulator Section */}
-      <section class="px-6 py-8">
+      <section id="how-it-works" class="mx-auto max-w-6xl scroll-mt-12 px-6 py-8">
         <ScanSimulator client:load />
       </section>
 
       {/* App Features Section */}
       <FeaturesSection />
 
-      {/* Pricing Cards Section ($0, $4.99/mo, $59.90 lifetime) */}
-      <PricingSection />
+      <ProTeaser />
 
       {/* Support & FAQ Section */}
       <FaqSection />

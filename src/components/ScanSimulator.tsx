@@ -45,9 +45,9 @@ const INITIAL_TARGETS: TargetItem[] = [
   },
   {
     id: '3',
-    name: 'ai-service .venv',
-    category: 'PYTHON_VENV',
-    path: '~/projects/ai-service/.venv',
+    name: 'ai-service __pycache__',
+    category: 'PYTHON_CACHE',
+    path: '~/projects/ai-service/__pycache__',
     size: '1.70 GB',
     bytes: 1.7 * 1024 * 1024 * 1024,
   },
@@ -61,7 +61,7 @@ const INITIAL_TARGETS: TargetItem[] = [
   },
 ];
 
-const STEPS = ['Workspace', 'Scan', 'Review', 'Done'] as const;
+const STEPS = ['Workspace', 'Scan', 'Review', 'Reclaimed'] as const;
 
 export default function ScanSimulator() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
@@ -295,7 +295,7 @@ export default function ScanSimulator() {
                   <strong className="block font-mono text-xl sm:text-3xl font-medium tracking-tight text-accent">
                     4
                   </strong>
-                  <span className="mt-0.5 sm:mt-1 block font-sans text-[10px] sm:text-xs text-text-muted">findings found</span>
+                  <span className="mt-0.5 sm:mt-1 block font-sans text-[10px] sm:text-xs text-text-muted">targets found</span>
                 </div>
               </div>
 
@@ -419,14 +419,12 @@ export default function ScanSimulator() {
                   {isCleaning ? (
                     <>
                       <LoaderCircle size={14} className="animate-spin" />
-                      <span>Cleaning...</span>
+                      <span>Reclaiming...</span>
                     </>
                   ) : (
                     <>
                       <Trash2 size={14} />
-                      <span>
-                        Delete ({selectedTargets.length})
-                      </span>
+                      <span>Reclaim ({selectedTargets.length})</span>
                     </>
                   )}
                 </button>
@@ -454,7 +452,7 @@ export default function ScanSimulator() {
               </motion.div>
 
               <h2 className="mt-3 sm:mt-5 text-2xl sm:text-4xl font-semibold tracking-tight text-text-primary">
-                Cleanup complete
+                Space reclaimed
               </h2>
 
               <p className="mt-1.5 max-w-xs text-xs sm:text-sm leading-relaxed text-text-muted">
@@ -464,7 +462,7 @@ export default function ScanSimulator() {
               {/* Stats Metrics Cards */}
               <div className="mt-4 sm:mt-6 flex gap-3 sm:gap-4">
                 <div className="rounded-xl sm:rounded-2xl border border-border-theme bg-canvas px-4 py-2.5 sm:px-6 sm:py-3.5 text-left">
-                  <span className="block text-[10px] sm:text-xs uppercase tracking-wider text-text-muted">Targets removed</span>
+                  <span className="block text-[10px] sm:text-xs uppercase tracking-wider text-text-muted">Targets reclaimed</span>
                   <strong className="mt-0.5 sm:mt-1 block text-lg sm:text-2xl text-text-primary font-mono">{reclaimedSummary.count}</strong>
                 </div>
                 <div className="rounded-xl sm:rounded-2xl border border-border-theme bg-canvas px-4 py-2.5 sm:px-6 sm:py-3.5 text-left">

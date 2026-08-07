@@ -1,52 +1,42 @@
 ---
 const features = [
   {
-    title: "Multi-Ecosystem Scanners",
-    desc: "Identifies heavy disposable build targets across major developer ecosystems, language toolchains, and package managers without manual folder hunting.",
-    tag: "Target Detection"
+    title: "Targets you can verify",
+    desc: "Review real paths, categories, and byte sizes before anything moves.",
+    tag: "Review first"
   },
   {
-    title: "System Trash & Permanent Nuke",
-    desc: "Safely transfers build folders to your native OS Recycle Bin for instant restoration, or permanently nukes targets to immediately free disk space.",
-    tag: "Flexible Execution"
+    title: "Trash by default",
+    desc: "Selected targets move to your native Trash or Recycle Bin so cleanup stays reversible by default.",
+    tag: "Safety first"
   },
   {
-    title: "Native Tauri 2 + Rust Engine",
-    desc: "Compiled in Rust. Starts in milliseconds, uses under 30MB of RAM, and runs asynchronous multi-threaded directory walks without bottlenecking CPU.",
-    tag: "Native Speed"
+    title: "Local-first by design",
+    desc: "Scanning and cleanup happen on your machine. Your workspace paths do not need to leave the device.",
+    tag: "No cloud upload"
   },
   {
-    title: "Automated Daemon Purge (Pro)",
-    desc: "Configure background daemon schedules to automatically purge abandoned build targets older than 14 days without manual intervention.",
-    tag: "Background Daemon"
+    title: "Built for toolchains",
+    desc: "Current early-access coverage includes Node, Rust, Python caches, Gradle, Next.js, and Turborepo targets.",
+    tag: "Current coverage"
   },
-  {
-    title: "Deep IDE & Docker Cleaners (Pro)",
-    desc: "Deep cleans Xcode DerivedData, Android Studio system caches, JetBrains build caches, and dangling Docker images & volumes.",
-    tag: "Deep Clean"
-  },
-  {
-    title: "Disk Reclaim Analytics (Pro)",
-    desc: "Track reclaimed SSD storage over time with interactive graphs, per-project breakdown stats, and workspace growth metrics.",
-    tag: "Analytics"
-  }
 ];
 ---
 
 <section id="features" class="w-full max-w-6xl mx-auto px-6 py-20 scroll-mt-12">
   <div class="text-center max-w-3xl mx-auto mb-14">
     <span class="text-xs font-mono text-text-muted uppercase tracking-widest block mb-2">
-      Local Dev Utility
+      Built for local workspaces
     </span>
     <h2 class="text-3xl md:text-5xl font-semibold tracking-[-0.04em] text-text-primary max-w-3xl mx-auto leading-[1.15]">
-      Built for developers shipping code,<br class="hidden sm:block" /> not storing build bloat.
+      Less hunting. More disk for the work.
     </h2>
     <p class="mt-3 text-sm text-text-muted leading-relaxed">
-      Automated multi-threaded scanning, deep IDE cleaners, and zero-overhead Rust execution for your local environment.
+      Uncached turns regenerable build artifacts into a short, reviewable cleanup flow.
     </p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+  <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
     {features.map((item) => (
       <div class="p-6 rounded-2xl bg-surface border border-border-theme flex flex-col justify-between transition-colors">
         <div>
