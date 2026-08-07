@@ -99,10 +99,8 @@ const schemaJson = JSON.stringify({
         const savedTheme = localStorage.getItem('uncached-theme');
         if (savedTheme === 'light' || savedTheme === 'dark') {
           document.documentElement.dataset.theme = savedTheme;
-        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-          document.documentElement.dataset.theme = 'light';
         } else {
-          document.documentElement.dataset.theme = 'dark';
+          document.documentElement.dataset.theme = 'light';
         }
       })();
     </script>

@@ -15,23 +15,7 @@
   --color-destructive-hover: var(--destructive-hover);
 }
 
-:root, [data-theme="dark"] {
-  --canvas: #101311;
-  --surface: #151b17;
-  --raised: #1a211c;
-  --border: #222b24;
-  --text-primary: #edf0eb;
-  --text-secondary: #c7d0c1;
-  --text-muted: #8e998e;
-  --accent: #b9d98d;
-  --accent-hover: #d1eca9;
-  --accent-text: #101311;
-  --destructive: #ffc2b5;
-  --destructive-hover: #ffad9e;
-  color-scheme: dark;
-}
-
-[data-theme="light"] {
+:root, [data-theme="light"] {
   --canvas: #f4f6f1;
   --surface: #ffffff;
   --raised: #eef2eb;
@@ -45,6 +29,22 @@
   --destructive: #d9534f;
   --destructive-hover: #c9302c;
   color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --canvas: #101311;
+  --surface: #151b17;
+  --raised: #1a211c;
+  --border: #222b24;
+  --text-primary: #edf0eb;
+  --text-secondary: #c7d0c1;
+  --text-muted: #8e998e;
+  --accent: #b9d98d;
+  --accent-hover: #d1eca9;
+  --accent-text: #101311;
+  --destructive: #ffc2b5;
+  --destructive-hover: #ffad9e;
+  color-scheme: dark;
 }
 
 /* Background Grain Noise Overlay */

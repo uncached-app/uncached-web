@@ -4,7 +4,7 @@
     <div class="flex items-center gap-3">
       <img 
         id="uncached-footer-logo"
-        src="/brand/UNCACHED-LOGO-LIGHT-NOBG.svg" 
+        src="/brand/UNCACHED-LOGO-DARK-NOBG.svg" 
         alt="Uncached Logo" 
         class="h-5 w-auto object-contain opacity-90 transition-opacity"
       />
@@ -37,7 +37,7 @@
   }
 
   // Initial Sync
-  const initialTheme = document.documentElement.dataset.theme || 'dark';
+  const initialTheme = document.documentElement.dataset.theme || 'light';
   updateFooterLogo(initialTheme);
 
   // Listen to Theme Toggle events

@@ -6,7 +6,7 @@
     <!-- Uncached Logo swapping dynamically per theme -->
     <img 
       id="uncached-header-logo"
-      src="/brand/UNCACHED-LOGO-LIGHT-NOBG.svg" 
+      src="/brand/UNCACHED-LOGO-DARK-NOBG.svg" 
       alt="Uncached Logo" 
       class="h-5 w-auto object-contain transition-opacity group-hover:opacity-90"
     />
@@ -40,7 +40,7 @@
   }
 
   // Initial Sync
-  const initialTheme = document.documentElement.dataset.theme || 'dark';
+  const initialTheme = document.documentElement.dataset.theme || 'light';
   updateHeaderLogo(initialTheme);
 
   // Listen to Theme Toggle events
