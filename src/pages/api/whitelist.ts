@@ -24,6 +24,10 @@ interface BrevoListResponse {
   };
 }
 
+interface BrevoContactInfo {
+  listIds?: number[];
+}
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_EMAIL_LENGTH = 254;
 const ALLOWED_OPERATING_SYSTEMS = new Set(['macOS', 'Windows', 'Linux']);
@@ -78,6 +82,16 @@ async function brevoRequest(apiKey: string, path: string, payload: unknown): Pro
       'api-key': apiKey,
     },
     body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(BREVO_TIMEOUT_MS),
+  });
+}
+
+async function brevoGet(apiKey: string, path: string): Promise<Response> {
+  return fetch(`${BREVO_API_URL}${path}`, {
+    headers: {
+      Accept: 'application/json',
+      'api-key': apiKey,
+    },
     signal: AbortSignal.timeout(BREVO_TIMEOUT_MS),
   });
 }
@@ -164,9 +178,18 @@ export const POST: APIRoute = async (context) => {
       const failedEmails = listData.contacts?.failure || [];
 
       if (!listResponse.ok || failedEmails.includes(trimmedEmail)) {
-        console.error('[Whitelist API Brevo List Error]', listResponse.status, listData);
-        return jsonResponse({ success: false, message: 'Unable to add your email to the whitelist.' }, 502);
+        const contactResponse = await brevoGet(apiKey, `/contacts/${encodeURIComponent(trimmedEmail)}`);
+        const contactData = (await contactResponse.json().catch(() => ({}))) as BrevoContactInfo;
+        const isAlreadyInList = contactResponse.ok && contactData.listIds?.includes(listId);
+
+        if (isAlreadyInList) {
+          console.info('[Whitelist API] Contact already belongs to configured list.');
+        } else {
+          console.error('[Whitelist API Brevo List Error]', listResponse.status, listData);
+          return jsonResponse({ success: false, message: 'Unable to add your email to the whitelist.' }, 502);
+        }
       }
+
     }
 
     if (senderEmail && EMAIL_REGEX.test(senderEmail)) {
