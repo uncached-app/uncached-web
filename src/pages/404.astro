@@ -1,0 +1,101 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Page not found — Uncached';
+const description = 'No page exists at this address. Return to the Uncached homepage.';
+
+// Recorded per the design contract so the decision survives in the built HTML.
+const contract = `<!--
+  SURFACE CONTRACT — 404 (seed 07c203c6)
+  THESIS: An error page that reports a fact and gets out of the way. Refuses both
+    category defaults: the oversized 404 numeral as hero, and the grid of
+    wayfinding cards that turns a dead end into a second landing page.
+  OWN-WORLD: Inherited unchanged from the landing page. Warm pale canvas, sage
+    reserved for the single forward action, Hanken Grotesk for prose, Geist Mono
+    for the one filesystem-shaped fact — the status and the requested path.
+  STORY: The visitor reads the exact path they asked for, learns nothing is there,
+    and leaves through the homepage.
+  FIRST VIEWPORT: One centered column, vertically centered in the viewport at
+    max-w-xl. Status and path in mono, headline, one sentence, one button, then a
+    quiet row of text links.
+  FORM: Candidate 5 of the ordered structural list — hero-mirror stacked column.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the
+    finish review, the verdict, and DESIGN.md.
+-->`;
+
+/** Real routes, so the page recovers the visitor instead of dead-ending them. */
+const destinations = [
+  { href: '/#how-it-works', label: 'How it works' },
+  { href: '/#features', label: 'Features' },
+  { href: '/#faq', label: 'Support' },
+];
+---
+
+<Layout title={title} description={description} noindex contract={contract}>
+  <main class="flex flex-1 items-center">
+    <section class="fade mx-auto w-full max-w-xl px-6 py-20 text-center sm:py-28">
+      {/* Status and path share one mono line: both are machine facts, one voice. */}
+      <p class="flex items-baseline justify-center gap-2.5 font-mono text-xs text-text-muted">
+        <span>404</span>
+        <code id="requested-path" class="min-w-0 truncate text-text-secondary">/</code>
+      </p>
+
+      <h1
+        class="mt-5 text-pretty text-3xl font-semibold leading-[1.15] tracking-tight text-text-primary sm:text-4xl"
+      >
+        No page at this path.
+      </h1>
+
+      <p class="mx-auto mt-4 max-w-xs text-pretty text-sm leading-relaxed text-text-secondary sm:text-base">
+        The address may be mistyped, or the page may never have existed.
+      </p>
+
+      <a
+        href="/"
+        class="mt-8 inline-flex min-h-11 items-center justify-center rounded-xl bg-accent px-6 text-sm font-semibold text-accent-text transition-colors hover:bg-accent-hover"
+      >
+        Back to homepage
+      </a>
+
+      <nav
+        aria-label="Site sections"
+        class="mt-10 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 font-mono text-xs text-text-muted"
+      >
+        {destinations.map((destination) => <a href={destination.href} class="hover:text-accent transition-colors">{destination.label}</a>)}
+      </nav>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* One soft settle for the column, nothing per-element. */
+  .fade {
+    animation: settle 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+
+  @keyframes settle {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade {
+      animation: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  // Static hosting cannot know the requested path, so the value is read at
+  // runtime. The markup ships "/" so the line is never empty or layout-shifting.
+  (function () {
+    const target = document.getElementById('requested-path');
+    if (!target) return;
+    const path = window.location.pathname + window.location.search;
+    // Cap the value so a long or crafted URL cannot stretch the line.
+    // textContent already neutralises any markup in it.
+    target.textContent = path.length > 80 ? path.slice(0, 79) + '…' : path;
+  })();
+</script>

@@ -1,13 +1,11 @@
 ---
-import Header from '../components/Header.astro';
+import Layout from '../layouts/Layout.astro';
 import WhitelistForm from '../components/WhitelistForm';
 import ScanSimulator from '../components/ScanSimulator';
 import FeaturesSection from '../components/FeaturesSection.astro';
 import FaqSection from '../components/FaqSection.astro';
 import ProTeaser from '../components/ProTeaser.astro';
-import Footer from '../components/Footer.astro';
 import { faqs } from '../data/faqs';
-import '../styles/global.css';
 
 const siteTitle = "Uncached — Reclaim gigabytes from the code you ship";
 const siteDescription = "Uncached finds regenerable build artifacts in developer workspaces and safely moves selected targets to your system Trash or Recycle Bin.";
@@ -81,109 +79,36 @@ const schemaJson = JSON.stringify({
 });
 ---
 
-<html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<Layout title={siteTitle} description={siteDescription} keywords={siteKeywords}>
+  <script type="application/ld+json" slot="head" set:html={schemaJson} />
 
-    <!-- Icons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <!-- Theme init below forces light unless the visitor opted into dark. -->
-    <meta name="theme-color" content="#f4f6f1" />
+  <main class="flex-1">
+    <section class="mx-auto max-w-4xl px-6 pb-12 pt-14 text-center sm:pt-20">
+      <h1 class="mx-auto max-w-4xl text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-balance sm:text-5xl sm:leading-[1.05] md:text-6xl">
+        Reclaim disk from build artifacts.
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
+        Uncached finds regenerable targets in your developer workspaces, shows exactly what can leave, and moves selected targets to Trash or Recycle Bin.
+      </p>
+      <div class="mx-auto mt-8 max-w-xl">
+        <WhitelistForm client:load />
+      </div>
+      <div class="mt-5 flex justify-center gap-5 font-mono text-[11px] text-text-muted">
+        <span>Local-first</span>
+        <span>Trash by default</span>
+      </div>
+    </section>
 
-    <meta name="generator" content={Astro.generator} />
+    <section id="how-it-works" class="mx-auto max-w-6xl scroll-mt-12 px-6 py-8">
+      <ScanSimulator client:load />
+    </section>
 
-    <!-- Primary Meta Tags -->
-    <title>{siteTitle}</title>
-    <meta name="title" content={siteTitle} />
-    <meta name="description" content={siteDescription} />
-    <meta name="keywords" content={siteKeywords} />
-    <meta name="author" content={authorName} />
-    <meta name="publisher" content={authorName} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
-    <link rel="canonical" href={canonicalURL} />
-    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    {/* App Features Section */}
+    <FeaturesSection />
 
-    <!-- Open Graph / Facebook / LinkedIn -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={siteTitle} />
-    <meta property="og:description" content={siteDescription} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Uncached — reclaim disk from build artifacts" />
-    <meta property="og:site_name" content="Uncached" />
-    <meta property="og:locale" content="en_US" />
+    <ProTeaser />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonicalURL} />
-    <meta name="twitter:title" content={siteTitle} />
-    <meta name="twitter:description" content={siteDescription} />
-    <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content="Uncached — reclaim disk from build artifacts" />
-    <meta name="twitter:creator" content="@natanviana" />
-
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json" set:html={schemaJson} />
-
-    <!-- Google Fonts: Hanken Grotesk & Geist Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
-    <!-- FOUT Prevention Theme Initializer -->
-    <script is:inline>
-      (function() {
-        const savedTheme = localStorage.getItem('uncached-theme');
-        if (savedTheme === 'light' || savedTheme === 'dark') {
-          document.documentElement.dataset.theme = savedTheme;
-        } else {
-          document.documentElement.dataset.theme = 'light';
-        }
-      })();
-    </script>
-  </head>
-  <body class="min-h-screen flex flex-col bg-canvas text-text-primary selection:bg-accent selection:text-accent-text transition-colors">
-    <Header />
-
-    <main class="flex-1">
-      <section class="mx-auto max-w-4xl px-6 pb-12 pt-14 text-center sm:pt-20">
-        <h1 class="mx-auto max-w-4xl text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-balance sm:text-5xl sm:leading-[1.05] md:text-6xl">
-          Reclaim disk from build artifacts.
-        </h1>
-        <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
-          Uncached finds regenerable targets in your developer workspaces, shows exactly what can leave, and moves selected targets to Trash or Recycle Bin.
-        </p>
-        <div class="mx-auto mt-8 max-w-xl">
-          <WhitelistForm client:load />
-        </div>
-        <div class="mt-5 flex justify-center gap-5 font-mono text-[11px] text-text-muted">
-          <span>Local-first</span>
-          <span>Trash by default</span>
-        </div>
-      </section>
-
-      <section id="how-it-works" class="mx-auto max-w-6xl scroll-mt-12 px-6 py-8">
-        <ScanSimulator client:load />
-      </section>
-
-      {/* App Features Section */}
-      <FeaturesSection />
-
-      <ProTeaser />
-
-      {/* Support & FAQ Section */}
-      <FaqSection />
-    </main>
-
-    <Footer />
-  </body>
-</html>
+    {/* Support & FAQ Section */}
+    <FaqSection />
+  </main>
+</Layout>
