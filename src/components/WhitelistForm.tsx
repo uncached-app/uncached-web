@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const LOCAL_STORAGE_KEY = 'uncached_whitelisted_email';
@@ -9,6 +9,7 @@ export default function WhitelistForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const [savedEmail, setSavedEmail] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     try {
@@ -19,6 +20,36 @@ export default function WhitelistForm() {
     } catch (e) {
       // Storage access may be restricted
     }
+  }, []);
+
+  useEffect(() => {
+    const handleHashFocus = () => {
+      if (window.location.hash === '#whitelist' || window.location.hash === '#whitelist-email') {
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 100);
+      }
+    };
+
+    const handleLinkClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest('a');
+      if (target) {
+        const href = target.getAttribute('href');
+        if (href === '/#whitelist' || href === '#whitelist' || href === '/#whitelist-email' || href === '#whitelist-email') {
+          setTimeout(() => {
+            inputRef.current?.focus();
+          }, 150);
+        }
+      }
+    };
+
+    handleHashFocus();
+    window.addEventListener('hashchange', handleHashFocus);
+    document.addEventListener('click', handleLinkClick);
+    return () => {
+      window.removeEventListener('hashchange', handleHashFocus);
+      document.removeEventListener('click', handleLinkClick);
+    };
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -87,13 +118,18 @@ export default function WhitelistForm() {
         {/* Input & Submit Row */}
         <div className="relative flex items-center w-full">
           <input
+            ref={inputRef}
+            id="whitelist-email"
+            name="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="developer@workspace.dev"
             disabled={status === 'loading' || status === 'success'}
             required
-            className="w-full px-3.5 py-3 sm:px-4 sm:py-3.5 rounded-xl bg-surface text-text-primary placeholder:text-text-muted border border-border-theme focus:outline-none focus:border-accent font-mono text-xs sm:text-sm pr-28 sm:pr-36 transition-all"
+            autoComplete="email"
+            aria-label="Email address for early access"
+            className="w-full px-3.5 py-3 sm:px-4 sm:py-3.5 rounded-xl bg-surface text-text-primary placeholder:text-text-muted border border-border-theme outline-none focus:outline-none focus-visible:outline-none focus:border-accent font-mono text-xs sm:text-sm pr-28 sm:pr-36 transition-all"
           />
           <button
             type="submit"
