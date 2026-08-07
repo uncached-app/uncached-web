@@ -312,7 +312,7 @@ export default function ScanSimulator() {
             </motion.div>
           )}
 
-          {/* STEP 3: FINDINGS SECTION */}
+          {/* STEP 3: REVIEW SECTION */}
           {step === 3 && (
             <motion.div
               key="step3"
@@ -326,12 +326,14 @@ export default function ScanSimulator() {
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="text-base sm:text-2xl font-semibold text-text-primary tracking-tight">4 targets</h3>
+                    <h3 className="text-base sm:text-2xl font-semibold text-text-primary tracking-tight">
+                      {INITIAL_TARGETS.length} targets
+                    </h3>
                     <span className="rounded-md border border-accent bg-canvas px-2 py-0.5 font-mono text-[10px] sm:text-xs font-medium text-accent">
                       15.12 GB total
                     </span>
                   </div>
-                  <p className="text-[11px] text-text-muted mt-0.5 hidden xs:block">
+                  <p className="text-[11px] font-sans text-text-muted mt-0.5 hidden xs:block">
                     Selected targets move to the Recycle Bin. Restorable from there.
                   </p>
                 </div>
@@ -339,15 +341,15 @@ export default function ScanSimulator() {
                 <button
                   type="button"
                   onClick={toggleSelectAll}
-                  className="text-xs sm:text-sm font-mono text-accent hover:underline flex items-center gap-1 cursor-pointer ml-auto"
+                  className="text-xs sm:text-sm font-mono text-accent hover:underline flex items-center gap-1.5 cursor-pointer ml-auto focus-visible:outline-2 focus-visible:outline-accent rounded px-1"
                 >
                   {selectedIds.size === INITIAL_TARGETS.length ? (
                     <>
-                      <CheckSquare size={13} /> Unselect All
+                      <CheckSquare size={13} /> Unselect all
                     </>
                   ) : (
                     <>
-                      <Square size={13} /> Select All
+                      <Square size={13} /> Select all
                     </>
                   )}
                 </button>
@@ -360,8 +362,18 @@ export default function ScanSimulator() {
                   return (
                     <article
                       key={item.id}
+                      role="checkbox"
+                      aria-checked={isSelected}
+                      aria-label={`${item.name} (${item.size})`}
+                      tabIndex={0}
                       onClick={() => toggleSelect(item.id)}
-                      className={`group flex items-center justify-between select-none gap-2 rounded-xl border p-2.5 sm:p-3.5 transition-all duration-200 cursor-pointer ${
+                      onKeyDown={(e) => {
+                        if (e.key === ' ' || e.key === 'Enter') {
+                          e.preventDefault();
+                          toggleSelect(item.id);
+                        }
+                      }}
+                      className={`group flex items-center justify-between select-none gap-2.5 rounded-xl border p-2.5 sm:p-3.5 transition-all duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-accent active:scale-[0.99] active:translate-y-[1px] ${
                         isSelected
                           ? 'border-accent bg-canvas'
                           : 'border-border-theme bg-canvas/70 hover:border-accent/60'
@@ -393,7 +405,7 @@ export default function ScanSimulator() {
                       </div>
 
                       <div className="flex items-center justify-end shrink-0 pl-2">
-                        <strong className={`text-xs sm:text-base font-semibold ${isSelected ? 'text-text-primary' : 'text-text-muted'}`}>
+                        <strong className={`font-mono text-xs sm:text-base font-semibold ${isSelected ? 'text-text-primary' : 'text-text-muted'}`}>
                           {item.size}
                         </strong>
                       </div>
@@ -405,26 +417,33 @@ export default function ScanSimulator() {
               {/* Bottom Action Footer */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-2 border-t border-border-theme">
                 <div className="flex items-center justify-between sm:block">
-                  <span className="text-[11px] text-text-muted">Selected Space: </span>
-                  <strong className="font-mono text-sm sm:text-lg font-bold text-accent">
-                    {selectedTargets.length > 0 ? `${selectedTargets.length} selected · ${formattedSelectedSize}` : '0 selected · 0.00 GB'}
+                  <span className="text-[11px] font-sans text-text-muted">Targets selected: </span>
+                  <strong className="font-mono text-xs sm:text-sm font-bold text-accent block sm:inline mt-0.5 sm:mt-0">
+                    {selectedTargets.length > 0
+                      ? `${selectedTargets.length} selected · ${formattedSelectedSize}`
+                      : '0 selected · 0 B'}
                   </strong>
                 </div>
 
                 <button
+                  type="button"
                   onClick={handleClean}
                   disabled={selectedTargets.length === 0 || isCleaning}
-                  className="w-full sm:w-auto inline-flex flex-row items-center justify-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl bg-destructive hover:bg-destructive-hover text-canvas font-semibold text-xs sm:text-sm transition-colors cursor-pointer disabled:opacity-40"
+                  className="w-full sm:w-auto inline-flex min-h-11 flex-row items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-destructive hover:bg-destructive-hover text-accent-text font-semibold text-xs sm:text-sm transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-accent active:scale-[0.99] active:translate-y-[1px]"
                 >
                   {isCleaning ? (
                     <>
                       <LoaderCircle size={14} className="animate-spin" />
-                      <span>Reclaiming...</span>
+                      <span>Moving to Recycle Bin...</span>
                     </>
                   ) : (
                     <>
                       <Trash2 size={14} />
-                      <span>Reclaim ({selectedTargets.length})</span>
+                      <span>
+                        {selectedTargets.length > 0
+                          ? `Move to Recycle Bin (${selectedTargets.length})`
+                          : 'Move to Recycle Bin'}
+                      </span>
                     </>
                   )}
                 </button>
