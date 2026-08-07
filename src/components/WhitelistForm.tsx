@@ -9,6 +9,7 @@ export default function WhitelistForm() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const [savedEmail, setSavedEmail] = useState<string | null>(null);
+  const [storageResolved, setStorageResolved] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -19,6 +20,8 @@ export default function WhitelistForm() {
       }
     } catch (e) {
       // Storage access may be restricted
+    } finally {
+      setStorageResolved(true);
     }
   }, []);
 
@@ -85,6 +88,16 @@ export default function WhitelistForm() {
       setMessage('Failed to connect to backend.');
     }
   };
+
+  if (!storageResolved) {
+    return (
+      <div
+        id="whitelist"
+        aria-busy="true"
+        className="w-full max-w-lg mx-auto scroll-mt-[22vh] px-1 min-h-28 sm:min-h-24"
+      />
+    );
+  }
 
   if (savedEmail) {
     return (
