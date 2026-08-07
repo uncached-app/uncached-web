@@ -33,16 +33,22 @@ desktop.ini
 .idea/
 .vscode/
 
-# AI agent local state
-.superpowers/
+# Local tooling & AI agent state
 .agent/
+.agents/
+.superpowers/
 .claude/
 .cursor/
+.cursorrules
 .windsurf/
+.windsurfrules
+.cline/
+.roo/
+.clinerules
+.roomodes
+.codex/
+.opencode/
 .aider*
-CLAUDE.local.md
-AGENTS.local.md
-
-# agent-authored plans and specs (kept locally, not part of the shipped repo)
+*.local.md
 docs/superpowers/
 
