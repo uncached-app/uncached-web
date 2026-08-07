@@ -175,9 +175,8 @@ export const POST: APIRoute = async (context) => {
         emails: [trimmedEmail],
       });
       const listData = (await listResponse.json().catch(() => ({}))) as BrevoListResponse;
-      const failedEmails = listData.contacts?.failure || [];
 
-      if (!listResponse.ok || failedEmails.includes(trimmedEmail)) {
+      if (!listResponse.ok) {
         const contactResponse = await brevoGet(apiKey, `/contacts/${encodeURIComponent(trimmedEmail)}`);
         const contactData = (await contactResponse.json().catch(() => ({}))) as BrevoContactInfo;
         const isAlreadyInList = contactResponse.ok && contactData.listIds?.includes(listId);
