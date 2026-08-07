@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { env as cfEnv } from 'cloudflare:workers';
 
 export const prerender = false;
 
@@ -29,7 +30,7 @@ async function sendBrevoEmail(
   }
 }
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
     const { email, os } = data;
@@ -41,25 +42,13 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    let cfEnv: Record<string, any> = {};
-    try {
-      // @ts-ignore
-      const cfWorkers = await import('cloudflare:workers');
-      if (cfWorkers?.env) {
-        cfEnv = cfWorkers.env;
-      }
-    } catch {
-      // Not running in Cloudflare Workers context
-    }
-
-    const runtimeEnv = cfEnv || (locals as any)?.runtime?.env || {};
-    const apiKey = runtimeEnv.BREVO_API_KEY || (locals as any)?.runtime?.env?.BREVO_API_KEY || import.meta.env.BREVO_API_KEY || (typeof process !== 'undefined' ? process.env?.BREVO_API_KEY : undefined);
-    const listIdRaw = runtimeEnv.BREVO_LIST_ID || (locals as any)?.runtime?.env?.BREVO_LIST_ID || import.meta.env.BREVO_LIST_ID || (typeof process !== 'undefined' ? process.env?.BREVO_LIST_ID : undefined);
+    const apiKey = cfEnv?.BREVO_API_KEY || import.meta.env.BREVO_API_KEY || (typeof process !== 'undefined' ? process.env?.BREVO_API_KEY : undefined);
+    const listIdRaw = cfEnv?.BREVO_LIST_ID || import.meta.env.BREVO_LIST_ID || (typeof process !== 'undefined' ? process.env?.BREVO_LIST_ID : undefined);
     const listId = listIdRaw ? parseInt(String(listIdRaw), 10) : NaN;
 
-    const senderEmail = runtimeEnv.BREVO_SENDER_EMAIL || (locals as any)?.runtime?.env?.BREVO_SENDER_EMAIL || import.meta.env.BREVO_SENDER_EMAIL || (typeof process !== 'undefined' ? process.env?.BREVO_SENDER_EMAIL : undefined);
-    const senderName = runtimeEnv.BREVO_SENDER_NAME || (locals as any)?.runtime?.env?.BREVO_SENDER_NAME || import.meta.env.BREVO_SENDER_NAME || (typeof process !== 'undefined' ? process.env?.BREVO_SENDER_NAME : undefined) || 'Uncached';
-    const adminEmail = runtimeEnv.ADMIN_NOTIFICATION_EMAIL || (locals as any)?.runtime?.env?.ADMIN_NOTIFICATION_EMAIL || import.meta.env.ADMIN_NOTIFICATION_EMAIL || (typeof process !== 'undefined' ? process.env?.ADMIN_NOTIFICATION_EMAIL : undefined);
+    const senderEmail = cfEnv?.BREVO_SENDER_EMAIL || import.meta.env.BREVO_SENDER_EMAIL || (typeof process !== 'undefined' ? process.env?.BREVO_SENDER_EMAIL : undefined);
+    const senderName = cfEnv?.BREVO_SENDER_NAME || import.meta.env.BREVO_SENDER_NAME || (typeof process !== 'undefined' ? process.env?.BREVO_SENDER_NAME : undefined) || 'Uncached';
+    const adminEmail = cfEnv?.ADMIN_NOTIFICATION_EMAIL || import.meta.env.ADMIN_NOTIFICATION_EMAIL || (typeof process !== 'undefined' ? process.env?.ADMIN_NOTIFICATION_EMAIL : undefined);
 
     if (!apiKey) {
       console.log(`[Whitelist API] Received registration: ${email} (${os || 'Not specified'})`);
