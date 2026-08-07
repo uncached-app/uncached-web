@@ -19,30 +19,31 @@
     <a href="#faq" class="hover:text-accent transition-colors">Support</a>
   </nav>
 
-  <!-- Desktop-Only CTA Button -->
-  <div class="hidden md:flex items-center gap-3 sm:gap-4">
+  <!-- Right Actions Container -->
+  <div class="flex items-center gap-3 sm:gap-4">
+    <!-- Desktop-Only CTA Button -->
     <a
       href="#pricing"
-      class="px-4 py-2 text-xs font-semibold text-accent-text bg-accent hover:bg-accent-hover rounded-xl transition-colors shadow-sm"
+      class="hidden md:inline-flex px-4 py-2 text-xs font-semibold text-accent-text bg-accent hover:bg-accent-hover rounded-xl transition-colors shadow-sm"
     >
       Get Uncached
     </a>
+
+    <!-- Mobile Animated Hamburger Toggle Button (Positioned relative in header at rest, switches to fixed z-70 only when open) -->
+    <button
+      id="mobile-menu-toggle"
+      type="button"
+      aria-label="Toggle Navigation Menu"
+      aria-expanded="false"
+      aria-controls="mobile-sidebar"
+      class="md:hidden p-1 flex flex-col justify-center items-end gap-[5px] w-8 h-8 bg-transparent border-none outline-none cursor-pointer"
+    >
+      <span class="burger-line-top"></span>
+      <span class="burger-line-mid"></span>
+      <span class="burger-line-bot"></span>
+    </button>
   </div>
 </header>
-
-<!-- Mobile Animated Hamburger Toggle Button (Root-level z-[70] stays above backdrop z-40 and sidebar z-50) -->
-<button
-  id="mobile-menu-toggle"
-  type="button"
-  aria-label="Toggle Navigation Menu"
-  aria-expanded="false"
-  aria-controls="mobile-sidebar"
-  class="md:hidden fixed top-6 right-6 z-[70] p-1 flex flex-col justify-center items-end gap-[5px] w-8 h-8 bg-transparent border-none outline-none cursor-pointer"
->
-  <span class="burger-line-top"></span>
-  <span class="burger-line-mid"></span>
-  <span class="burger-line-bot"></span>
-</button>
 
 <!-- Mobile Sidebar Backdrop Overlay with backdrop-blur-xs (z-40 sits above header z-10) -->
 <div
@@ -99,7 +100,14 @@
     transform-origin: center;
   }
 
-  /* Morphing hamburger lines into X icon when menu is open */
+  /* When menu is open: switch button to position fixed z-70 and morph lines into X */
+  :global(#mobile-menu-toggle.menu-open) {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 70;
+  }
+
   :global(#mobile-menu-toggle.menu-open) .burger-line-top {
     transform: translateY(7px) rotate(45deg);
     background-color: #111827 !important;
