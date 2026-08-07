@@ -1,0 +1,35 @@
+---
+const pillars = [
+  {
+    title: "Safety-First Cleanup",
+    desc: "Uncached canonicalizes paths and validates targets before execution. Deleted files move safely to system Trash/Recycle Bin.",
+    badge: "Trash Integration"
+  },
+  {
+    title: "Broad Developer Scanners",
+    desc: "Recognizes bulky disposable targets in Node.js, Rust Cargo, Python virtual environments, Gradle, and .NET.",
+    badge: "Smart Detection"
+  },
+  {
+    title: "Quiet Native Speed",
+    desc: "Built with Tauri 2 and Rust. Starts instantly, consumes minimal memory, and leaves your CPU free for building software.",
+    badge: "Tauri 2 + Rust"
+  }
+];
+---
+
+<section class="w-full max-w-6xl mx-auto px-6 py-20">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {pillars.map((item) => (
+      <div class="p-6 rounded-2xl bg-[#151b17] border border-[#222b24] flex flex-col justify-between hover:border-[#b9d98d]/40 transition-colors">
+        <div>
+          <span class="inline-block mb-3 px-2.5 py-1 rounded-md bg-[#1a211c] text-[#b9d98d] text-xs font-mono border border-[#222b24]">
+            {item.badge}
+          </span>
+          <h3 class="text-lg font-semibold text-[#edf0eb] mb-2">{item.title}</h3>
+          <p class="text-sm text-[#c7d0c1] leading-relaxed">{item.desc}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

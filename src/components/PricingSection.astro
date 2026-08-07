@@ -1,0 +1,119 @@
+---
+const pricingPlans = [
+  {
+    name: "Free Tier",
+    price: "$0",
+    period: "forever free",
+    desc: "Manual scan & cleanup for standard dev targets.",
+    featured: false,
+    cta: "Download Free",
+    ctaLink: "#whitelist",
+    features: [
+      "Standard Scans (Dependency & Build Caches)",
+      "Manual One-Click Cleanup",
+      "System Trash / Recycle Bin Integration",
+      "Native Tauri 2 + Rust Engine",
+      "Community Support"
+    ]
+  },
+  {
+    name: "Pro Lifetime",
+    price: "$59.90",
+    period: "one-time payment",
+    desc: "Permanent license key for developers who prefer zero recurring fees.",
+    featured: true,
+    badge: "RECOMMENDED",
+    cta: "Get Lifetime License",
+    ctaLink: "#whitelist",
+    features: [
+      "Everything in Pro Tier",
+      "Cryptographic Offline-Verified License Key",
+      "Lifetime Updates & All Future Pro Features",
+      "Hardware-bound Machine Activation (Up to 3 PCs)",
+      "Priority Developer Support",
+      "One-time payment, zero recurring subscription"
+    ]
+  },
+  {
+    name: "Pro Monthly",
+    price: "$4.99",
+    period: "/ month",
+    desc: "Flexible monthly access with cancel-anytime policy.",
+    featured: false,
+    cta: "Subscribe Monthly",
+    ctaLink: "#whitelist",
+    features: [
+      "Everything in Free Tier",
+      "Automated Background Daemon Purge",
+      "Deep IDE Cleaners (Xcode DerivedData, Android Studio)",
+      "Docker Dangling Volumes & Images Cleaner",
+      "Multi-Drive Parallel Scanner (NVMe, NAS)",
+      "Cancel Anytime Flexibility"
+    ]
+  }
+];
+---
+
+<section id="pricing" class="w-full max-w-6xl mx-auto px-6 py-20 scroll-mt-12">
+  <div class="text-center max-w-3xl mx-auto mb-14">
+    <span class="text-xs font-mono text-text-muted uppercase tracking-widest block mb-2">
+      Transparent Licensing
+    </span>
+    <h2 class="text-3xl md:text-5xl font-semibold tracking-[-0.04em] text-text-primary max-w-2xl mx-auto leading-[1.15]">
+      Simple licensing.<br class="hidden sm:block" /> Zero subscription traps.
+    </h2>
+    <p class="mt-3 text-base text-text-muted leading-relaxed">
+      Get full access to background auto-purges, Docker cleaners, and multi-drive parallel scanning.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+    {pricingPlans.map((plan) => (
+      <div
+        class={`rounded-2xl p-6 flex flex-col justify-between relative bg-surface border transition-colors ${
+          plan.featured
+            ? "border-accent"
+            : "border-border-theme"
+        }`}
+      >
+        {plan.featured && (
+          <div class="absolute -top-3 left-6 bg-accent text-accent-text font-mono text-[11px] font-medium px-2.5 py-0.5 rounded-md uppercase tracking-wider">
+            {plan.badge}
+          </div>
+        )}
+
+        <div>
+          <div class="mb-5">
+            <h3 class="text-lg font-semibold text-text-primary mb-1">{plan.name}</h3>
+            <p class="text-xs text-text-muted leading-relaxed min-h-[32px]">{plan.desc}</p>
+          </div>
+
+          <div class="mb-6 flex items-baseline gap-1.5 font-mono">
+            <span class="text-3xl font-semibold text-text-primary">{plan.price}</span>
+            <span class="text-xs text-text-muted">{plan.period}</span>
+          </div>
+
+          <ul class="space-y-2.5 mb-8">
+            {plan.features.map((feat) => (
+              <li class="flex items-start gap-2.5 text-xs text-text-secondary leading-relaxed">
+                <span class="text-accent font-mono shrink-0 mt-0.5">✓</span>
+                <span>{feat}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <a
+          href={plan.ctaLink}
+          class={`w-full py-2.5 rounded-xl font-semibold text-xs text-center transition-colors cursor-pointer ${
+            plan.featured
+              ? "bg-accent hover:bg-accent-hover text-accent-text"
+              : "bg-raised hover:bg-border-theme text-text-secondary border border-border-theme"
+          }`}
+        >
+          {plan.cta}
+        </a>
+      </div>
+    ))}
+  </div>
+</section>

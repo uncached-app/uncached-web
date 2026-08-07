@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-border-theme: var(--border);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-text: var(--accent-text);
+  --color-destructive: var(--destructive);
+  --color-destructive-hover: var(--destructive-hover);
+}
+
+:root, [data-theme="dark"] {
+  --canvas: #101311;
+  --surface: #151b17;
+  --raised: #1a211c;
+  --border: #222b24;
+  --text-primary: #edf0eb;
+  --text-secondary: #c7d0c1;
+  --text-muted: #8e998e;
+  --accent: #b9d98d;
+  --accent-hover: #d1eca9;
+  --accent-text: #101311;
+  --destructive: #ffc2b5;
+  --destructive-hover: #ffad9e;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --canvas: #f4f6f1;
+  --surface: #ffffff;
+  --raised: #eef2eb;
+  --border: #dfe7dc;
+  --text-primary: #182018;
+  --text-secondary: #3d5c2d;
+  --text-muted: #637064;
+  --accent: #567a3d;
+  --accent-hover: #3d5c2d;
+  --accent-text: #ffffff;
+  --destructive: #d9534f;
+  --destructive-hover: #c9302c;
+  color-scheme: light;
+}
+
+/* Background Grain Noise Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Custom Scrollbars matching Quiet Forest Utility */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

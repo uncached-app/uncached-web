@@ -1,0 +1,55 @@
+---
+const faqs = [
+  {
+    question: "How does Uncached safely handle filesystem deletion?",
+    answer: "Uncached canonicalizes target directory paths, rejects symlinks, and strictly verifies project roots before touching any folder. By default, build targets move directly to your OS Recycle Bin / Trash for instant restoration. Permanent Nuke mode requires explicit confirmation before executing backend directory removal."
+  },
+  {
+    question: "Which build artifacts and developer ecosystems are supported?",
+    answer: "Uncached implements modular scanners for major developer ecosystems including JavaScript/TypeScript, Rust, Python, Java/Android, and .NET. The Pro tier adds deep cleaners for IDE system caches, Xcode, and Docker artifacts."
+  },
+  {
+    question: "What differentiates the Free Tier from Uncached Pro?",
+    answer: "The Free Tier includes full manual scanning and one-click cleanup for standard build targets. Uncached Pro adds background daemon auto-purging, Xcode & Docker deep cleaners, multi-drive parallel scanning (NVMe, NAS), and disk reclaim analytics."
+  },
+  {
+    question: "How does the $59.90 Pro Lifetime License Key work?",
+    answer: "Purchasing the Lifetime License generates an offline Ed25519 cryptographically signed license key bound to your Hardware ID (HWID). It activates up to 3 personal machines without requiring online servers to run."
+  },
+  {
+    question: "What is the memory and CPU footprint of the scanner engine?",
+    answer: "Uncached is compiled in Rust using Tauri 2. It launches instantly, maintains a RAM footprint under 30MB, and executes asynchronous non-blocking directory walks that leave CPU resources completely free for active compilation."
+  },
+  {
+    question: "Can I manage or cancel the $4.99/month Pro subscription?",
+    answer: "Yes, subscription management and 1-click cancellation are available anytime through the merchant portal. Pro features remain active through the end of the paid billing period."
+  }
+];
+---
+
+<section id="faq" class="w-full max-w-5xl mx-auto px-6 py-20 scroll-mt-12">
+  <div class="text-center max-w-2xl mx-auto mb-14">
+    <span class="text-xs font-mono text-text-muted uppercase tracking-widest block mb-2">
+      Support
+    </span>
+    <h2 class="text-3xl md:text-4xl font-semibold tracking-[-0.04em] text-text-primary">
+      Frequently Asked Questions
+    </h2>
+    <p class="mt-2.5 text-xs text-text-muted leading-relaxed">
+      Technical specifications on security, licensing, and filesystem execution.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {faqs.map((faq) => (
+      <div class="p-5 rounded-2xl bg-surface border border-border-theme transition-colors">
+        <h3 class="text-sm font-semibold text-text-primary mb-2 leading-snug">
+          {faq.question}
+        </h3>
+        <p class="text-xs text-text-muted leading-relaxed">
+          {faq.answer}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>

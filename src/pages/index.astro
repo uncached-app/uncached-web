@@ -1,11 +1,75 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Header from '../components/Header.astro';
+import WhitelistForm from '../components/WhitelistForm';
+import ScanSimulator from '../components/ScanSimulator';
+import FeaturesSection from '../components/FeaturesSection.astro';
+import PricingSection from '../components/PricingSection.astro';
+import FaqSection from '../components/FaqSection.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Uncached — Developer Build Cache Cleaner for macOS, Windows & Linux</title>
+    <meta name="description" content="Uncached scans your local repositories for disposable build targets, package caches, and toolchain artifacts to reclaim gigabytes of SSD space." />
+    
+    <!-- Google Fonts: Hanken Grotesk & Geist Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- FOUT Prevention Theme Initializer -->
+    <script is:inline>
+      (function() {
+        const savedTheme = localStorage.getItem('uncached-theme');
+        if (savedTheme === 'light' || savedTheme === 'dark') {
+          document.documentElement.dataset.theme = savedTheme;
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.dataset.theme = 'light';
+        } else {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-canvas text-text-primary selection:bg-accent selection:text-accent-text transition-colors">
+    <Header />
+
+    <main class="flex-1">
+      {/* Hero Section */}
+      <section class="max-w-4xl mx-auto px-6 pt-16 pb-12 text-center">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-text-primary mb-6 leading-[1.1] max-w-3xl mx-auto">
+          Obliterate build bloat.<br class="hidden sm:block" /> Reclaim your SSD space.
+        </h1>
+        
+        <p class="text-base sm:text-lg text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
+          Uncached scans your local repositories for disposable build targets, package caches, and toolchain artifacts — giving you 1-click control to safely recycle or permanently clear gigabytes of wasted storage.
+        </p>
+
+        {/* Brevo Whitelist Component */}
+        <WhitelistForm client:load />
+      </section>
+
+      {/* Simulator Section */}
+      <section class="px-6 py-8">
+        <ScanSimulator client:load />
+      </section>
+
+      {/* App Features Section */}
+      <FeaturesSection />
+
+      {/* Pricing Cards Section ($0, $4.99/mo, $59.90 lifetime) */}
+      <PricingSection />
+
+      {/* Support & FAQ Section */}
+      <FaqSection />
+    </main>
+
+    <Footer />
+  </body>
+</html>
