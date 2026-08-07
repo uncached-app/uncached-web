@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+
+const LOCAL_STORAGE_KEY = 'uncached_whitelisted_email';
 
 export default function WhitelistForm() {
   const [email, setEmail] = useState('');
   const [os, setOs] = useState('macOS');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
+  const [savedEmail, setSavedEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (stored) {
+        setSavedEmail(stored);
+      }
+    } catch (e) {
+      // Storage access may be restricted
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,16 +38,30 @@ export default function WhitelistForm() {
       const data = await res.json();
       if (data.success) {
         setStatus('success');
-        setMessage(data.message || 'You have been added to the whitelist!');
+        setMessage(data.message || 'Added to whitelist.');
+        setSavedEmail(email);
+        try {
+          localStorage.setItem(LOCAL_STORAGE_KEY, email);
+        } catch (e) {
+          // ignore
+        }
       } else {
         setStatus('error');
-        setMessage(data.message || 'Something went wrong.');
+        setMessage(data.message || 'Error processing request.');
       }
     } catch (err) {
       setStatus('error');
-      setMessage('Failed to connect to the server.');
+      setMessage('Failed to connect to backend.');
     }
   };
+
+  if (savedEmail) {
+    return (
+      <div id="whitelist" className="w-full max-w-lg mx-auto scroll-mt-[22vh] px-1 text-center font-mono text-xs sm:text-sm text-accent py-3">
+        Você já está na whitelist ({savedEmail}).
+      </div>
+    );
+  }
 
   return (
     <div id="whitelist" className="w-full max-w-lg mx-auto scroll-mt-[22vh] px-1">
@@ -72,7 +100,7 @@ export default function WhitelistForm() {
             disabled={status === 'loading' || status === 'success'}
             className="absolute right-1.5 px-3 py-2 sm:px-4 sm:py-2.5 bg-accent hover:bg-accent-hover text-accent-text font-semibold text-xs rounded-lg transition-all cursor-pointer disabled:opacity-50"
           >
-            {status === 'loading' ? 'Joining...' : status === 'success' ? 'Joined!' : 'Join Whitelist'}
+            {status === 'loading' ? 'Registering...' : 'Request Early Access'}
           </button>
         </div>
 

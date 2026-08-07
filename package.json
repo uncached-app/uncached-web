@@ -12,6 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.2.0",
     "@astrojs/node": "^11.1.0",
     "@astrojs/react": "^6.0.2",
     "@tailwindcss/vite": "^4.3.3",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/canvas-confetti": "^1.9.0",
     "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4"
+    "@types/react-dom": "^19.2.4",
+    "wrangler": "^4.119.0"
   }
 }

@@ -2,6 +2,33 @@ import type { APIRoute } from 'astro';
 
 export const prerender = false;
 
+async function sendBrevoEmail(
+  apiKey: string,
+  payload: {
+    sender: { name: string; email: string };
+    to: { email: string; name?: string }[];
+    subject: string;
+    htmlContent: string;
+  }
+) {
+  try {
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'api-key': apiKey,
+      },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.error('[Brevo Transactional Email Error]', err);
+    }
+  } catch (err) {
+    console.error('[Brevo Transactional Email Network Error]', err);
+  }
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const data = await request.json();
@@ -15,6 +42,12 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const apiKey = import.meta.env.BREVO_API_KEY;
+    const listIdRaw = import.meta.env.BREVO_LIST_ID;
+    const listId = listIdRaw ? parseInt(listIdRaw, 10) : NaN;
+
+    const senderEmail = import.meta.env.BREVO_SENDER_EMAIL;
+    const senderName = import.meta.env.BREVO_SENDER_NAME || 'Uncached';
+    const adminEmail = import.meta.env.ADMIN_NOTIFICATION_EMAIL;
 
     if (!apiKey) {
       console.log(`[Dev Whitelist] Received registration: ${email} (${os || 'Not specified'})`);
@@ -24,20 +57,86 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    // 1. Add contact to Brevo contacts & list
+    const contactPayload: Record<string, any> = {
+      email: email,
+      attributes: { OS: os || 'Not specified' },
+      updateEnabled: true,
+    };
+
+    if (!isNaN(listId)) {
+      contactPayload.listIds = [listId];
+    }
+
     const response = await fetch('https://api.brevo.com/v3/contacts', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'api-key': apiKey,
       },
-      body: JSON.stringify({
-        email: email,
-        attributes: { OS: os || 'Not specified' },
-        updateEnabled: true,
-      }),
+      body: JSON.stringify(contactPayload),
     });
 
     if (response.ok || response.status === 201 || response.status === 204) {
+      // 2. Send transactional emails if sender is configured
+      if (senderEmail) {
+        // Welcome email to user
+        const welcomeHtml = `
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8">
+              <title>Bem-vindo ao Uncached</title>
+            </head>
+            <body style="margin:0; padding:40px 20px; background-color:#09090b; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color:#f4f4f5;">
+              <div style="max-width:560px; margin:0 auto; background-color:#18181b; border:1px solid #27272a; border-radius:12px; padding:32px;">
+                <h1 style="font-size:24px; font-weight:700; color:#ffffff; margin-top:0; margin-bottom:16px;">
+                  🚀 Você está na lista VIP do Uncached!
+                </h1>
+                <p style="font-size:15px; line-height:1.6; color:#a1a1aa; margin-bottom:20px;">
+                  Olá! Confirmamos sua inscrição para acesso antecipado ao <strong>Uncached</strong> (${os ? `sistema ${os}` : 'versão desktop'}).
+                </p>
+                <p style="font-size:15px; line-height:1.6; color:#a1a1aa; margin-bottom:24px;">
+                  Em breve enviaremos novidades, atualizações de desenvolvimento e o link de acesso exclusivo para os primeiros membros da whitelist.
+                </p>
+                <div style="padding:16px; background-color:#27272a; border-radius:8px; font-size:13px; color:#71717a; text-align:center;">
+                  Obrigado por nos acompanhar nessa jornada para liberar espaço de SSD!
+                </div>
+              </div>
+            </body>
+          </html>
+        `;
+
+        sendBrevoEmail(apiKey, {
+          sender: { name: senderName, email: senderEmail },
+          to: [{ email: email }],
+          subject: '🚀 Você está na lista de espera do Uncached!',
+          htmlContent: welcomeHtml,
+        });
+
+        // Notification email to Admin
+        if (adminEmail) {
+          const adminHtml = `
+            <!DOCTYPE html>
+            <html>
+              <body style="font-family:sans-serif; padding:20px;">
+                <h2>🔔 Novo Cadastro na Whitelist!</h2>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Sistema Operacional:</strong> ${os || 'Não informado'}</p>
+                <p><strong>Data/Hora:</strong> ${new Date().toLocaleString('pt-BR')}</p>
+              </body>
+            </html>
+          `;
+
+          sendBrevoEmail(apiKey, {
+            sender: { name: 'Uncached System', email: senderEmail },
+            to: [{ email: adminEmail }],
+            subject: `🔔 Novo cadastro na Whitelist: ${email}`,
+            htmlContent: adminHtml,
+          });
+        }
+      }
+
       return new Response(
         JSON.stringify({ success: true, message: 'Welcome to the whitelist!' }),
         { status: 200, headers: { 'Content-Type': 'application/json' } }
