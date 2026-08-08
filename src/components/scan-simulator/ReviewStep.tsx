@@ -34,7 +34,7 @@ export default function ReviewStep({ selectedIds, selectedTargets, formattedSele
         </button>
       </div>
 
-      <div className="flex flex-col gap-2 max-h-48 sm:max-h-64 overflow-y-auto pr-1">
+      <div className="flex flex-col gap-2 max-h-full sm:max-h-full overflow-y-auto pr-1">
         {INITIAL_TARGETS.map((item) => {
           const isSelected = selectedIds.has(item.id);
           return (

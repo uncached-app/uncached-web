@@ -11,7 +11,7 @@ export default function ScanSimulator() {
 
   return (
     <div
-      className="w-full max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto rounded-2xl sm:rounded-3xl bg-surface border border-border-theme p-4 sm:p-8 overflow-hidden min-h-110 sm:h-120 md:h-127.5 flex flex-col justify-between select-none text-text-primary transition-colors"
+      className="w-full max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto rounded-2xl sm:rounded-3xl bg-surface border border-border-theme p-4 sm:p-8 overflow-hidden min-h-110 sm:h-120 md:h-156 flex flex-col justify-between select-none text-text-primary transition-colors"
     >
       <div className="flex items-center justify-center pb-3 sm:pb-4 shrink-0 border-b border-border-theme">
         <ProgressPipeline step={simulator.step} />
