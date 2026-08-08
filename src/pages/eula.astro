@@ -1,0 +1,134 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'End User License Agreement (EULA) — Uncached';
+const description = 'End User License Agreement and Terms of Service for Uncached desktop application and developer tools.';
+---
+
+<Layout title={title} description={description}>
+  <main class="py-16 sm:py-24">
+    <article class="mx-auto max-w-4xl px-6">
+      <!-- Page Header -->
+      <header class="border-b border-border-theme pb-8">
+        <p class="font-mono text-xs font-medium tracking-wider uppercase text-text-muted">Legal Agreement</p>
+        <h1 class="mt-3 text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
+          End User License Agreement (EULA)
+        </h1>
+        <p class="mt-3 font-mono text-xs text-text-muted">
+          Last Updated: August 8, 2026 &middot; Licensor: Natan Viana de Sousa
+        </p>
+      </header>
+
+      <!-- Agreement Body -->
+      <div class="mt-10 space-y-10 text-sm leading-relaxed text-text-secondary">
+        <section>
+          <p class="text-base leading-relaxed text-text-primary">
+            This End User License Agreement (&ldquo;Agreement&rdquo; or &ldquo;EULA&rdquo;) is a legal agreement between you (either an individual or a single entity) and <strong>Natan Viana de Sousa</strong> (&ldquo;Licensor&rdquo;, &ldquo;Developer&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;), an individual developer residing in Brazil, for the <strong>Uncached</strong> software application, including associated software components, media, online or electronic documentation, and desktop or command-line executable files (collectively, the &ldquo;Software&rdquo; or &ldquo;Uncached&rdquo;).
+          </p>
+          <p class="mt-4">
+            By installing, downloading, accessing, or using Uncached, you agree to be bound by the terms of this Agreement. If you do not agree to these terms, do not install or use the Software.
+          </p>
+        </section>
+
+        <!-- Section 1 -->
+        <section class="border-t border-border-theme/50 pt-8">
+          <h2 class="text-lg font-semibold text-text-primary">1. Grant of License</h2>
+          <p class="mt-3">
+            Subject to your compliance with this Agreement, Licensor grants you a personal, non-exclusive, non-transferable, non-sublicensable, revocable, limited license to download, install, and execute the Software on compatible devices under your control for personal, educational, or internal business purposes.
+          </p>
+          <p class="mt-3">
+            Uncached is provided as proprietary, closed-source software. All rights not expressly granted to you under this Agreement are strictly reserved by Licensor.
+          </p>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="border-t border-border-theme/50 pt-8">
+          <h2 class="text-lg font-semibold text-text-primary">2. Restrictions</h2>
+          <p class="mt-3">You agree NOT to, and you shall NOT permit any third party to:</p>
+          <ul class="mt-3 list-disc space-y-2 pl-6">
+            <li><strong>Decompile or Reverse Engineer:</strong> Reverse engineer, decompile, disassemble, derive source code, decrypt, modify, or create derivative works of the Software or any portion thereof.</li>
+            <li><strong>Bypass Protection:</strong> Circumvent, disable, tamper with, or defeat any technical protection measures, license key validation, hardware binding checks (HWID), or cryptographic verification mechanisms in the Software.</li>
+            <li><strong>Redistribute or Resell:</strong> Rent, lease, lend, sell, sublicense, assign, distribute, publish, host, or transfer the Software or any license keys to any third party without explicit written permission from Licensor.</li>
+            <li><strong>Remove Proprietary Notices:</strong> Remove, alter, or obscure any copyright, trademark, logo, or proprietary notices included in or with the Software.</li>
+          </ul>
+        </section>
+
+        <!-- Section 3 (Disclaimer) -->
+        <section class="rounded-2xl border border-coral-500/20 bg-coral-500/5 p-6 sm:p-8">
+          <h2 class="text-lg font-semibold text-coral-600 dark:text-coral-400">
+            3. Local Filesystem Cleanup &amp; Disclaimer of Liability
+          </h2>
+          <p class="mt-3 text-text-primary">
+            Uncached is a local developer tool designed to identify and remove disposable build artifacts, package manager caches, and temporary directories (such as <code>node_modules</code>, <code>target/</code>, <code>.gradle/</code>, <code>.next/</code>, <code>.turbo/</code>, <code>__pycache__</code>).
+          </p>
+          <div class="mt-4 space-y-3">
+            <p>
+              <strong>User Responsibility:</strong> You acknowledge and agree that all scan operations, target selections, and cleanup executions are performed strictly at your sole direction and risk. You are solely responsible for verifying the paths and directories selected for cleanup prior to confirming deletion.
+            </p>
+            <p class="font-medium text-text-primary">
+              <strong>NO LIABILITY FOR DATA LOSS:</strong> TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL LICENSOR (NATAN VIANA DE SOUSA) BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, PUNITIVE, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING LOSS OF DATA, LOSS OF SOURCE CODE, SYSTEM DOWNTIME, RECOVERY COSTS, OR FINANCIAL LOSS) ARISING OUT OF OR IN CONNECTION WITH THE USE OF OR INABILITY TO USE THE SOFTWARE.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="border-t border-border-theme/50 pt-8">
+          <h2 class="text-lg font-semibold text-text-primary">4. Disclaimer of Warranty (&ldquo;AS IS&rdquo;)</h2>
+          <p class="mt-3">
+            THE SOFTWARE IS PROVIDED TO YOU <strong>&ldquo;AS IS&rdquo;</strong> AND <strong>&ldquo;AS AVAILABLE&rdquo;</strong>, WITH ALL FAULTS AND DEFECTS, AND WITHOUT WARRANTY OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW, LICENSOR EXPRESSLY DISCLAIMS ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.
+          </p>
+        </section>
+
+        <!-- Section 5 -->
+        <section class="border-t border-border-theme/50 pt-8">
+          <h2 class="text-lg font-semibold text-text-primary">5. Privacy &amp; Data Protection</h2>
+          <p class="mt-3">
+            Uncached operates under a strict <strong>100% Local &amp; Private</strong> architecture:
+          </p>
+          <ul class="mt-3 list-disc space-y-2 pl-6">
+            <li>All filesystem scanning, size calculations, and file cleanup commands execute exclusively on your local machine.</li>
+            <li>The Software contains zero telemetry, zero analytics tracking, and zero cloud uploads.</li>
+            <li>Your directory structure, file names, and personal workspace data are never transmitted to Licensor or third parties.</li>
+          </ul>
+        </section>
+
+        <!-- Section 6 -->
+        <section class="border-t border-border-theme/50 pt-8">
+          <h2 class="text-lg font-semibold text-text-primary">6. Pro Features &amp; License Key Activation</h2>
+          <p class="mt-3">
+            If you purchase a license for Uncached Pro features, a paid license key grants access to premium capabilities as specified at purchase. License keys may be cryptographically bound to hardware fingerprints (HWID) to prevent key leakage. Licensor reserves the right to revoke or deactivate license keys in cases of fraudulent purchases, chargebacks, or violation of this EULA.
+          </p>
+        </section>
+
+        <!-- Section 7 -->
+        <section class="border-t border-border-theme/50 pt-8">
+          <h2 class="text-lg font-semibold text-text-primary">7. Intellectual Property</h2>
+          <p class="mt-3">
+            The Software, visual design, UI layouts, brand assets, source code, documentation, graphics, and logos are protected by copyright laws and international treaties. All title, ownership, and intellectual property rights remain solely with <strong>Natan Viana de Sousa</strong>.
+          </p>
+        </section>
+
+        <!-- Section 8 & 9 -->
+        <section class="border-t border-border-theme/50 pt-8">
+          <h2 class="text-lg font-semibold text-text-primary">8. Governing Law &amp; Contact</h2>
+          <p class="mt-3">
+            This Agreement shall be governed by and construed in accordance with the laws of the <strong>Federative Republic of Brazil</strong>.
+          </p>
+          <p class="mt-3">
+            For questions regarding this EULA, please visit <a href="https://uncached.app" class="text-accent underline hover:opacity-80">uncached.app</a>.
+          </p>
+        </section>
+      </div>
+
+      <!-- Footer back button -->
+      <footer class="mt-12 border-t border-border-theme pt-8">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 font-mono text-xs text-text-secondary transition-colors hover:text-accent"
+        >
+          &larr; Back to homepage
+        </a>
+      </footer>
+    </article>
+  </main>
+</Layout>
