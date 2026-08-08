@@ -26,7 +26,7 @@ Built with **Rust** for native filesystem scanning speed and **React + Tauri v2*
 
 ## ✨ Features
 
-- 🚀 **Blazing Fast Scanning**: Powered by a multi-threaded Rust backend capable of traversing tens of thousands of directories in seconds.
+- 🚀 **Fast Scanning**: Powered by a multi-threaded Rust backend capable of traversing tens of thousands of directories in seconds.
 - 🛡️ **Safety-First Deletion**: Strict path validation prevents accidental deletion of source code or arbitrary system files.
 - ♻️ **Recycle Bin Integration**: Moves items safely to system Recycle Bin by default instead of permanent deletion.
 - 🎨 **Cozy & Minimalist UI**: Crafted with a calm dark aesthetic, grain noise textures, Geist Mono typography, and micro-interactions.
