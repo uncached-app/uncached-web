@@ -22,7 +22,10 @@ export default function ProgressPipeline({ step }: ProgressPipelineProps) {
             }`}
           >
             <span
-              className={`grid size-3.5 sm:size-4 place-items-center rounded-full text-[9px] sm:text-[10px] font-mono ${
+              /* `leading-none` matters: an arbitrary text size sets no
+                 line-height, so this would inherit the nav's 16px/20px line
+                 box inside a 14px/16px circle and the digit would sit low. */
+              className={`grid size-3.5 sm:size-4 place-items-center rounded-full text-[9px] sm:text-[10px] font-mono leading-none ${
                 isCurrent
                   ? 'bg-accent font-bold text-accent-text'
                   : isPassed
