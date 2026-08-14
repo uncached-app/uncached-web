@@ -23,8 +23,11 @@
   --text-primary: #182018;
   --text-secondary: #3d5c2d;
   --text-muted: #637064;
-  --accent: #567a3d;
-  --accent-hover: #3d5c2d;
+  /* Same ramp the desktop app uses: light sage is darkened to hold contrast,
+     but stays at hue 110 and above 40% saturation so it reads as green rather
+     than as cold grey. Accent doubles as a fill under white text. */
+  --accent: #3f7d33;
+  --accent-hover: #35722c;
   --accent-text: #ffffff;
   --destructive: #d9534f;
   --destructive-hover: #c9302c;
