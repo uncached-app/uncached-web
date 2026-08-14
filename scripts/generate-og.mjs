@@ -26,7 +26,7 @@ const SURFACE = '#ffffff';
 const BORDER = '#dfe7dc';
 const TEXT_PRIMARY = '#182018';
 const TEXT_MUTED = '#637064';
-const ACCENT = '#567a3d';
+const ACCENT = '#6a994e';
 
 const TAGLINE = 'Reclaim disk from build artifacts.';
 // Deliberately shorter than the hero copy: a social card is read at thumbnail
