@@ -1,3 +1,13 @@
+packages:
+  - .
+
+# `allowBuilds` needs pnpm >= 10.26; `onlyBuiltDependencies` is the pre-10.26
+# spelling the Cloudflare build image (pnpm 10.11.x) still reads. Both are kept
+# so a single lockfile installs under either major.
 allowBuilds:
   esbuild: true
   workerd: true
+
+onlyBuiltDependencies:
+  - esbuild
+  - workerd
