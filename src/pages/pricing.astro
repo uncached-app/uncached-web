@@ -1,0 +1,228 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { plans } from '../data/plans';
+
+const title = 'Pricing — Uncached';
+const description =
+  'Uncached Pro is $19.90 a year or $89.90 once. One machine per licence, activation works offline, and the free scanner keeps every safety rail.';
+const keywords =
+  'uncached pricing, disk cleanup tool price, build cache cleaner license, developer disk cleaner lifetime license';
+
+const canonicalURL = 'https://uncached.app/pricing';
+
+const schemaJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'Uncached Pro',
+  description,
+  url: canonicalURL,
+  brand: { '@type': 'Brand', name: 'Uncached' },
+  offers: plans
+    .filter((plan) => plan.id !== 'free')
+    .map((plan) => ({
+      '@type': 'Offer',
+      name: plan.name,
+      price: plan.price.replace('$', ''),
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: canonicalURL,
+    })),
+});
+---
+
+<Layout title={title} description={description} keywords={keywords}>
+  <script type="application/ld+json" slot="head" set:html={schemaJson} />
+
+  <main class="flex-1">
+    <section class="mx-auto max-w-4xl px-6 pb-10 pt-14 text-center sm:pt-20">
+      <span class="font-mono text-xs uppercase tracking-widest text-text-muted">Pricing</span>
+      <h1
+        class="mx-auto mt-3 max-w-3xl text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-balance sm:text-5xl sm:leading-[1.05]"
+      >
+        Pay for the deep cleaners. Never for the safety.
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
+        Confidence scores, verdicts, and the revalidation that runs before anything is deleted are
+        free in every tier, always. Pro adds the cleaners that reach further into your disk.
+      </p>
+    </section>
+
+    <section class="mx-auto w-full max-w-6xl px-6 pb-4">
+      <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        {
+          plans.map((plan) => (
+            <div
+              class:list={[
+                'flex flex-col rounded-2xl border bg-surface p-6 transition-colors sm:p-7',
+                plan.featured ? 'border-accent shadow-sm' : 'border-border-theme',
+              ]}
+            >
+              <div class="flex items-center justify-between gap-3">
+                <h2 class="text-base font-semibold text-text-primary">{plan.name}</h2>
+                {plan.featured && (
+                  <span class="rounded-md border border-border-theme bg-raised px-2.5 py-0.5 font-mono text-[11px] text-accent">
+                    Best value
+                  </span>
+                )}
+              </div>
+
+              <div class="mt-4 flex items-baseline gap-2">
+                <span class="text-4xl font-semibold tracking-[-0.04em] text-text-primary">
+                  {plan.price}
+                </span>
+                <span class="font-mono text-xs text-text-muted">{plan.cadence}</span>
+              </div>
+
+              <p class="mt-3 text-sm leading-6 text-text-secondary">{plan.summary}</p>
+
+              <ul class="mt-6 flex flex-1 flex-col gap-3">
+                {plan.features.map((feature) => (
+                  <li class="flex items-start gap-2.5 text-xs leading-relaxed text-text-muted">
+                    <span aria-hidden="true" class="mt-1.5 size-1.5 shrink-0 rounded-full bg-accent" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              {plan.id === 'free' ? (
+                <a
+                  href="/download"
+                  class="mt-7 inline-flex justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent"
+                >
+                  {plan.cta}
+                </a>
+              ) : plan.priceId ? (
+                <button
+                  type="button"
+                  data-paddle-price={plan.priceId}
+                  class:list={[
+                    'mt-7 inline-flex justify-center rounded-xl px-5 py-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60',
+                    plan.featured
+                      ? 'bg-accent text-accent-text hover:bg-accent-hover'
+                      : 'border border-border-theme bg-raised text-text-primary hover:border-accent hover:text-accent',
+                  ]}
+                >
+                  {plan.cta}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  title="Checkout is not configured yet."
+                  class="mt-7 inline-flex cursor-not-allowed justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-muted opacity-60"
+                >
+                  Coming soon
+                </button>
+              )}
+            </div>
+          ))
+        }
+      </div>
+
+      <p
+        id="checkout-error"
+        role="status"
+        aria-live="polite"
+        class="mt-5 hidden text-center text-xs text-destructive"
+      >
+      </p>
+    </section>
+
+    <section class="mx-auto w-full max-w-6xl px-6 py-14">
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div class="rounded-2xl border border-border-theme bg-surface p-6">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-accent">One machine</span>
+          <p class="mt-3 text-xs leading-relaxed text-text-muted">
+            Every licence covers one machine, annual and lifetime alike. The number travels inside
+            the signed payload, so the condition lives in the purchase rather than only on this page.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-border-theme bg-surface p-6">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-accent">Offline activation</span>
+          <p class="mt-3 text-xs leading-relaxed text-text-muted">
+            Your key is emailed after checkout. Paste it into Settings → Licence. The app verifies it
+            against a key compiled into the binary and never contacts a server.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-border-theme bg-surface p-6">
+          <span class="font-mono text-[11px] uppercase tracking-wider text-accent">Tax handled</span>
+          <p class="mt-3 text-xs leading-relaxed text-text-muted">
+            Paddle is the merchant of record. VAT and sales tax are calculated at checkout and the
+            invoice comes from them, in your local currency where supported.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  import { initializePaddle, type Paddle } from '@paddle/paddle-js';
+
+  const CLIENT_TOKEN = import.meta.env.PUBLIC_PADDLE_CLIENT_TOKEN ?? '';
+
+  /** Paddle mints sandbox tokens with a `test_` prefix and live ones with `live_`. */
+  function environmentForToken(token: string): 'sandbox' | 'production' {
+    return token.startsWith('test_') ? 'sandbox' : 'production';
+  }
+
+  function currentTheme(): 'light' | 'dark' {
+    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  }
+
+  function showError(message: string): void {
+    const banner = document.getElementById('checkout-error');
+    if (!banner) return;
+    banner.textContent = message;
+    banner.classList.remove('hidden');
+  }
+
+  const buttons = Array.from(
+    document.querySelectorAll<HTMLButtonElement>('[data-paddle-price]'),
+  );
+  if (buttons.length > 0) {
+    if (!CLIENT_TOKEN) {
+      buttons.forEach((button) => {
+        button.disabled = true;
+      });
+      showError('Checkout is not configured yet.');
+    } else {
+      let paddle: Paddle | undefined;
+
+      initializePaddle({
+        token: CLIENT_TOKEN,
+        environment: environmentForToken(CLIENT_TOKEN),
+        checkout: { settings: { displayMode: 'overlay', theme: currentTheme() } },
+      })
+        .then((instance) => {
+          paddle = instance;
+        })
+        .catch(() => {
+          buttons.forEach((button) => {
+            button.disabled = true;
+          });
+          showError('Checkout could not load. Refresh the page or try again shortly.');
+        });
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const priceId = button.dataset.paddlePrice;
+          if (!paddle || !priceId) {
+            showError('Checkout is still loading. Try again in a moment.');
+            return;
+          }
+
+          // Read at click time: the visitor may have flipped the toggle since load.
+          paddle.Checkout.open({
+            items: [{ priceId, quantity: 1 }],
+            settings: {
+              displayMode: 'overlay',
+              theme: currentTheme(),
+              successUrl: `${window.location.origin}/thank-you`,
+            },
+          });
+        });
+      });
+    }
+  }
+</script>

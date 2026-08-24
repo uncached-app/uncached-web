@@ -1,0 +1,226 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Download Uncached — free for macOS, Windows, and Linux';
+const description =
+  'Download the latest Uncached build for macOS, Windows, or Linux. The free tier scans your workspaces and moves regenerable build artifacts to Trash.';
+const keywords =
+  'download uncached, disk cleanup app download, node_modules cleaner download, macos build cache cleaner, windows developer disk cleaner';
+---
+
+<Layout title={title} description={description} keywords={keywords}>
+  <main class="flex-1">
+    <section class="mx-auto max-w-4xl px-6 pb-8 pt-14 text-center sm:pt-20">
+      <span class="font-mono text-xs uppercase tracking-widest text-text-muted">Download</span>
+      <h1
+        class="mx-auto mt-3 max-w-3xl text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-balance sm:text-5xl sm:leading-[1.05]"
+      >
+        Get your disk back.
+      </h1>
+      <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
+        Free, no account, no upload. Uncached scans locally and moves what you select to Trash or
+        Recycle Bin.
+      </p>
+      <p class="mt-4 font-mono text-xs text-text-muted">
+        Version <span id="latest-version">checking…</span>
+      </p>
+    </section>
+
+    <section class="mx-auto w-full max-w-3xl px-6 pb-6">
+      <div id="primary-download" class="hidden">
+        <a
+          id="primary-download-link"
+          href="#"
+          class="flex flex-col items-center rounded-2xl border border-accent bg-surface p-7 text-center transition-colors hover:bg-raised"
+        >
+          <span class="text-lg font-semibold text-text-primary" id="primary-download-label"></span>
+          <span class="mt-1 font-mono text-[11px] text-text-muted" id="primary-download-detail"></span>
+          <span
+            class="mt-5 inline-flex rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text"
+          >
+            Download for free
+          </span>
+        </a>
+      </div>
+
+      <p id="download-status" role="status" aria-live="polite" class="text-center text-sm text-text-muted">
+        Looking up the latest release…
+      </p>
+    </section>
+
+    <section class="mx-auto w-full max-w-3xl px-6 pb-14">
+      <h2 class="mb-4 font-mono text-[11px] uppercase tracking-wider text-text-muted">
+        All platforms
+      </h2>
+      <ul id="download-list" class="flex flex-col gap-3"></ul>
+
+      <noscript>
+        <p class="mt-4 rounded-xl border border-border-theme bg-surface p-4 text-xs text-text-muted">
+          The download links are read from the release manifest at
+          <a href="https://cdn.uncached.app/latest.json" class="text-accent hover:underline"
+            >cdn.uncached.app/latest.json</a
+          >, which needs JavaScript to render here. The manifest itself is plain JSON and lists every
+          platform.
+        </p>
+      </noscript>
+    </section>
+
+    <section class="mx-auto w-full max-w-3xl px-6 pb-16">
+      <div class="rounded-2xl border border-border-theme bg-surface p-6">
+        <h2 class="text-sm font-semibold text-text-primary">On first launch</h2>
+        <p class="mt-3 text-xs leading-relaxed text-text-muted">
+          Uncached is not yet signed with an Apple or Windows certificate, so the operating system
+          will say the developer is unidentified. On macOS, right-click the app and choose
+          <strong class="font-semibold text-text-secondary">Open</strong>. On Windows, choose
+          <strong class="font-semibold text-text-secondary">More info → Run anyway</strong>. Updates
+          from inside the app are separately signed and are refused unless they match the key
+          compiled into your copy.
+        </p>
+      </div>
+
+      <div class="mt-3 rounded-2xl border border-border-theme bg-surface p-6">
+        <h2 class="text-sm font-semibold text-text-primary">What is in this release</h2>
+        <p
+          id="release-notes"
+          class="mt-3 whitespace-pre-line text-xs leading-relaxed text-text-muted"
+        >
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  interface Download {
+    key: string;
+    os: string;
+    label: string;
+    detail: string;
+    url: string;
+    filename: string;
+  }
+
+  interface Manifest {
+    version: string;
+    notes: string;
+    pubDate: string | null;
+    downloads: Download[];
+  }
+
+  /**
+   * `navigator.userAgentData.platform` is not in every browser, so the classic
+   * string is the fallback. Apple ships an identical UA for both Mac
+   * architectures, so Silicon is inferred from the WebGL renderer instead.
+   */
+  function detectPlatformKey(): string | null {
+    const ua = navigator.userAgent;
+    if (/Win/i.test(ua)) return 'windows-x86_64';
+    if (/Linux/i.test(ua) && !/Android/i.test(ua)) return 'linux-x86_64';
+    if (!/Mac/i.test(ua)) return null;
+    return isAppleSilicon() ? 'darwin-aarch64' : 'darwin-x86_64';
+  }
+
+  function isAppleSilicon(): boolean {
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl');
+      if (!gl) return false;
+      const info = gl.getExtension('WEBGL_debug_renderer_info');
+      if (!info) return false;
+      const renderer = String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL));
+      return /Apple\s*(M\d|GPU)/i.test(renderer);
+    } catch {
+      return false;
+    }
+  }
+
+  function renderPrimary(match: Download): void {
+    const container = document.getElementById('primary-download');
+    const link = document.getElementById('primary-download-link') as HTMLAnchorElement | null;
+    const label = document.getElementById('primary-download-label');
+    const detail = document.getElementById('primary-download-detail');
+    if (!container || !link || !label || !detail) return;
+
+    link.href = match.url;
+    label.textContent = `Uncached for ${match.label}`;
+    detail.textContent = `${match.detail} · ${match.filename}`;
+    container.classList.remove('hidden');
+  }
+
+  function renderList(downloads: Download[]): void {
+    const list = document.getElementById('download-list');
+    if (!list) return;
+
+    list.replaceChildren(
+      ...downloads.map((download) => {
+        const item = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = download.url;
+        link.className =
+          'flex items-center justify-between gap-4 rounded-xl border border-border-theme bg-surface px-5 py-4 transition-colors hover:border-accent';
+
+        const text = document.createElement('span');
+        text.className = 'flex flex-col';
+
+        const name = document.createElement('span');
+        name.className = 'text-sm font-semibold text-text-primary';
+        name.textContent = `${download.label} — ${download.detail}`;
+
+        const file = document.createElement('span');
+        file.className = 'mt-0.5 font-mono text-[11px] text-text-muted';
+        file.textContent = download.filename;
+
+        text.append(name, file);
+
+        const action = document.createElement('span');
+        action.className = 'shrink-0 font-mono text-[11px] text-accent';
+        action.textContent = 'Download';
+
+        link.append(text, action);
+        item.append(link);
+        return item;
+      }),
+    );
+  }
+
+  function showStatus(message: string): void {
+    const status = document.getElementById('download-status');
+    if (status) status.textContent = message;
+  }
+
+  async function loadManifest(): Promise<void> {
+    let manifest: Manifest;
+    try {
+      const response = await fetch('/api/latest');
+      if (!response.ok) throw new Error(String(response.status));
+      manifest = await response.json();
+    } catch {
+      showStatus('Could not reach the release manifest. Refresh, or try again shortly.');
+      return;
+    }
+
+    const version = document.getElementById('latest-version');
+    if (version) version.textContent = manifest.version;
+
+    const notes = document.getElementById('release-notes');
+    if (notes) notes.textContent = manifest.notes || 'No release notes were published.';
+
+    if (manifest.downloads.length === 0) {
+      showStatus('No builds are published for download yet.');
+      return;
+    }
+
+    renderList(manifest.downloads);
+
+    const key = detectPlatformKey();
+    const match = manifest.downloads.find((download) => download.key === key);
+    if (match) {
+      renderPrimary(match);
+      showStatus('');
+    } else {
+      showStatus('Pick the build for your machine.');
+    }
+  }
+
+  loadManifest();
+</script>

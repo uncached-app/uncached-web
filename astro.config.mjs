@@ -12,8 +12,10 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      // API endpoints are server-rendered and must never appear in the sitemap.
-      filter: (page) => !page.includes('/api/'),
+      // API endpoints are server-rendered; /pay and /thank-you are noindex, and a
+      // noindex URL in the sitemap is a crawl instruction contradicting itself.
+      filter: (page) =>
+        !page.includes('/api/') && !page.includes('/pay') && !page.includes('/thank-you'),
       changefreq: 'weekly',
       priority: 1.0,
       lastmod: new Date(),

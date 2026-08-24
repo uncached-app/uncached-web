@@ -18,15 +18,15 @@ export const faqs: Faq[] = [
   },
   {
     question: "Is Uncached available to download?",
-    answer: "Uncached is currently opening private early access. Join the list to hear when the free tier is ready for testers."
+    answer: "Yes. The free tier is a public download for macOS, Windows, and Linux, and needs no account. Pro adds the deeper cleaners at $19.90 a year or $89.90 once."
   },
   {
     question: "Does Uncached upload workspace data?",
     answer: "The scanner is designed to run locally. It works with workspace paths and target data on your machine rather than requiring project contents in the cloud."
   },
   {
-    question: "What is included in early access?",
-    answer: "Early access focuses on the free manual scan and cleanup flow. Future capabilities such as deeper cleaners, scheduled cleanup, and history will be announced separately when they are implemented."
+    question: "What is included in the free tier?",
+    answer: "The manual scan and cleanup flow, with measured sizes shown before anything moves and Trash as the default. The safety checks that run before a deletion are free in every tier and always will be."
   },
   {
     question: "Who is Uncached for?",

@@ -18,6 +18,7 @@
     "@astrojs/node": "^11.1.0",
     "@astrojs/react": "^6.0.2",
     "@astrojs/sitemap": "^3.7.3",
+    "@paddle/paddle-js": "^1.6.4",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.2.0",
     "canvas-confetti": "^1.9.4",

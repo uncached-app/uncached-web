@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import WhitelistForm from '../components/WhitelistForm';
 import ScanSimulator from '../components/scan-simulator/ScanSimulator';
 import FeaturesSection from '../components/FeaturesSection.astro';
 import FaqSection from '../components/FaqSection.astro';
@@ -55,10 +54,27 @@ const schemaJson = JSON.stringify({
       "offers": [
         {
           "@type": "Offer",
-          "name": "Early access",
+          "name": "Free",
           "price": "0",
           "priceCurrency": "USD",
-          "availability": "https://schema.org/PreOrder"
+          "availability": "https://schema.org/InStock",
+          "url": "https://uncached.app/download"
+        },
+        {
+          "@type": "Offer",
+          "name": "Pro Annual",
+          "price": "19.90",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://uncached.app/pricing"
+        },
+        {
+          "@type": "Offer",
+          "name": "Pro Lifetime",
+          "price": "89.90",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "url": "https://uncached.app/pricing"
         }
       ],
       "author": { "@id": "https://uncached.app/#author" }
@@ -90,8 +106,19 @@ const schemaJson = JSON.stringify({
       <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
         Uncached finds regenerable targets in your developer workspaces, shows exactly what can leave, and moves selected targets to Trash or Recycle Bin.
       </p>
-      <div class="mx-auto mt-8 max-w-xl">
-        <WhitelistForm client:load />
+      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <a
+          href="/download"
+          class="inline-flex w-full justify-center rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text transition-colors hover:bg-accent-hover sm:w-auto"
+        >
+          Download free
+        </a>
+        <a
+          href="/pricing"
+          class="inline-flex w-full justify-center rounded-xl border border-border-theme bg-surface px-6 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent sm:w-auto"
+        >
+          See pricing
+        </a>
       </div>
       <div class="mt-5 flex justify-center gap-5 font-mono text-[11px] text-text-muted">
         <span>Local-first</span>

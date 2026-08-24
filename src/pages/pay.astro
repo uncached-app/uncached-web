@@ -1,0 +1,107 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Complete your payment — Uncached';
+const description = 'Finish paying for your Uncached order.';
+---
+
+<Layout title={title} description={description} noindex>
+  <main class="flex-1">
+    <section class="mx-auto max-w-3xl px-6 pb-20 pt-12 sm:pt-16">
+      <div class="text-center">
+        <span class="font-mono text-xs uppercase tracking-widest text-text-muted">Checkout</span>
+        <h1 class="mt-3 text-3xl font-semibold tracking-[-0.03em] text-text-primary sm:text-4xl">
+          Complete your payment
+        </h1>
+        <p class="mx-auto mt-4 max-w-xl text-sm leading-6 text-text-secondary">
+          Paddle is the merchant of record for this order. Your licence key is emailed as soon as the
+          payment settles.
+        </p>
+      </div>
+
+      <div class="mt-10 rounded-2xl border border-border-theme bg-surface p-4 sm:p-6">
+        <div class="checkout-container"></div>
+
+        <p id="pay-status" role="status" aria-live="polite" class="py-10 text-center text-sm text-text-muted">
+          Loading checkout…
+        </p>
+      </div>
+
+      <p class="mt-6 text-center text-xs text-text-muted">
+        Nothing to pay here?
+        <a href="/pricing" class="text-accent hover:underline">See pricing</a>
+        or
+        <a href="/download" class="text-accent hover:underline">download the free tier</a>.
+      </p>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  import { initializePaddle, type Paddle } from '@paddle/paddle-js';
+
+  const CLIENT_TOKEN = import.meta.env.PUBLIC_PADDLE_CLIENT_TOKEN ?? '';
+
+  /** Paddle appends the transaction to its default payment link under this name. */
+  const TRANSACTION_PARAM = '_ptxn';
+
+  function environmentForToken(token: string): 'sandbox' | 'production' {
+    return token.startsWith('test_') ? 'sandbox' : 'production';
+  }
+
+  function currentTheme(): 'light' | 'dark' {
+    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  }
+
+  function showStatus(message: string): void {
+    const status = document.getElementById('pay-status');
+    if (status) status.textContent = message;
+  }
+
+  function hideStatus(): void {
+    document.getElementById('pay-status')?.classList.add('hidden');
+  }
+
+  async function openTransaction(): Promise<void> {
+    const transactionId = new URLSearchParams(window.location.search).get(TRANSACTION_PARAM);
+    if (!transactionId) {
+      showStatus('This link carries no transaction to pay.');
+      return;
+    }
+
+    if (!CLIENT_TOKEN) {
+      showStatus('Checkout is not configured yet.');
+      return;
+    }
+
+    let paddle: Paddle | undefined;
+    try {
+      paddle = await initializePaddle({
+        token: CLIENT_TOKEN,
+        environment: environmentForToken(CLIENT_TOKEN),
+        checkout: {
+          settings: {
+            displayMode: 'inline',
+            theme: currentTheme(),
+            frameTarget: 'checkout-container',
+            frameInitialHeight: '450',
+            frameStyle: 'width: 100%; min-width: 312px; background-color: transparent; border: none;',
+          },
+        },
+      });
+    } catch {
+      showStatus('Checkout could not load. Refresh the page or try again shortly.');
+      return;
+    }
+
+    if (!paddle) {
+      showStatus('Checkout could not load. Refresh the page or try again shortly.');
+      return;
+    }
+
+    hideStatus();
+    paddle.Checkout.open({ transactionId });
+  }
+
+  openTransaction();
+</script>

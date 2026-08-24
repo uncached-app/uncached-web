@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = 'Thank you — Uncached';
+const description = 'Your Uncached Pro licence key is on its way by email.';
+---
+
+<Layout title={title} description={description} noindex>
+  <main class="flex-1">
+    <section class="mx-auto max-w-2xl px-6 pb-20 pt-20 text-center sm:pt-28">
+      <span class="font-mono text-xs uppercase tracking-widest text-accent">Payment received</span>
+      <h1
+        class="mt-3 text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-4xl"
+      >
+        Your licence key is on its way.
+      </h1>
+      <p class="mx-auto mt-5 max-w-xl text-pretty text-base leading-7 text-text-secondary">
+        It arrives by email within a couple of minutes. Open Uncached, go to
+        <strong class="font-semibold text-text-primary">Settings → Licence</strong>, and paste the key.
+        Activation works offline — the app never contacts a server to verify it.
+      </p>
+
+      <div class="mt-9 rounded-2xl border border-border-theme bg-surface p-6 text-left">
+        <h2 class="text-sm font-semibold text-text-primary">If the email has not arrived</h2>
+        <ul class="mt-3 flex flex-col gap-2.5 text-xs leading-relaxed text-text-muted">
+          <li>Check spam and promotions — the key is a long block of text, which some filters dislike.</li>
+          <li>The receipt from Paddle and the licence email are separate. The receipt arrives first.</li>
+          <li>
+            Still nothing after 15 minutes? Reply to your Paddle receipt or write to
+            <a href="mailto:hello@uncached.app" class="text-accent hover:underline">hello@uncached.app</a>
+            with the order number.
+          </li>
+        </ul>
+      </div>
+
+      <a
+        href="/"
+        class="mt-9 inline-flex justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent"
+      >
+        Back to Uncached
+      </a>
+    </section>
+  </main>
+</Layout>

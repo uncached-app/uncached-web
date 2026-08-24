@@ -47,8 +47,8 @@ Step 2 covers two overlapping backend phases, and the interface names both. Whil
 - Product term for a detected disposable directory is **target**, not "finding" or "item". The scanned root is the **workspace** — it names the first step, the primary action (`Scan workspace`), and the back affordance. Keep one term per concept across UI, docs, and metadata.
 - Preserve existing Uncached logo and icon assets in `public/brand`.
 - Preserve desktop-first Tauri architecture.
-- Current distribution state: private early access; no public download or checkout.
-- Current commercial state: free tier only. Pro capabilities and pricing are planned, not available.
+- Current distribution state: public download from cdn.uncached.app; Paddle checkout on /pricing.
+- Current commercial state: free tier plus Pro at $19.90/year or $89.90 once. Pro capabilities ship progressively.
 
 ## Evidence on Hand
 
