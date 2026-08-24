@@ -15,7 +15,10 @@ export default defineConfig({
       // API endpoints are server-rendered; /pay and /thank-you are noindex, and a
       // noindex URL in the sitemap is a crawl instruction contradicting itself.
       filter: (page) =>
-        !page.includes('/api/') && !page.includes('/pay') && !page.includes('/thank-you'),
+        !page.includes('/api/') &&
+        !page.includes('/pay') &&
+        !page.includes('/thank-you') &&
+        (process.env.PUBLIC_DOWNLOADS_ENABLED === 'true' || !page.includes('/download')),
       changefreq: 'weekly',
       priority: 1.0,
       lastmod: new Date(),

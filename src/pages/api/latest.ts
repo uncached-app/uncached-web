@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { downloadsEnabled } from '../../data/flags';
 
 export const prerender = false;
 
@@ -106,6 +107,8 @@ async function resolveDownload(
 }
 
 export const GET: APIRoute = async () => {
+  if (!downloadsEnabled) return new Response('not found', { status: 404 });
+
   let manifest: unknown;
   try {
     const response = await fetch(MANIFEST_URL, { signal: AbortSignal.timeout(CDN_TIMEOUT_MS) });

@@ -5,6 +5,7 @@ import FeaturesSection from '../components/FeaturesSection.astro';
 import FaqSection from '../components/FaqSection.astro';
 import ProTeaser from '../components/ProTeaser.astro';
 import { faqs } from '../data/faqs';
+import { downloadsEnabled } from '../data/flags';
 
 const siteTitle = "Uncached — Reclaim gigabytes from the code you ship";
 const siteDescription = "Uncached finds regenerable build artifacts in developer workspaces and safely moves selected targets to your system Trash or Recycle Bin.";
@@ -107,17 +108,26 @@ const schemaJson = JSON.stringify({
         Uncached finds regenerable targets in your developer workspaces, shows exactly what can leave, and moves selected targets to Trash or Recycle Bin.
       </p>
       <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        {downloadsEnabled ? (
+          <a
+            href="/download"
+            class="inline-flex w-full justify-center rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text transition-colors hover:bg-accent-hover sm:w-auto"
+          >
+            Download free
+          </a>
+        ) : (
+          <a
+            href="/pricing"
+            class="inline-flex w-full justify-center rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text transition-colors hover:bg-accent-hover sm:w-auto"
+          >
+            See pricing
+          </a>
+        )}
         <a
-          href="/download"
-          class="inline-flex w-full justify-center rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text transition-colors hover:bg-accent-hover sm:w-auto"
-        >
-          Download free
-        </a>
-        <a
-          href="/pricing"
+          href={downloadsEnabled ? '/pricing' : '/download'}
           class="inline-flex w-full justify-center rounded-xl border border-border-theme bg-surface px-6 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent sm:w-auto"
         >
-          See pricing
+          {downloadsEnabled ? 'See pricing' : 'When does it open?'}
         </a>
       </div>
       <div class="mt-5 flex justify-center gap-5 font-mono text-[11px] text-text-muted">

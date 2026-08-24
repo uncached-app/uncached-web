@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { plans } from '../data/plans';
+import { checkoutEnabled, downloadsEnabled } from '../data/flags';
 
 const title = 'Pricing — Uncached';
 const description =
@@ -84,14 +85,22 @@ const schemaJson = JSON.stringify({
                 ))}
               </ul>
 
-              {plan.id === 'free' ? (
+              {plan.id === 'free' && !downloadsEnabled ? (
+                <button
+                  type="button"
+                  disabled
+                  class="mt-7 inline-flex cursor-not-allowed justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-muted opacity-60"
+                >
+                  Available soon
+                </button>
+              ) : plan.id === 'free' ? (
                 <a
                   href="/download"
                   class="mt-7 inline-flex justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent"
                 >
                   {plan.cta}
                 </a>
-              ) : plan.priceId ? (
+              ) : checkoutEnabled && plan.priceId ? (
                 <button
                   type="button"
                   data-paddle-price={plan.priceId}

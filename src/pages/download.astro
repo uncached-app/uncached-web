@@ -1,92 +1,109 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { downloadsEnabled } from '../data/flags';
 
-const title = 'Download Uncached — free for macOS, Windows, and Linux';
-const description =
-  'Download the latest Uncached build for macOS, Windows, or Linux. The free tier scans your workspaces and moves regenerable build artifacts to Trash.';
+const title = downloadsEnabled
+  ? 'Download Uncached — free for macOS, Windows, and Linux'
+  : 'Download Uncached — opening soon';
+const description = downloadsEnabled
+  ? 'Download the latest Uncached build for macOS, Windows, or Linux. The free tier scans your workspaces and moves regenerable build artifacts to Trash.'
+  : 'Uncached downloads open once the builds are signed. The free tier scans locally and moves regenerable build artifacts to Trash.';
 const keywords =
   'download uncached, disk cleanup app download, node_modules cleaner download, macos build cache cleaner, windows developer disk cleaner';
 ---
 
-<Layout title={title} description={description} keywords={keywords}>
+<Layout title={title} description={description} keywords={keywords} noindex={!downloadsEnabled}>
   <main class="flex-1">
     <section class="mx-auto max-w-4xl px-6 pb-8 pt-14 text-center sm:pt-20">
       <span class="font-mono text-xs uppercase tracking-widest text-text-muted">Download</span>
       <h1
         class="mx-auto mt-3 max-w-3xl text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-balance sm:text-5xl sm:leading-[1.05]"
       >
-        Get your disk back.
+        {downloadsEnabled ? 'Get your disk back.' : 'Almost ready.'}
       </h1>
       <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
-        Free, no account, no upload. Uncached scans locally and moves what you select to Trash or
-        Recycle Bin.
+        {
+          downloadsEnabled
+            ? 'Free, no account, no upload. Uncached scans locally and moves what you select to Trash or Recycle Bin.'
+            : 'The builds are finished and the update path works. Downloads open once they are signed with an Apple Developer certificate, so the first launch does not accuse the app of being damaged.'
+        }
       </p>
-      <p class="mt-4 font-mono text-xs text-text-muted">
-        Version <span id="latest-version">checking…</span>
-      </p>
+      {
+        downloadsEnabled && (
+          <p class="mt-4 font-mono text-xs text-text-muted">
+            Version <span id="latest-version">checking…</span>
+          </p>
+        )
+      }
     </section>
 
-    <section class="mx-auto w-full max-w-3xl px-6 pb-6">
-      <div id="primary-download" class="hidden">
-        <a
-          id="primary-download-link"
-          href="#"
-          class="flex flex-col items-center rounded-2xl border border-accent bg-surface p-7 text-center transition-colors hover:bg-raised"
-        >
-          <span class="text-lg font-semibold text-text-primary" id="primary-download-label"></span>
-          <span class="mt-1 font-mono text-[11px] text-text-muted" id="primary-download-detail"></span>
-          <span
-            class="mt-5 inline-flex rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text"
-          >
-            Download for free
-          </span>
-        </a>
-      </div>
+    {
+      downloadsEnabled ? (
+        <>
+          <section class="mx-auto w-full max-w-3xl px-6 pb-6">
+            <div id="primary-download" class="hidden">
+              <a
+                id="primary-download-link"
+                href="#"
+                class="flex flex-col items-center rounded-2xl border border-accent bg-surface p-7 text-center transition-colors hover:bg-raised"
+              >
+                <span class="text-lg font-semibold text-text-primary" id="primary-download-label" />
+                <span class="mt-1 font-mono text-[11px] text-text-muted" id="primary-download-detail" />
+                <span class="mt-5 inline-flex rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text">
+                  Download for free
+                </span>
+              </a>
+            </div>
 
-      <p id="download-status" role="status" aria-live="polite" class="text-center text-sm text-text-muted">
-        Looking up the latest release…
-      </p>
-    </section>
+            <p
+              id="download-status"
+              role="status"
+              aria-live="polite"
+              class="text-center text-sm text-text-muted"
+            >
+              Looking up the latest release…
+            </p>
+          </section>
 
-    <section class="mx-auto w-full max-w-3xl px-6 pb-14">
-      <h2 class="mb-4 font-mono text-[11px] uppercase tracking-wider text-text-muted">
-        All platforms
-      </h2>
-      <ul id="download-list" class="flex flex-col gap-3"></ul>
+          <section class="mx-auto w-full max-w-3xl px-6 pb-14">
+            <h2 class="mb-4 font-mono text-[11px] uppercase tracking-wider text-text-muted">
+              All platforms
+            </h2>
+            <ul id="download-list" class="flex flex-col gap-3" />
+          </section>
 
-      <noscript>
-        <p class="mt-4 rounded-xl border border-border-theme bg-surface p-4 text-xs text-text-muted">
-          The download links are read from the release manifest at
-          <a href="https://cdn.uncached.app/latest.json" class="text-accent hover:underline"
-            >cdn.uncached.app/latest.json</a
-          >, which needs JavaScript to render here. The manifest itself is plain JSON and lists every
-          platform.
-        </p>
-      </noscript>
-    </section>
+          <section class="mx-auto w-full max-w-3xl px-6 pb-16">
+            <div class="rounded-2xl border border-border-theme bg-surface p-6">
+              <h2 class="text-sm font-semibold text-text-primary">On first launch</h2>
+              <p class="mt-3 text-xs leading-relaxed text-text-muted">
+                Updates from inside the app are signed separately and are refused unless they match
+                the key compiled into your copy.
+              </p>
+            </div>
 
-    <section class="mx-auto w-full max-w-3xl px-6 pb-16">
-      <div class="rounded-2xl border border-border-theme bg-surface p-6">
-        <h2 class="text-sm font-semibold text-text-primary">On first launch</h2>
-        <p class="mt-3 text-xs leading-relaxed text-text-muted">
-          Uncached is not yet signed with an Apple or Windows certificate, so the operating system
-          will say the developer is unidentified. On macOS, right-click the app and choose
-          <strong class="font-semibold text-text-secondary">Open</strong>. On Windows, choose
-          <strong class="font-semibold text-text-secondary">More info → Run anyway</strong>. Updates
-          from inside the app are separately signed and are refused unless they match the key
-          compiled into your copy.
-        </p>
-      </div>
-
-      <div class="mt-3 rounded-2xl border border-border-theme bg-surface p-6">
-        <h2 class="text-sm font-semibold text-text-primary">What is in this release</h2>
-        <p
-          id="release-notes"
-          class="mt-3 whitespace-pre-line text-xs leading-relaxed text-text-muted"
-        >
-        </p>
-      </div>
-    </section>
+            <div class="mt-3 rounded-2xl border border-border-theme bg-surface p-6">
+              <h2 class="text-sm font-semibold text-text-primary">What is in this release</h2>
+              <p id="release-notes" class="mt-3 whitespace-pre-line text-xs leading-relaxed text-text-muted" />
+            </div>
+          </section>
+        </>
+      ) : (
+        <section class="mx-auto w-full max-w-2xl px-6 pb-20">
+          <div class="rounded-2xl border border-border-theme bg-surface p-7 text-center">
+            <p class="text-sm leading-6 text-text-secondary">
+              Nothing is being held back for a paywall — the free tier is what opens first, and it
+              opens for every platform at once.
+            </p>
+            <a
+              href="/pricing"
+              class="mt-6 inline-flex justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent"
+            >
+              See what Pro adds
+            </a>
+          </div>
+        </section>
+      )
+    }
   </main>
 </Layout>
 
@@ -222,5 +239,6 @@ const keywords =
     }
   }
 
-  loadManifest();
+  // Absent when the gate is closed: the page renders no download UI at all.
+  if (document.getElementById('download-status')) loadManifest();
 </script>
