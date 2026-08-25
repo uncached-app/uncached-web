@@ -13,6 +13,12 @@
   --color-accent-text: var(--accent-text);
   --color-destructive: var(--destructive);
   --color-destructive-hover: var(--destructive-hover);
+  --color-pro: var(--pro);
+  --color-pro-hover: var(--pro-hover);
+  --color-pro-text: var(--pro-text);
+  --color-pro-surface: var(--pro-surface);
+  --color-pro-muted: var(--pro-muted);
+  --color-pro-border: var(--pro-border);
 }
 
 :root, [data-theme="light"] {
@@ -28,6 +34,14 @@
   --accent-text: #ffffff;
   --destructive: #bc4749;
   --destructive-hover: #9e393b;
+  /* Pro carries the app's own hue. Green means confirmed and safe in both
+     places, so it cannot also mean paid. */
+  --pro: #4a2d6f;
+  --pro-hover: #5e3d85;
+  --pro-text: #ffffff;
+  --pro-surface: #efe7fa;
+  --pro-border: #d8c9ee;
+  --pro-muted: #5b4a78;
   color-scheme: light;
 }
 
@@ -44,6 +58,12 @@
   --accent-text: #101311;
   --destructive: #ffc2b5;
   --destructive-hover: #ffad9e;
+  --pro: #d9b8ff;
+  --pro-hover: #eee0ff;
+  --pro-text: #211b2b;
+  --pro-surface: #211b2b;
+  --pro-border: #38304a;
+  --pro-muted: #b9a8d0;
   color-scheme: dark;
 }
 

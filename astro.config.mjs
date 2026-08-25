@@ -8,6 +8,9 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://uncached.app',
   output: 'static',
+  // The shipped desktop app links Pro here, and a released binary cannot be
+  // edited: the route has to exist for as long as those copies do.
+  redirects: { '/pro': '/pricing' },
   adapter: cloudflare(),
   integrations: [
     react(),

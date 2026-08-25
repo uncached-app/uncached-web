@@ -1,11 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { plans } from '../data/plans';
+import { freeFeatures, proFeatures, proPrices } from '../data/plans';
 import { checkoutEnabled, downloadsEnabled } from '../data/flags';
 
 const title = 'Pricing — Uncached';
 const description =
-  'Uncached Pro is $19.90 a year or $89.90 once. One machine per licence, activation works offline, and the free scanner keeps every safety rail.';
+  'Uncached Free reclaims every artifact of every project, with no limits. Pro adds the map, the automation, and the history for $19.90 a year or $89.90 once.';
 const keywords =
   'uncached pricing, disk cleanup tool price, build cache cleaner license, developer disk cleaner lifetime license';
 
@@ -18,16 +18,14 @@ const schemaJson = JSON.stringify({
   description,
   url: canonicalURL,
   brand: { '@type': 'Brand', name: 'Uncached' },
-  offers: plans
-    .filter((plan) => plan.id !== 'free')
-    .map((plan) => ({
-      '@type': 'Offer',
-      name: plan.name,
-      price: plan.price.replace('$', ''),
-      priceCurrency: 'USD',
-      availability: 'https://schema.org/InStock',
-      url: canonicalURL,
-    })),
+  offers: proPrices.map((price) => ({
+    '@type': 'Offer',
+    name: price.id === 'annual' ? 'Pro Annual' : 'Pro Lifetime',
+    price: price.price.replace('$', ''),
+    priceCurrency: 'USD',
+    availability: checkoutEnabled ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
+    url: canonicalURL,
+  })),
 });
 ---
 
@@ -35,132 +33,177 @@ const schemaJson = JSON.stringify({
   <script type="application/ld+json" slot="head" set:html={schemaJson} />
 
   <main class="flex-1">
-    <section class="mx-auto max-w-4xl px-6 pb-10 pt-14 text-center sm:pt-20">
-      <span class="font-mono text-xs uppercase tracking-widest text-text-muted">Pricing</span>
+    <section class="mx-auto max-w-3xl px-6 pb-12 pt-16 sm:pt-24">
       <h1
-        class="mx-auto mt-3 max-w-3xl text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-balance sm:text-5xl sm:leading-[1.05]"
+        class="max-w-2xl text-pretty text-[2rem] font-semibold leading-[1.08] tracking-tighter text-text-primary sm:text-[2.75rem]"
       >
-        Pay for the deep cleaners. Never for the safety.
+        Free already reclaims everything.
       </h1>
-      <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
-        Confidence scores, verdicts, and the revalidation that runs before anything is deleted are
-        free in every tier, always. Pro adds the cleaners that reach further into your disk.
+      <p class="mt-5 max-w-xl text-pretty text-base leading-7 text-text-secondary">
+        No locked scanners, no smaller safety checks, no project it refuses to look at. Pro adds the
+        readings and the automation on top — it never takes anything away from Free.
       </p>
     </section>
 
-    <section class="mx-auto w-full max-w-6xl px-6 pb-4">
-      <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+    <section class="mx-auto w-full max-w-3xl px-6">
+      <div class="rounded-2xl border border-border-theme bg-surface p-6 sm:p-7">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h2 class="text-sm font-semibold text-text-primary">Uncached Free</h2>
+          <span
+            class="rounded-md border border-border-theme bg-raised px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-text-muted"
+          >
+            $0 · forever
+          </span>
+        </div>
+
+        <ul class="mt-5 flex flex-col gap-2.5">
+          {
+            freeFeatures.map((feature) => (
+              <li class="flex items-start gap-2.5 text-xs leading-relaxed text-text-muted">
+                <span aria-hidden="true" class="mt-1.5 size-1 shrink-0 rounded-full bg-accent" />
+                <span>{feature}</span>
+              </li>
+            ))
+          }
+        </ul>
+
         {
-          plans.map((plan) => (
-            <div
-              class:list={[
-                'flex flex-col rounded-2xl border bg-surface p-6 transition-colors sm:p-7',
-                plan.featured ? 'border-accent shadow-sm' : 'border-border-theme',
-              ]}
+          downloadsEnabled ? (
+            <a
+              href="/download"
+              class="mt-6 inline-flex h-10 items-center justify-center rounded-xl border border-border-theme bg-raised px-5 text-xs font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent"
             >
-              <div class="flex items-center justify-between gap-3">
-                <h2 class="text-base font-semibold text-text-primary">{plan.name}</h2>
-                {plan.featured && (
-                  <span class="rounded-md border border-border-theme bg-raised px-2.5 py-0.5 font-mono text-[11px] text-accent">
-                    Best value
+              Download free
+            </a>
+          ) : (
+            <button
+              type="button"
+              disabled
+              class="mt-6 inline-flex h-10 cursor-not-allowed items-center justify-center rounded-xl border border-border-theme bg-raised px-5 text-xs font-semibold text-text-muted opacity-60"
+            >
+              Available soon
+            </button>
+          )
+        }
+      </div>
+    </section>
+
+    <section class="mx-auto w-full max-w-3xl px-6 pt-4">
+      <div class="rounded-2xl border border-pro-border bg-pro-surface p-6 sm:p-7">
+        <div class="flex items-center gap-2.5">
+          <span
+            aria-hidden="true"
+            class="grid size-8 shrink-0 place-items-center rounded-xl border border-pro-border bg-canvas text-pro"
+          >
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9.94 14.06 3 21l6.94-6.94Zm0 0L12 9l3 3-4.94 2.06ZM12 9l4.5-4.5L21 9l-6 3-3-3Z"></path>
+              <path d="M18 14v4M16 16h4M5 4v3M3.5 5.5h3"></path>
+            </svg>
+          </span>
+          <div>
+            <h2 class="text-sm font-semibold text-text-primary">Uncached Pro</h2>
+            <p class="text-xs text-pro-muted">One machine per licence, activated offline.</p>
+          </div>
+        </div>
+
+        <ul class="mt-5 flex flex-col gap-2.5">
+          {
+            proFeatures.map((feature) => (
+              <li class="flex items-start gap-2.5 text-xs leading-relaxed text-pro-muted">
+                <span aria-hidden="true" class="mt-1.5 size-1 shrink-0 rounded-full bg-pro" />
+                <span>{feature}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-7 grid grid-cols-1 border-t border-pro-border sm:grid-cols-2">
+          {
+            proPrices.map((option, index) => (
+              <div
+                class:list={[
+                  'flex flex-col pt-5',
+                  index === 0 ? 'sm:pr-7' : 'mt-5 border-t border-pro-border sm:mt-0 sm:border-l sm:border-t-0 sm:pl-7',
+                ]}
+              >
+                <div class="flex items-baseline gap-1.5">
+                  <span class="text-2xl font-semibold tracking-[-0.04em] text-text-primary">
+                    {option.price}
                   </span>
+                  <span class="text-xs text-pro-muted">{option.cadence}</span>
+                </div>
+                <p class="mt-2 flex-1 text-xs leading-relaxed text-pro-muted">{option.note}</p>
+
+                {checkoutEnabled && option.priceId ? (
+                  <button
+                    type="button"
+                    data-paddle-price={option.priceId}
+                    class:list={[
+                      'mt-4 inline-flex h-10 items-center justify-center rounded-xl px-5 text-xs font-semibold transition-colors',
+                      option.featured
+                        ? 'bg-pro text-pro-text hover:bg-pro-hover'
+                        : 'border border-pro-border bg-canvas text-pro hover:border-pro',
+                    ]}
+                  >
+                    {option.cta}
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    class="mt-4 inline-flex h-10 cursor-not-allowed items-center justify-center rounded-xl border border-pro-border bg-canvas px-5 text-xs font-semibold text-pro-muted opacity-60"
+                  >
+                    Coming soon
+                  </button>
                 )}
               </div>
-
-              <div class="mt-4 flex items-baseline gap-2">
-                <span class="text-4xl font-semibold tracking-[-0.04em] text-text-primary">
-                  {plan.price}
-                </span>
-                <span class="font-mono text-xs text-text-muted">{plan.cadence}</span>
-              </div>
-
-              <p class="mt-3 text-sm leading-6 text-text-secondary">{plan.summary}</p>
-
-              <ul class="mt-6 flex flex-1 flex-col gap-3">
-                {plan.features.map((feature) => (
-                  <li class="flex items-start gap-2.5 text-xs leading-relaxed text-text-muted">
-                    <span aria-hidden="true" class="mt-1.5 size-1.5 shrink-0 rounded-full bg-accent" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              {plan.id === 'free' && !downloadsEnabled ? (
-                <button
-                  type="button"
-                  disabled
-                  class="mt-7 inline-flex cursor-not-allowed justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-muted opacity-60"
-                >
-                  Available soon
-                </button>
-              ) : plan.id === 'free' ? (
-                <a
-                  href="/download"
-                  class="mt-7 inline-flex justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent"
-                >
-                  {plan.cta}
-                </a>
-              ) : checkoutEnabled && plan.priceId ? (
-                <button
-                  type="button"
-                  data-paddle-price={plan.priceId}
-                  class:list={[
-                    'mt-7 inline-flex justify-center rounded-xl px-5 py-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60',
-                    plan.featured
-                      ? 'bg-accent text-accent-text hover:bg-accent-hover'
-                      : 'border border-border-theme bg-raised text-text-primary hover:border-accent hover:text-accent',
-                  ]}
-                >
-                  {plan.cta}
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  disabled
-                  title="Checkout is not configured yet."
-                  class="mt-7 inline-flex cursor-not-allowed justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-muted opacity-60"
-                >
-                  Coming soon
-                </button>
-              )}
-            </div>
-          ))
-        }
+            ))
+          }
+        </div>
       </div>
 
       <p
         id="checkout-error"
         role="status"
         aria-live="polite"
-        class="mt-5 hidden text-center text-xs text-destructive"
+        class="mt-4 hidden text-center text-xs text-destructive"
       >
       </p>
     </section>
 
-    <section class="mx-auto w-full max-w-6xl px-6 py-14">
-      <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
-        <div class="rounded-2xl border border-border-theme bg-surface p-6">
-          <span class="font-mono text-[11px] uppercase tracking-wider text-accent">One machine</span>
-          <p class="mt-3 text-xs leading-relaxed text-text-muted">
-            Every licence covers one machine, annual and lifetime alike. The number travels inside
-            the signed payload, so the condition lives in the purchase rather than only on this page.
-          </p>
+    <section class="mx-auto w-full max-w-3xl px-6 py-16">
+      <dl class="flex flex-col gap-6 border-t border-border-theme pt-8">
+        <div class="sm:flex sm:gap-8">
+          <dt class="w-40 shrink-0 text-xs font-semibold text-text-primary">One machine</dt>
+          <dd class="mt-1.5 text-xs leading-relaxed text-text-muted sm:mt-0">
+            The seat count travels inside the signed payload, so the condition lives in the purchase
+            rather than only on this page. A second machine is a second licence.
+          </dd>
         </div>
-        <div class="rounded-2xl border border-border-theme bg-surface p-6">
-          <span class="font-mono text-[11px] uppercase tracking-wider text-accent">Offline activation</span>
-          <p class="mt-3 text-xs leading-relaxed text-text-muted">
-            Your key is emailed after checkout. Paste it into Settings → Licence. The app verifies it
-            against a key compiled into the binary and never contacts a server.
-          </p>
+        <div class="sm:flex sm:gap-8">
+          <dt class="w-40 shrink-0 text-xs font-semibold text-text-primary">Activated offline</dt>
+          <dd class="mt-1.5 text-xs leading-relaxed text-text-muted sm:mt-0">
+            The key arrives by email. Paste it into Settings → Licence, where the app checks it
+            against a key compiled into the binary. Nothing is sent anywhere to verify it.
+          </dd>
         </div>
-        <div class="rounded-2xl border border-border-theme bg-surface p-6">
-          <span class="font-mono text-[11px] uppercase tracking-wider text-accent">Tax handled</span>
-          <p class="mt-3 text-xs leading-relaxed text-text-muted">
-            Paddle is the merchant of record. VAT and sales tax are calculated at checkout and the
-            invoice comes from them, in your local currency where supported.
-          </p>
+        <div class="sm:flex sm:gap-8">
+          <dt class="w-40 shrink-0 text-xs font-semibold text-text-primary">Tax handled</dt>
+          <dd class="mt-1.5 text-xs leading-relaxed text-text-muted sm:mt-0">
+            Paddle is the merchant of record. VAT and sales tax are worked out at checkout and the
+            invoice comes from them, in your local currency where it is supported.
+          </dd>
         </div>
-      </div>
+      </dl>
     </section>
   </main>
 </Layout>
@@ -186,9 +229,8 @@ const schemaJson = JSON.stringify({
     banner.classList.remove('hidden');
   }
 
-  const buttons = Array.from(
-    document.querySelectorAll<HTMLButtonElement>('[data-paddle-price]'),
-  );
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-paddle-price]'));
+
   if (buttons.length > 0) {
     if (!CLIENT_TOKEN) {
       buttons.forEach((button) => {
