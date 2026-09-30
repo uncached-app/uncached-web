@@ -26,7 +26,11 @@ export const faqs: Faq[] = [
   },
   {
     question: "What is free and what is Pro?",
-    answer: "Free reclaims every artifact of every project, with every safety check and verdict, and no limits. Pro adds scheduled maintenance, duplicate insights, lifetime history and Dock icons, at $4.99 a year or $14.99 once."
+    answer: "Free reclaims every artifact of every project, with every safety check and verdict, and no limits, and flags the secrets Git would publish. Pro adds maintenance that runs on its own, including when the disk runs low, the unused toolchain versions one by one, duplicate insights, history and Dock icons, at $4.99 a year or $14.99 once."
+  },
+  {
+    question: "Does Uncached read my secrets?",
+    answer: "It reads the file names Git lists and, only for a .pem, .key, .npmrc or .pypirc, the first few kilobytes, to tell a private key or a literal token from a harmless file. Nothing is stored or sent anywhere: the project page shows the file and the command that stops Git from publishing it."
   },
   {
     question: "Which systems does it run on?",

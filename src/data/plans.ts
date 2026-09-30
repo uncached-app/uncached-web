@@ -4,11 +4,13 @@
  * is a promise the product does not keep.
  */
 export const proFeatures = [
-  'Scheduled maintenance, in the background',
+  'Scheduled maintenance, and a run when the disk runs low',
+  'Projects you keep out of maintenance',
   'Machine-wide caches: package managers, AI tools, editors',
+  'Every unused toolchain version, with its uninstall command',
   'Up to 12 workspace folders at once',
   'Every duplicate dependency, with the projects holding it',
-  'Reclaim history and insights',
+  'Reclaim history, insights and a weekly summary',
   'Six app icons for the Dock',
 ] as const;
 
@@ -17,7 +19,10 @@ export const freeFeatures = [
   'Confidence readings and verdicts before anything moves',
   'The check that runs again at removal, not only at scan',
   'Trash by default',
+  'Secrets Git would publish: env files, keys, credentials',
   'Unused dependencies, with the command that removes them',
+  'Repository size, and when git gc would shrink it',
+  'Free and reclaimable space in the menu bar',
 ] as const;
 
 export interface ProPrice {
