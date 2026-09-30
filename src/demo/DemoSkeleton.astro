@@ -1,0 +1,39 @@
+---
+const rows = [0, 1, 2, 3, 4];
+---
+
+<div class="container flex h-screen flex-col justify-center gap-6 py-8" aria-hidden="true">
+  <div class="min-h-[8.5rem] max-w-2xl">
+    <div class="h-8 w-80 animate-pulse rounded-lg bg-raised"></div>
+    <div class="mt-4 h-4 w-full animate-pulse rounded bg-raised"></div>
+    <div class="mt-2.5 h-4 w-3/4 animate-pulse rounded bg-raised"></div>
+  </div>
+  <div class="flex h-[min(760px,calc(100vh-16rem))] flex-col overflow-hidden rounded-[14px] bg-forest-950 ring-1 ring-border-theme">
+    <div class="flex h-12 shrink-0 items-center gap-2 border-b border-forest-800 px-4">
+      <span class="size-3 rounded-full bg-forest-800"></span>
+      <span class="size-3 rounded-full bg-forest-800"></span>
+      <span class="size-3 rounded-full bg-forest-800"></span>
+    </div>
+    <div class="flex min-h-0 flex-1 gap-8 px-8 py-5">
+      <div class="hidden w-56 shrink-0 flex-col gap-3 xl:flex">
+        <div class="h-3 w-16 animate-pulse rounded bg-forest-850"></div>
+        <div class="h-9 animate-pulse rounded-xl bg-forest-850"></div>
+        <div class="mt-4 h-3 w-16 animate-pulse rounded bg-forest-850"></div>
+        {rows.map(() => <div class="h-6 animate-pulse rounded-lg bg-forest-850"></div>)}
+      </div>
+      <div class="flex min-w-0 flex-1 flex-col gap-4">
+        <div class="h-8 w-48 animate-pulse rounded-lg bg-forest-850"></div>
+        <div class="flex gap-2">
+          <div class="h-8 w-32 animate-pulse rounded-lg bg-forest-850"></div>
+          <div class="h-8 w-36 animate-pulse rounded-lg bg-forest-850"></div>
+          <div class="h-8 w-24 animate-pulse rounded-lg bg-forest-850"></div>
+        </div>
+        <div class="h-10 animate-pulse rounded-xl bg-forest-850"></div>
+        {rows.map(() => <div class="h-14 animate-pulse rounded-xl bg-forest-900 ring-1 ring-forest-800"></div>)}
+      </div>
+    </div>
+    <div class="flex h-12 shrink-0 items-center justify-center gap-3 border-t border-forest-800">
+      {rows.map(() => <div class="h-6 w-24 animate-pulse rounded-lg bg-forest-850"></div>)}
+    </div>
+  </div>
+</div>

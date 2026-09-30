@@ -1,0 +1,150 @@
+/* Tokens and window classes the desktop components in src/demo/app expect,
+   copied from uncached-desktop/src/index.css. The values are resolved on
+   :root, so the demo follows the site's `data-theme` on <html>. */
+
+@theme {
+  --color-forest-950: var(--theme-forest-950);
+  --color-forest-900: var(--theme-forest-900);
+  --color-forest-850: var(--theme-forest-850);
+  --color-forest-800: var(--theme-forest-800);
+  --color-sage-300: var(--theme-sage-300);
+  --color-sage-400: var(--theme-sage-400);
+  --color-sage-500: var(--theme-sage-500);
+  --color-mist-100: var(--theme-mist-100);
+  --color-mist-300: var(--theme-mist-300);
+  --color-mist-500: var(--theme-mist-500);
+  --color-coral-300: var(--theme-coral-300);
+  --color-coral-surface: var(--theme-coral-surface);
+  --color-pro-100: var(--theme-pro-100);
+  --color-pro-200: var(--theme-pro-200);
+  --color-pro-surface: var(--theme-pro-surface);
+  --color-confidence-high: var(--theme-confidence-high);
+  --color-confidence-high-surface: var(--theme-confidence-high-surface);
+  --color-confidence-medium: var(--theme-confidence-medium);
+  --color-confidence-medium-surface: var(--theme-confidence-medium-surface);
+  --color-confidence-review: var(--theme-confidence-review);
+  --color-confidence-review-surface: var(--theme-confidence-review-surface);
+}
+
+@custom-variant root-filled (:where(:root[data-window-fill="true"]) &);
+
+:root {
+  --theme-forest-950: #f6f4ea;
+  --theme-forest-900: #fffdf5;
+  --theme-forest-850: #ece8d6;
+  --theme-forest-800: #d8d1b8;
+  --theme-sage-300: #765800;
+  --theme-sage-400: #7a5b00;
+  --theme-sage-500: #b08a00;
+  --theme-mist-100: #1b1b15;
+  --theme-mist-300: #3d3a2c;
+  --theme-mist-500: #65614b;
+  --theme-coral-300: #ad3d1a;
+  --theme-coral-surface: #f8e2d8;
+  --theme-pro-100: #4a2d6f;
+  --theme-pro-200: #5e3d85;
+  --theme-pro-surface: #efe7fa;
+  --theme-confidence-high: #46620f;
+  --theme-confidence-high-surface: #e6eed2;
+  --theme-confidence-medium: #7f4c00;
+  --theme-confidence-medium-surface: #f8ead0;
+  --theme-confidence-review: #1d5a80;
+  --theme-confidence-review-surface: #deedf6;
+}
+
+[data-theme="dark"] {
+  --theme-forest-950: #14140f;
+  --theme-forest-900: #1b1b15;
+  --theme-forest-850: #24241c;
+  --theme-forest-800: #38382b;
+  --theme-sage-300: #ffd83d;
+  --theme-sage-400: #f5c518;
+  --theme-sage-500: #d9a800;
+  --theme-mist-100: #f5f3e8;
+  --theme-mist-300: #ccc8b4;
+  --theme-mist-500: #99957f;
+  --theme-coral-300: #ff7a4d;
+  --theme-coral-surface: #33201a;
+  --theme-pro-100: #dcc7ff;
+  --theme-pro-200: #b28cff;
+  --theme-pro-surface: #221c33;
+  --theme-confidence-high: #a8d84a;
+  --theme-confidence-high-surface: #212a12;
+  --theme-confidence-medium: #ffb03a;
+  --theme-confidence-medium-surface: #2e2312;
+  --theme-confidence-review: #6ec6ff;
+  --theme-confidence-review-surface: #12222e;
+}
+
+.app-demo {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+.app-demo button {
+  transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease,
+    color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+.app-demo button:active:not(:disabled) {
+  transform: translateY(1px) scale(0.99);
+}
+
+.app-demo ::-webkit-scrollbar-track {
+  background: var(--color-forest-950);
+}
+
+.app-demo ::-webkit-scrollbar-thumb {
+  background: var(--color-forest-800);
+}
+
+@keyframes ui-rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.985);
+  }
+}
+
+@keyframes ui-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.ui-rise {
+  animation: ui-rise 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ui-fade {
+  animation: ui-fade 140ms ease-out;
+}
+
+.traffic-light {
+  display: grid;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+}
+
+.traffic-light-close {
+  background: #ff5f57;
+}
+
+.traffic-light-minimize {
+  background: #febc2e;
+}
+
+.traffic-light-maximize {
+  background: #28c840;
+}
+
+/* Headings the app focuses for screen readers carry tabindex="-1". A browser
+   counts that scripted focus as :focus-visible when nothing was clicked, so the
+   keyboard ring would show after every scroll-driven step. */
+.app-demo [tabindex="-1"]:focus-visible {
+  box-shadow: none;
+}

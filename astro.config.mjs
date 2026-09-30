@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
@@ -28,5 +29,16 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    resolve: {
+      // The homepage demo renders desktop components copied into src/demo/app.
+      alias: [
+        { find: '@tauri-apps/api/core', replacement: fileURLToPath(new URL('./src/demo/stubs/core.ts', import.meta.url)) },
+        { find: '@tauri-apps/api/event', replacement: fileURLToPath(new URL('./src/demo/stubs/event.ts', import.meta.url)) },
+        { find: '@tauri-apps/plugin-dialog', replacement: fileURLToPath(new URL('./src/demo/stubs/plugin-dialog.ts', import.meta.url)) },
+        { find: '@tauri-apps/plugin-opener', replacement: fileURLToPath(new URL('./src/demo/stubs/plugin-opener.ts', import.meta.url)) },
+        // Exact match only: the stub itself imports the library from its dist path.
+        { find: /^canvas-confetti$/, replacement: fileURLToPath(new URL('./src/demo/stubs/confetti.ts', import.meta.url)) },
+      ],
+    },
   },
 });
