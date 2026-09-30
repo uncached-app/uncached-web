@@ -1,15 +1,10 @@
 ---
+import Logo from './Logo.astro';
 ---
 
-<header class="relative w-full max-w-6xl mx-auto px-6 py-6 min-h-[5rem] flex items-center justify-between">
+<header class="container relative py-6 min-h-[5rem] flex items-center justify-between">
   <a href="/" class="flex items-center gap-3 group h-8">
-    <!-- Uncached Logo swapping dynamically per theme -->
-    <img 
-      id="uncached-header-logo"
-      src="/brand/UNCACHED-LOGO-DARK-NOBG.svg" 
-      alt="Uncached Logo" 
-      class="h-5 w-auto object-contain transition-opacity group-hover:opacity-90"
-    />
+    <Logo class="h-5 w-auto text-text-primary transition-opacity group-hover:opacity-90" />
   </a>
 
   <!-- Desktop Navigation Links -->
@@ -26,7 +21,7 @@
       href="/download"
       class="hidden md:inline-flex px-4 py-2 text-xs font-semibold text-accent-text bg-accent hover:bg-accent-hover rounded-xl transition-colors shadow-sm"
     >
-      Download
+      Get Uncached
     </a>
 
     <!-- Mobile Animated Hamburger Toggle Button -->
@@ -70,7 +65,7 @@
       href="/download"
       class="mobile-nav-link mt-2 px-5 py-2.5 text-sm font-semibold text-accent-text bg-accent hover:bg-accent-hover rounded-xl transition-colors shadow-sm inline-block"
     >
-      Download
+      Get Uncached
     </a>
   </nav>
 </aside>
@@ -125,25 +120,6 @@
 </style>
 
 <script>
-  function updateHeaderLogo(theme: string) {
-    const logoImg = document.getElementById('uncached-header-logo') as HTMLImageElement | null;
-    if (logoImg) {
-      logoImg.src = theme === 'light' 
-        ? '/brand/UNCACHED-LOGO-DARK-NOBG.svg' 
-        : '/brand/UNCACHED-LOGO-LIGHT-NOBG.svg';
-    }
-  }
-
-  // Initial Sync
-  const initialTheme = document.documentElement.dataset.theme || 'light';
-  updateHeaderLogo(initialTheme);
-
-  // Listen to Theme Toggle events
-  window.addEventListener('theme-change', (e: Event) => {
-    const customEvent = e as CustomEvent<{ theme: string }>;
-    updateHeaderLogo(customEvent.detail.theme);
-  });
-
   // Mobile Sidebar & Animated Hamburger Controller
   const toggleBtn = document.getElementById('mobile-menu-toggle');
   const sidebar = document.getElementById('mobile-sidebar');

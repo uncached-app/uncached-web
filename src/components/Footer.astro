@@ -1,13 +1,12 @@
+---
+import Logo from './Logo.astro';
+---
+
 <footer class="w-full border-t border-border-theme py-10 bg-canvas transition-colors">
-  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+  <div class="container flex flex-col md:flex-row items-center justify-between gap-6">
     {/* Brand Logo & Copyright */}
     <div class="flex items-center gap-3">
-      <img 
-        id="uncached-footer-logo"
-        src="/brand/UNCACHED-LOGO-DARK-NOBG.svg" 
-        alt="Uncached Logo" 
-        class="h-5 w-auto object-contain opacity-90 transition-opacity"
-      />
+      <Logo intro={false} class="h-5 w-auto text-text-primary opacity-90" />
       <span class="text-xs text-text-muted font-mono">© 2026</span>
     </div>
 
@@ -26,24 +25,3 @@
     </div>
   </div>
 </footer>
-
-<script>
-  function updateFooterLogo(theme: string) {
-    const logoImg = document.getElementById('uncached-footer-logo') as HTMLImageElement | null;
-    if (logoImg) {
-      logoImg.src = theme === 'light' 
-        ? '/brand/UNCACHED-LOGO-DARK-NOBG.svg' 
-        : '/brand/UNCACHED-LOGO-LIGHT-NOBG.svg';
-    }
-  }
-
-  // Initial Sync
-  const initialTheme = document.documentElement.dataset.theme || 'light';
-  updateFooterLogo(initialTheme);
-
-  // Listen to Theme Toggle events
-  window.addEventListener('theme-change', (e: Event) => {
-    const customEvent = e as CustomEvent<{ theme: string }>;
-    updateFooterLogo(customEvent.detail.theme);
-  });
-</script>
