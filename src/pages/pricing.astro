@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { freeFeatures, proFeatures, proPrices } from '../data/plans';
-import { checkoutEnabled, downloadsEnabled } from '../data/flags';
+import { checkoutEnabled } from '../data/flags';
 
 const title = 'Pricing — Uncached';
 const description =
@@ -67,24 +67,12 @@ const schemaJson = JSON.stringify({
           }
         </ul>
 
-        {
-          downloadsEnabled ? (
-            <a
-              href="/download"
-              class="mt-6 inline-flex h-10 items-center justify-center rounded-xl border border-border-theme bg-raised px-5 text-xs font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent"
-            >
-              Download free
-            </a>
-          ) : (
-            <button
-              type="button"
-              disabled
-              class="mt-6 inline-flex h-10 cursor-not-allowed items-center justify-center rounded-xl border border-border-theme bg-raised px-5 text-xs font-semibold text-text-muted opacity-60"
-            >
-              Available soon
-            </button>
-          )
-        }
+        <a
+          href="/download"
+          class="mt-6 inline-flex h-10 items-center justify-center rounded-xl border border-border-theme bg-raised px-5 text-xs font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent"
+        >
+          Download free
+        </a>
       </div>
     </section>
 

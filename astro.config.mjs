@@ -20,8 +20,7 @@ export default defineConfig({
       filter: (page) =>
         !page.includes('/api/') &&
         !page.includes('/pay') &&
-        !page.includes('/thank-you') &&
-        (process.env.PUBLIC_DOWNLOADS_ENABLED === 'true' || !page.includes('/download')),
+        !page.includes('/thank-you'),
       changefreq: 'weekly',
       priority: 1.0,
       lastmod: new Date(),

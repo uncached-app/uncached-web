@@ -1,108 +1,89 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { downloadsEnabled } from '../data/flags';
+import WindowsWaitlist from '../components/WindowsWaitlist';
 
-const title = downloadsEnabled
-  ? 'Download Uncached — free for macOS and Linux'
-  : 'Download Uncached — opening soon';
-const description = downloadsEnabled
-  ? 'Download the latest Uncached build for macOS or Linux. The free tier scans your workspaces and moves regenerable build artifacts to Trash.'
-  : 'Uncached downloads open once the builds are signed. The free tier scans locally and moves regenerable build artifacts to Trash.';
+const title = 'Download Uncached — free for macOS and Linux';
+const description =
+  'Download the latest Uncached build for macOS or Linux. The free tier scans your workspaces and moves regenerable build artifacts to Trash.';
 const keywords =
   'download uncached, disk cleanup app download, node_modules cleaner download, macos build cache cleaner, linux developer disk cleaner';
 ---
 
-<Layout title={title} description={description} keywords={keywords} noindex={!downloadsEnabled}>
+<Layout title={title} description={description} keywords={keywords} >
   <main class="flex-1">
     <section class="mx-auto max-w-3xl px-6 pb-8 pt-16 text-center sm:pt-24">
       <h1
         class="mx-auto max-w-3xl text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-balance sm:text-5xl sm:leading-[1.05]"
       >
-        {downloadsEnabled ? 'Get your disk back.' : 'Almost ready.'}
+        Get your disk back.
       </h1>
       <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
-        {
-          downloadsEnabled
-            ? 'Free, no account, no upload. Uncached scans locally and moves what you select to Trash or Recycle Bin.'
-            : 'The builds are finished and the update path works. Downloads open once they are signed with an Apple Developer certificate, so the first launch does not accuse the app of being damaged.'
-        }
+        Free, no account, no upload. Uncached scans locally and moves what you select to Trash.
       </p>
-      {
-        downloadsEnabled && (
-          <p class="mt-4 font-mono text-xs text-text-muted">
-            Version <span id="latest-version">checking…</span>
-          </p>
-        )
-      }
+      <p class="mt-4 font-mono text-xs text-text-muted">
+        Version <span id="latest-version">checking…</span>
+      </p>
     </section>
 
-    {
-      downloadsEnabled ? (
-        <>
-          <section class="mx-auto w-full max-w-3xl px-6 pb-6">
-            <div id="primary-download" class="hidden">
-              <a
-                id="primary-download-link"
-                href="#"
-                class="flex flex-col items-center rounded-2xl border border-accent bg-surface p-7 text-center transition-colors hover:bg-raised"
-              >
-                <span class="text-lg font-semibold text-text-primary" id="primary-download-label" />
-                <span class="mt-1 font-mono text-[11px] text-text-muted" id="primary-download-detail" />
-                <span class="mt-5 inline-flex rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text">
-                  Download for free
-                </span>
-              </a>
-            </div>
+    <section class="mx-auto w-full max-w-3xl px-6 pb-6">
+      <div id="primary-download" class="hidden">
+        <a
+          id="primary-download-link"
+          href="#"
+          class="flex flex-col items-center rounded-2xl border border-accent bg-surface p-7 text-center transition-colors hover:bg-raised"
+        >
+          <span class="text-lg font-semibold text-text-primary" id="primary-download-label" />
+          <span class="mt-1 font-mono text-[11px] text-text-muted" id="primary-download-detail" />
+          <span class="mt-5 inline-flex rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text">
+            Download for free
+          </span>
+        </a>
+      </div>
 
-            <p
-              id="download-status"
-              role="status"
-              aria-live="polite"
-              class="text-center text-sm text-text-muted"
-            >
-              Looking up the latest release…
-            </p>
-          </section>
+      <p
+        id="download-status"
+        role="status"
+        aria-live="polite"
+        class="text-center text-sm text-text-muted"
+      >
+        Looking up the latest release…
+      </p>
+    </section>
 
-          <section class="mx-auto w-full max-w-3xl px-6 pb-14">
-            <h2 class="mb-4 font-mono text-[11px] uppercase tracking-wider text-text-muted">
-              All platforms
-            </h2>
-            <ul id="download-list" class="flex flex-col gap-3" />
-          </section>
+    <section class="mx-auto w-full max-w-3xl px-6 pb-14">
+      <h2 class="mb-4 font-mono text-[11px] uppercase tracking-wider text-text-muted">
+        All platforms
+      </h2>
+      <ul id="download-list" class="flex flex-col gap-3" />
+      <div id="windows" class="mt-3 rounded-xl border border-dashed border-border-theme bg-surface px-5 py-4">
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <span class="text-sm font-semibold text-text-primary">Windows — soon</span>
+          <span class="font-mono text-[11px] text-text-muted">Through the Microsoft Store</span>
+        </div>
+        <p class="mt-1 text-xs leading-relaxed text-text-muted">
+          Leave an email and you get one message when it ships.
+        </p>
+        <div class="mt-3">
+          <WindowsWaitlist client:visible />
+        </div>
+      </div>
+    </section>
 
-          <section class="mx-auto w-full max-w-3xl px-6 pb-16">
-            <div class="rounded-2xl border border-border-theme bg-surface p-6">
-              <h2 class="text-sm font-semibold text-text-primary">On first launch</h2>
-              <p class="mt-3 text-xs leading-relaxed text-text-muted">
-                Updates from inside the app are signed separately and are refused unless they match
-                the key compiled into your copy.
-              </p>
-            </div>
+    <section class="mx-auto w-full max-w-3xl px-6 pb-16">
+      <div class="rounded-2xl border border-border-theme bg-surface p-6">
+        <h2 class="text-sm font-semibold text-text-primary">On first launch</h2>
+        <p class="mt-3 text-xs leading-relaxed text-text-muted">
+          The macOS build is signed and notarised by Apple, so it opens like any other app.
+          Updates from inside the app are signed separately and are refused unless they match
+          the key compiled into your copy.
+        </p>
+      </div>
 
-            <div class="mt-3 rounded-2xl border border-border-theme bg-surface p-6">
-              <h2 class="text-sm font-semibold text-text-primary">What is in this release</h2>
-              <p id="release-notes" class="mt-3 whitespace-pre-line text-xs leading-relaxed text-text-muted" />
-            </div>
-          </section>
-        </>
-      ) : (
-        <section class="mx-auto w-full max-w-2xl px-6 pb-20">
-          <div class="rounded-2xl border border-border-theme bg-surface p-7 text-center">
-            <p class="text-sm leading-6 text-text-secondary">
-              Nothing is being held back for a paywall — the free tier is what opens first, and it
-              opens for macOS and Linux at once. Windows follows through the Microsoft Store.
-            </p>
-            <a
-              href="/pricing"
-              class="mt-6 inline-flex justify-center rounded-xl border border-border-theme bg-raised px-5 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent"
-            >
-              See what Pro adds
-            </a>
-          </div>
-        </section>
-      )
-    }
+      <div class="mt-3 rounded-2xl border border-border-theme bg-surface p-6">
+        <h2 class="text-sm font-semibold text-text-primary">What is in this release</h2>
+        <p id="release-notes" class="mt-3 whitespace-pre-line text-xs leading-relaxed text-text-muted" />
+      </div>
+    </section>
   </main>
 </Layout>
 
@@ -234,7 +215,7 @@ const keywords =
       renderPrimary(match);
       showStatus('');
     } else if (key === 'windows-x86_64') {
-      showStatus('Uncached ships for macOS and Linux for now. Windows comes later, through the Microsoft Store.');
+      showStatus('Uncached ships for macOS and Linux for now. Windows comes later, through the Microsoft Store — join the list below.');
     } else {
       showStatus('Pick the build for your machine.');
     }

@@ -185,7 +185,7 @@ export const POST: APIRoute = async (context) => {
           console.info('[Whitelist API] Contact already belongs to configured list.');
         } else {
           console.error('[Whitelist API Brevo List Error]', listResponse.status, listData);
-          return jsonResponse({ success: false, message: 'Unable to add your email to the whitelist.' }, 502);
+          return jsonResponse({ success: false, message: 'Unable to add your email to the list.' }, 502);
         }
       }
 
@@ -199,22 +199,19 @@ export const POST: APIRoute = async (context) => {
         <html>
           <head>
             <meta charset="utf-8">
-            <title>Bem-vindo ao Uncached</title>
+            <title>Uncached for ${safeOperatingSystem}</title>
           </head>
           <body style="margin:0; padding:40px 20px; background-color:#09090b; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color:#f4f4f5;">
             <div style="max-width:560px; margin:0 auto; background-color:#18181b; border:1px solid #27272a; border-radius:12px; padding:32px;">
-              <h1 style="font-size:24px; font-weight:700; color:#ffffff; margin-top:0; margin-bottom:16px;">
-                🚀 Você está na lista VIP do Uncached!
+              <h1 style="font-size:22px; font-weight:700; color:#ffffff; margin-top:0; margin-bottom:16px;">
+                You are on the list for Uncached for ${safeOperatingSystem}.
               </h1>
               <p style="font-size:15px; line-height:1.6; color:#a1a1aa; margin-bottom:20px;">
-                Olá! Confirmamos sua inscrição para acesso antecipado ao <strong>Uncached</strong> (sistema ${safeOperatingSystem}).
+                It ships through the Microsoft Store. When it is there, this address gets one email with the link. Nothing else is sent to it.
               </p>
-              <p style="font-size:15px; line-height:1.6; color:#a1a1aa; margin-bottom:24px;">
-                Em breve enviaremos novidades, atualizações de desenvolvimento e o link de acesso exclusivo para os primeiros membros da whitelist.
+              <p style="font-size:13px; line-height:1.6; color:#71717a; margin:0;">
+                macOS and Linux builds are available now at https://uncached.app/download.
               </p>
-              <div style="padding:16px; background-color:#27272a; border-radius:8px; font-size:13px; color:#71717a; text-align:center;">
-                Obrigado por nos acompanhar nessa jornada para liberar espaço de SSD!
-              </div>
             </div>
           </body>
         </html>
@@ -223,7 +220,7 @@ export const POST: APIRoute = async (context) => {
       await sendBrevoEmail(apiKey, {
         sender: { name: senderName, email: senderEmail },
         to: [{ email: trimmedEmail }],
-        subject: '🚀 Você está na lista de espera do Uncached!',
+        subject: `Uncached for ${operatingSystem || 'Windows'}: you are on the list`,
         htmlContent: welcomeHtml,
       });
 
@@ -232,7 +229,7 @@ export const POST: APIRoute = async (context) => {
           <!DOCTYPE html>
           <html>
             <body style="font-family:sans-serif; padding:20px;">
-              <h2>🔔 Novo Cadastro na Whitelist!</h2>
+              <h2>Novo cadastro na lista de espera</h2>
               <p><strong>Email:</strong> ${safeEmail}</p>
               <p><strong>Sistema Operacional:</strong> ${safeOperatingSystem}</p>
               <p><strong>Data/Hora:</strong> ${new Date().toLocaleString('pt-BR')}</p>
@@ -243,7 +240,7 @@ export const POST: APIRoute = async (context) => {
         await sendBrevoEmail(apiKey, {
           sender: { name: 'Uncached System', email: senderEmail },
           to: [{ email: adminEmail }],
-          subject: '🔔 Novo cadastro na Whitelist',
+          subject: `Lista de espera: ${operatingSystem || 'sem sistema'}`,
           htmlContent: adminHtml,
         });
       }
@@ -251,7 +248,7 @@ export const POST: APIRoute = async (context) => {
 
     return jsonResponse({
       success: true,
-      message: 'Welcome to the whitelist!',
+      message: 'You are on the list.',
     });
   } catch (err) {
     console.error('[Whitelist API Internal Error]', err);

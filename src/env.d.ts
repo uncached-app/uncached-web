@@ -6,7 +6,6 @@ interface ImportMetaEnv {
   readonly BREVO_SENDER_EMAIL?: string;
   readonly BREVO_SENDER_NAME?: string;
   readonly ADMIN_NOTIFICATION_EMAIL?: string;
-  readonly PUBLIC_DOWNLOADS_ENABLED?: string;
   readonly PUBLIC_CHECKOUT_ENABLED?: string;
   readonly PUBLIC_PADDLE_CLIENT_TOKEN?: string;
   readonly PUBLIC_PADDLE_PRICE_ANNUAL?: string;
