@@ -4,7 +4,6 @@
  * is a promise the product does not keep.
  */
 export const proFeatures = [
-  'Interactive 2D workspace map',
   'Automated background cleanups',
   'Cross-project duplicate insights',
   'Lifetime reclaimed analytics',
