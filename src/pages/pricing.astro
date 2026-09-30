@@ -11,6 +11,18 @@ const keywords =
 
 const canonicalURL = 'https://uncached.app/pricing';
 
+const comparison: [string, string, string][] = [
+  ['Every dependency, build and cache folder in your projects', 'Yes', 'Yes'],
+  ['Verdicts, confidence, and the check again at removal', 'Yes', 'Yes'],
+  ['Unused dependencies and the disk overview', 'Yes', 'Yes'],
+  ['Workspace folders at once', '1', '12'],
+  ['Machine-wide caches: package managers, AI tools, editors', '—', 'Yes'],
+  ['Scheduled maintenance', 'Preview', 'Runs'],
+  ['Duplicate dependencies across projects', 'Top 3', 'All'],
+  ['Reclaim history and insights', '—', 'Yes'],
+  ['App icons for the Dock', '—', '6'],
+];
+
 const schemaJson = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Product',
@@ -33,162 +45,148 @@ const schemaJson = JSON.stringify({
   <script type="application/ld+json" slot="head" set:html={schemaJson} />
 
   <main class="flex-1">
-    <section class="mx-auto max-w-3xl px-6 pb-12 pt-16 sm:pt-24">
-      <h1
-        class="max-w-2xl text-pretty text-[2rem] font-semibold leading-[1.08] tracking-tighter text-text-primary sm:text-[2.75rem]"
-      >
+    <section class="container pb-14 pt-12 sm:pt-20">
+      <h1 class="max-w-3xl text-balance text-[2.5rem] font-bold leading-[1.04] tracking-[-0.045em] text-text-primary sm:text-6xl">
         Free already reclaims everything.
       </h1>
-      <p class="mt-5 max-w-xl text-pretty text-base leading-7 text-text-secondary">
-        No locked scanners, no smaller safety checks, no project it refuses to look at. Pro adds the
-        readings and the automation on top — it never takes anything away from Free.
+      <p class="mt-6 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
+        No locked scanners, no smaller safety checks, no project it refuses to look at. Pro adds what runs and remembers on its own, and never takes anything away from Free.
       </p>
     </section>
 
-    <section class="mx-auto w-full max-w-3xl px-6">
-      <div class="rounded-2xl border border-border-theme bg-surface p-6 sm:p-7">
-        <div class="flex flex-wrap items-center justify-between gap-3">
-          <h2 class="text-sm font-semibold text-text-primary">Uncached Free</h2>
-          <span
-            class="rounded-md border border-border-theme bg-raised px-2 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-text-muted"
-          >
-            $0 · forever
-          </span>
-        </div>
-
-        <ul class="mt-5 flex flex-col gap-2.5">
-          {
-            freeFeatures.map((feature) => (
-              <li class="flex items-start gap-2.5 text-xs leading-relaxed text-text-muted">
-                <span aria-hidden="true" class="mt-1.5 size-1 shrink-0 rounded-full bg-accent" />
-                <span>{feature}</span>
-              </li>
-            ))
-          }
+    <section class="container grid gap-5 lg:grid-cols-12">
+      <div class="flex flex-col rounded-3xl border border-border-theme bg-surface p-8 sm:p-10 lg:col-span-5">
+        <h2 class="text-lg font-semibold text-text-primary">Free</h2>
+        <p class="mt-1 text-sm text-text-muted">For every project, forever.</p>
+        <p class="mt-6 flex items-baseline gap-2">
+          <span class="font-mono text-5xl font-bold tracking-tight text-text-primary">$0</span>
+        </p>
+        <ul class="mt-7 flex flex-1 flex-col gap-3">
+          {freeFeatures.map((feature) => (
+            <li class="flex items-start gap-3 text-sm leading-6 text-text-secondary">
+              <span aria-hidden="true" class="mt-2 size-2 shrink-0 rounded-[2px] bg-accent" />
+              <span>{feature}</span>
+            </li>
+          ))}
         </ul>
-
         <a
           href="/download"
-          class="mt-6 inline-flex h-10 items-center justify-center rounded-xl border border-border-theme bg-raised px-5 text-xs font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent-ink"
+          class="mt-8 inline-flex h-12 items-center justify-center rounded-xl border border-border-theme bg-raised px-5 text-sm font-semibold text-text-primary transition-colors hover:border-accent-ink hover:text-accent-ink"
         >
           Download free
         </a>
       </div>
-    </section>
 
-    <section class="mx-auto w-full max-w-3xl px-6 pt-4">
-      <div class="rounded-2xl border border-pro-border bg-pro-surface p-6 sm:p-7">
-        <div class="flex items-center gap-2.5">
-          <span
-            aria-hidden="true"
-            class="grid size-8 shrink-0 place-items-center rounded-xl border border-pro-border bg-canvas text-pro"
-          >
-            <svg
-              width="15"
-              height="15"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M9.94 14.06 3 21l6.94-6.94Zm0 0L12 9l3 3-4.94 2.06ZM12 9l4.5-4.5L21 9l-6 3-3-3Z"></path>
-              <path d="M18 14v4M16 16h4M5 4v3M3.5 5.5h3"></path>
-            </svg>
-          </span>
-          <div>
-            <h2 class="text-sm font-semibold text-text-primary">Uncached Pro</h2>
-            <p class="text-xs text-pro-muted">One machine per licence, activated offline.</p>
-          </div>
+      <div class="flex flex-col rounded-3xl border border-pro-border bg-pro-surface p-8 sm:p-10 lg:col-span-7">
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 class="text-lg font-semibold text-text-primary">Pro</h2>
+          <span class="text-sm text-pro-muted">One machine per licence, activated offline.</span>
         </div>
-
-        <ul class="mt-5 flex flex-col gap-2.5">
-          {
-            proFeatures.map((feature) => (
-              <li class="flex items-start gap-2.5 text-xs leading-relaxed text-pro-muted">
-                <span aria-hidden="true" class="mt-1.5 size-1 shrink-0 rounded-full bg-pro" />
-                <span>{feature}</span>
-              </li>
-            ))
-          }
+        <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+          {proFeatures.map((feature) => (
+            <li class="flex items-start gap-3 text-sm leading-6 text-text-secondary">
+              <span aria-hidden="true" class="mt-2 size-2 shrink-0 rounded-full bg-pro" />
+              <span>{feature}</span>
+            </li>
+          ))}
         </ul>
 
-        <div class="mt-7 grid grid-cols-1 border-t border-pro-border sm:grid-cols-2">
-          {
-            proPrices.map((option, index) => (
-              <div
-                class:list={[
-                  'flex flex-col pt-5',
-                  index === 0 ? 'sm:pr-7' : 'mt-5 border-t border-pro-border sm:mt-0 sm:border-l sm:border-t-0 sm:pl-7',
-                ]}
-              >
-                <div class="flex items-baseline gap-1.5">
-                  <span class="text-2xl font-semibold tracking-[-0.04em] text-text-primary">
-                    {option.price}
-                  </span>
-                  <span class="text-xs text-pro-muted">{option.cadence}</span>
-                </div>
-                <p class="mt-2 flex-1 text-xs leading-relaxed text-pro-muted">{option.note}</p>
-
-                {checkoutEnabled && option.priceId ? (
-                  <button
-                    type="button"
-                    data-paddle-price={option.priceId}
-                    class:list={[
-                      'mt-4 inline-flex h-10 items-center justify-center rounded-xl px-5 text-xs font-semibold transition-colors',
-                      option.featured
-                        ? 'bg-pro text-pro-text hover:bg-pro-hover'
-                        : 'border border-pro-border bg-canvas text-pro hover:border-pro',
-                    ]}
-                  >
-                    {option.cta}
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    disabled
-                    class="mt-4 inline-flex h-10 cursor-not-allowed items-center justify-center rounded-xl border border-pro-border bg-canvas px-5 text-xs font-semibold text-pro-muted opacity-60"
-                  >
-                    Coming soon
-                  </button>
-                )}
-              </div>
-            ))
-          }
+        <div class="mt-8 grid flex-1 gap-4 sm:grid-cols-2">
+          {proPrices.map((option) => (
+            <div
+              class:list={[
+                'relative flex flex-col rounded-2xl border bg-surface p-5',
+                option.featured ? 'border-pro' : 'border-pro-border',
+              ]}
+            >
+              {option.featured && (
+                <span class="absolute -top-2.5 right-4 rounded-full bg-pro px-2.5 py-0.5 text-[11px] font-semibold text-pro-text">
+                  Three years of annual
+                </span>
+              )}
+              <p class="flex items-baseline gap-1.5">
+                <span class="font-mono text-4xl font-bold tracking-tight text-text-primary">{option.price}</span>
+                <span class="text-sm text-text-muted">{option.cadence}</span>
+              </p>
+              <p class="mt-2 flex-1 text-sm leading-6 text-text-muted">{option.note}</p>
+              {checkoutEnabled && option.priceId ? (
+                <button
+                  type="button"
+                  data-paddle-price={option.priceId}
+                  class:list={[
+                    'mt-5 inline-flex h-12 cursor-pointer items-center justify-center rounded-xl px-5 text-sm font-semibold transition-colors',
+                    option.featured
+                      ? 'bg-pro text-pro-text hover:bg-pro-hover'
+                      : 'border border-pro-border bg-pro-surface text-text-primary hover:border-pro',
+                  ]}
+                >
+                  {option.cta}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  class="mt-5 inline-flex h-12 cursor-not-allowed items-center justify-center rounded-xl border border-pro-border px-5 text-sm font-semibold text-pro-muted opacity-60"
+                >
+                  Coming soon
+                </button>
+              )}
+            </div>
+          ))}
         </div>
       </div>
-
-      <p
-        id="checkout-error"
-        role="status"
-        aria-live="polite"
-        class="mt-4 hidden text-center text-xs text-destructive"
-      >
-      </p>
     </section>
 
-    <section class="mx-auto w-full max-w-3xl px-6 py-16">
-      <dl class="flex flex-col gap-6 border-t border-border-theme pt-8">
-        <div class="sm:flex sm:gap-8">
-          <dt class="w-40 shrink-0 text-xs font-semibold text-text-primary">One machine</dt>
-          <dd class="mt-1.5 text-xs leading-relaxed text-text-muted sm:mt-0">
-            The seat count travels inside the signed payload, so the condition lives in the purchase
-            rather than only on this page. A second machine is a second licence.
+    <p
+      id="checkout-error"
+      role="status"
+      aria-live="polite"
+      class="container mt-4 hidden text-center text-sm text-destructive"
+    >
+    </p>
+
+    <section class="container pt-20">
+      <h2 class="text-2xl font-bold tracking-[-0.04em] text-text-primary sm:text-3xl">Free and Pro, side by side</h2>
+      <div class="mt-8 overflow-x-auto">
+        <table class="w-full min-w-[560px] border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-border-theme text-left">
+              <th scope="col" class="py-3 pr-4 font-medium text-text-muted"></th>
+              <th scope="col" class="w-32 py-3 pr-4 font-semibold text-text-primary">Free</th>
+              <th scope="col" class="w-32 py-3 font-semibold text-text-primary">Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map(([row, free, pro]) => (
+              <tr class="border-b border-border-theme">
+                <th scope="row" class="py-3.5 pr-4 text-left font-normal text-text-secondary">{row}</th>
+                <td class:list={['py-3.5 pr-4 font-mono', free === '—' ? 'text-text-muted' : 'text-text-primary']}>{free}</td>
+                <td class="py-3.5 font-mono text-text-primary">{pro}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="container py-20">
+      <dl class="grid gap-x-12 gap-y-8 border-t border-border-theme pt-10 md:grid-cols-3">
+        <div>
+          <dt class="text-sm font-semibold text-text-primary">One machine</dt>
+          <dd class="mt-2 text-sm leading-6 text-text-muted">
+            The seat count travels inside the signed licence, so the condition lives in the purchase rather than only on this page. A second machine is a second licence.
           </dd>
         </div>
-        <div class="sm:flex sm:gap-8">
-          <dt class="w-40 shrink-0 text-xs font-semibold text-text-primary">Activated offline</dt>
-          <dd class="mt-1.5 text-xs leading-relaxed text-text-muted sm:mt-0">
-            The key arrives by email. Paste it into Settings → Licence, where the app checks it
-            against a key compiled into the binary. Nothing is sent anywhere to verify it.
+        <div>
+          <dt class="text-sm font-semibold text-text-primary">Activated offline</dt>
+          <dd class="mt-2 text-sm leading-6 text-text-muted">
+            The key arrives by email. Paste it into Settings → Licence, where the app checks it against a key compiled into the binary. Nothing is sent anywhere to verify it.
           </dd>
         </div>
-        <div class="sm:flex sm:gap-8">
-          <dt class="w-40 shrink-0 text-xs font-semibold text-text-primary">Tax handled</dt>
-          <dd class="mt-1.5 text-xs leading-relaxed text-text-muted sm:mt-0">
-            Paddle is the merchant of record. VAT and sales tax are worked out at checkout and the
-            invoice comes from them, in your local currency where it is supported.
+        <div>
+          <dt class="text-sm font-semibold text-text-primary">Tax handled</dt>
+          <dd class="mt-2 text-sm leading-6 text-text-muted">
+            Paddle is the merchant of record. VAT and sales tax are worked out at checkout, and the invoice comes from Paddle in your local currency where it is supported.
           </dd>
         </div>
       </dl>
@@ -251,7 +249,7 @@ const schemaJson = JSON.stringify({
             return;
           }
 
-          // Read at click time: the visitor may have flipped the toggle since load.
+          // Read at click time: the system theme can change after load.
           paddle.Checkout.open({
             items: [{ priceId, quantity: 1 }],
             settings: {

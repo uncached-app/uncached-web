@@ -4,9 +4,11 @@
  * is a promise the product does not keep.
  */
 export const proFeatures = [
-  'Automated background cleanups',
-  'Cross-project duplicate insights',
-  'Lifetime reclaimed analytics',
+  'Scheduled maintenance, in the background',
+  'Machine-wide caches: package managers, AI tools, editors',
+  'Up to 12 workspace folders at once',
+  'Every duplicate dependency, with the projects holding it',
+  'Reclaim history and insights',
   'Six app icons for the Dock',
 ] as const;
 
@@ -15,6 +17,7 @@ export const freeFeatures = [
   'Confidence readings and verdicts before anything moves',
   'The check that runs again at removal, not only at scan',
   'Trash by default',
+  'Unused dependencies, with the command that removes them',
 ] as const;
 
 export interface ProPrice {
