@@ -5,9 +5,17 @@ import { ChoiceRow } from './app/components/shared/ChoiceRow';
 import { ProjectDependencyGroup } from './app/modules/dependencies/ProjectDependencyGroup';
 import { visibleDependencies, type Scope } from './app/utils/dependencies.mjs';
 import type { ProjectDependencies } from './app/types/dependencies';
+import type { ToolchainReport } from './app/types/toolchains';
+import { ToolchainSection } from './app/modules/dependencies/ToolchainSection';
 
 /** The desktop DependenciesModule, reading from props instead of a scan. */
-export function DemoDependencies({ projects }: { projects: ProjectDependencies[] }) {
+export function DemoDependencies({
+  projects,
+  toolchains,
+}: {
+  projects: ProjectDependencies[];
+  toolchains: ToolchainReport;
+}) {
   const { t } = useTranslation();
   const [scope, setScope] = useState<Scope>('high');
 
@@ -50,6 +58,7 @@ export function DemoDependencies({ projects }: { projects: ProjectDependencies[]
             <ProjectDependencyGroup key={project.project} project={project} />
           ))}
         </div>
+        <ToolchainSection report={toolchains} loading={false} failed={false} />
       </div>
     </section>
   );

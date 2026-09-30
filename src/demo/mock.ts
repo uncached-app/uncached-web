@@ -1,7 +1,10 @@
 import type { ProjectDependencies } from './app/types/dependencies';
 import type { ScanTarget } from './app/types/scan';
+import type { ToolchainReport } from './app/types/toolchains';
 import type {
+  ExposedSecret,
   Footprint,
+  ObjectStore,
   RecoverabilityLevel,
   Restore,
   Verdict,
@@ -28,6 +31,9 @@ type ProjectSeed = {
   restore: Restore;
   risk?: Partial<{ untrackedFiles: number; stashEntries: number; unpushedCommits: number }>;
   commit: string;
+  secrets?: ExposedSecret[];
+  /** Megabytes of loose objects in `.git`; past 100 Git would repack. */
+  looseMb?: number;
 };
 
 const NPM: Restore = { manager: 'npm', command: 'npm ci', pinnedBy: 'package-lock.json' };
@@ -44,6 +50,7 @@ const SEEDS: ProjectSeed[] = [
     restore: { manager: 'cargo', command: 'cargo build', pinnedBy: 'Cargo.lock' },
     risk: { untrackedFiles: 1 },
     commit: 'Settle invoices in the ledger currency',
+    looseMb: 180,
   },
   {
     name: 'design-system',
@@ -71,6 +78,10 @@ const SEEDS: ProjectSeed[] = [
     ],
     restore: NPM,
     commit: 'Cache product images at the edge',
+    secrets: [
+      { path: '.env.production', committed: true, kind: 'env' },
+      { path: 'deploy/id_rsa', committed: false, kind: 'privateKey' },
+    ],
   },
   {
     name: 'field-app',
@@ -124,6 +135,17 @@ function recoverabilityLevel(seed: ProjectSeed): RecoverabilityLevel {
   return seed.risk ? 'localOnlyWork' : 'fullyRemote';
 }
 
+function objectStore(looseMb: number): ObjectStore {
+  return {
+    looseObjects: Math.round(looseMb * 40),
+    looseBytes: looseMb * MB,
+    packs: 3,
+    packBytes: 48 * MB,
+    garbageBytes: 0,
+    gcRecommended: looseMb >= 100,
+  };
+}
+
 function toProject(seed: ProjectSeed, now: number): WorkspaceProject {
   const path = `${ROOT}/${seed.name}`;
   const lastActivityAt = now - seed.idleDays * DAY - 2 * 60 * 60;
@@ -148,6 +170,8 @@ function toProject(seed: ProjectSeed, now: number): WorkspaceProject {
         untrackedFiles: seed.risk?.untrackedFiles ?? 0,
         level: recoverabilityLevel(seed),
       },
+      exposedSecrets: seed.secrets ?? [],
+      objectStore: objectStore(seed.looseMb ?? 1),
     },
     activity: {
       lastActivityAt,
@@ -285,7 +309,17 @@ function toHistory(now: number): CleanupEvent[] {
   }));
 }
 
+/** The Free view: how many and how much, not which. */
+const TOOLCHAINS: ToolchainReport = {
+  installedCount: 11,
+  unusedCount: 6,
+  unusedBytes: 4.2 * GB,
+  unused: [],
+  locked: true,
+};
+
 export type DemoData = {
+  toolchains: ToolchainReport;
   history: CleanupEvent[];
   index: WorkspaceIndex;
   verdicts: Record<string, Verdict>;
@@ -313,7 +347,10 @@ export function createDemoData(now: number): DemoData {
     footprints: Object.fromEntries(SEEDS.map((seed) => [`${ROOT}/${seed.name}`, toFootprint(seed)])),
     targets: SEEDS.flatMap((seed) => toTargets(seed, now)),
     dependencies: DEPENDENCIES,
+    toolchains: TOOLCHAINS,
   };
 }
 
 export const PROTECTED_PROJECT = `${ROOT}/ledger-api`;
+
+export const SECRETS_PROJECT = `${ROOT}/storefront`;

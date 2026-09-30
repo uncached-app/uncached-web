@@ -11,10 +11,19 @@ import { DemoDependencies } from './DemoDependencies';
 import { DemoInsights } from './DemoInsights';
 import { DemoMaintenance } from './DemoMaintenance';
 import { DemoTitlebar } from './DemoTitlebar';
-import { createDemoData, PROTECTED_PROJECT } from './mock';
-import { setConfettiCanvas } from './stubs/confetti';
+import { createDemoData, PROTECTED_PROJECT, SECRETS_PROJECT } from './mock';
+import { clearConfetti, setConfettiCanvas } from './stubs/confetti';
+import { useTranslation } from 'react-i18next';
 
-export type Scene = 'workspace' | 'project' | 'review' | 'done' | 'dependencies' | 'maintenance' | 'insights';
+export type Scene =
+  | 'workspace'
+  | 'project'
+  | 'secrets'
+  | 'review'
+  | 'done'
+  | 'dependencies'
+  | 'maintenance'
+  | 'insights';
 
 const NO_RUNNING = {};
 const NO_CLEANING = new Set<string>();
@@ -60,6 +69,27 @@ export function DemoWindow({
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [sidebarHidden, setSidebarHidden] = useState(false);
   const confettiCanvas = useRef<HTMLCanvasElement>(null);
+  const windowRoot = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    if (scene !== 'done') clearConfetti();
+  }, [scene]);
+
+  // The secrets panel sits below the verdict; its chapter scrolls the page to it.
+  useEffect(() => {
+    if (scene !== 'secrets') return;
+    const frame = window.requestAnimationFrame(() => {
+      const root = windowRoot.current;
+      const title = t('workspace.project.secrets.title');
+      const label = Array.from(root?.querySelectorAll('p') ?? []).find((node) => node.textContent === title);
+      const scroller = label?.closest('.overflow-y-auto');
+      if (!label || !(scroller instanceof HTMLElement)) return;
+      const offset = label.getBoundingClientRect().top - scroller.getBoundingClientRect().top;
+      scroller.scrollTo({ top: scroller.scrollTop + offset - 24, behavior: 'smooth' });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [scene, t]);
 
   useEffect(() => {
     setConfettiCanvas(confettiCanvas.current);
@@ -83,12 +113,16 @@ export function DemoWindow({
     return { freedBytes, sizeHasErrors: false, modeUsed: 'Trash' };
   }, []);
 
-  const openProject = data.index.projects.find((project) => project.path === openPath) ?? null;
+  const pagePath = scene === 'secrets' ? SECRETS_PROJECT : openPath;
+  const openProject = data.index.projects.find((project) => project.path === pagePath) ?? null;
   const step: Step = scene === 'done' ? 4 : 3;
   const view = scene === 'review' || scene === 'done' ? 'artifacts' : 'projects';
 
   return (
-    <div className="app-demo relative flex h-full flex-col overflow-hidden rounded-[14px] bg-forest-950 text-mist-100">
+    <div
+      ref={windowRoot}
+      className="app-demo relative flex h-full flex-col overflow-hidden rounded-[14px] bg-forest-950 text-mist-100"
+    >
       <DemoTitlebar step={step} reviewing={scene === 'review'} activeModule={moduleOf(scene)} />
       <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden px-8 py-5">
@@ -130,7 +164,7 @@ export function DemoWindow({
             />
           )}
 
-          {scene === 'project' && openProject && (
+          {(scene === 'project' || scene === 'secrets') && openProject && (
             <ProjectPage
               proEnabled={false}
               project={openProject}
@@ -146,6 +180,8 @@ export function DemoWindow({
               onBack={() => onNavigate('workspace')}
               onShowInList={() => onNavigate('workspace')}
               onOpenProject={(path) => setOpenPath(path)}
+              maintenanceExcluded={null}
+              onMaintenanceExcludedChange={() => {}}
             />
           )}
 
@@ -179,7 +215,9 @@ export function DemoWindow({
             backToWorkspace={() => onNavigate('workspace')}
           />
 
-          {scene === 'dependencies' && <DemoDependencies projects={data.dependencies} />}
+          {scene === 'dependencies' && (
+            <DemoDependencies projects={data.dependencies} toolchains={data.toolchains} />
+          )}
 
           {scene === 'maintenance' && (
             <DemoMaintenance

@@ -18,6 +18,11 @@ const CHAPTERS: Chapter[] = [
     body: 'Uncommitted files, unpushed commits and stashes mark a project Protect. Its page says why, and which command rebuilds the rest.',
   },
   {
+    scene: 'secrets',
+    title: 'It catches secrets before Git publishes them',
+    body: 'Env files, private keys, credentials and registry tokens that are committed or not ignored are flagged on the project, each with the command that stops Git from publishing it.',
+  },
+  {
     scene: 'review',
     title: 'You pick what goes',
     body: 'Every folder shows its size and why it can be rebuilt. Select a few and press Move to Trash: each one is checked again right before it moves.',
@@ -30,7 +35,7 @@ const CHAPTERS: Chapter[] = [
   {
     scene: 'dependencies',
     title: 'Unused dependencies, too',
-    body: 'Packages in package.json or Cargo.toml that nothing in the project imports, with the command that removes them. Uncached only reports them.',
+    body: 'Packages in package.json or Cargo.toml that nothing in the project imports, and Node, Rust, Python and Java versions no project uses, each with the command that removes it. Uncached only reports them.',
   },
   {
     scene: 'maintenance',

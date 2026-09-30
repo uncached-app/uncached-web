@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { CheckCircle2, Radio } from "lucide-react";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { ArtifactList } from "./project/ArtifactList";
 import { ActivityPanel, GitPanel } from "./project/ContextPanels";
 import { DuplicatePanel } from "./project/DuplicatePanel";
@@ -10,6 +10,7 @@ import { HygienePanel } from "./project/HygienePanel";
 import { ProjectActions } from "./project/ProjectActions";
 import { ProjectHeader } from "./project/ProjectHeader";
 import { VerdictPanel } from "./project/VerdictPanel";
+import { SecretsPanel } from "./project/SecretsPanel";
 import { useProjectHygiene } from "../../hooks/useProjectHygiene";
 import { useFlash } from "../../hooks/useFlash";
 import type { ScanTarget } from "../../types/scan";
@@ -40,6 +41,9 @@ type ProjectPageProps = {
   packages: DuplicatePackage[];
   /** That reading has not finished, so an empty list means nothing yet. */
   analysing: boolean;
+  /** Whether maintenance skips this project; `null` where maintenance is not Pro. */
+  maintenanceExcluded: boolean | null;
+  onMaintenanceExcludedChange: (excluded: boolean) => void;
 };
 
 /**
@@ -64,7 +68,10 @@ export function ProjectPage({
   onOpenProject,
   packages,
   analysing,
+  maintenanceExcluded,
+  onMaintenanceExcludedChange,
 }: ProjectPageProps) {
+  const { t } = useTranslation();
   const [flash, handleResult] = useFlash();
   const reducedMotion = useReducedMotion();
   // Four Git processes per project, so it is read here — where the user is
@@ -137,6 +144,8 @@ export function ProjectPage({
             onResult={handleResult}
           />
 
+          {project.git.exposedSecrets.length > 0 && <SecretsPanel files={project.git.exposedSecrets} />}
+
           {/* Above Git and Activity: "why is this so big" is the question the
               page is opened with, and the answer was computed all along. */}
           {footprint && <FootprintPanel footprint={footprint} />}
@@ -145,6 +154,25 @@ export function ProjectPage({
             <GitPanel git={project.git} />
             <ActivityPanel activity={project.activity} />
           </div>
+
+          {maintenanceExcluded !== null && (
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-forest-800 bg-forest-900 px-5 py-3.5 shadow-xs">
+              <p className="text-xs text-mist-300">
+                {maintenanceExcluded
+                  ? t("workspace.project.maintenance.excluded")
+                  : t("workspace.project.maintenance.included")}
+              </p>
+              <button
+                type="button"
+                onClick={() => onMaintenanceExcludedChange(!maintenanceExcluded)}
+                className="shrink-0 rounded-lg border border-forest-800 bg-forest-850 px-3 py-1.5 text-xs font-medium text-mist-300 transition-colors hover:bg-forest-800 hover:text-mist-100"
+              >
+                {maintenanceExcluded
+                  ? t("workspace.project.maintenance.include")
+                  : t("workspace.project.maintenance.exclude")}
+              </button>
+            </div>
+          )}
 
           {project.git.branch && (
             <HygienePanel

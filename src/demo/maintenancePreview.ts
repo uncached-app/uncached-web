@@ -21,7 +21,8 @@ export function previewMaintenance(
     const skip = (reason: Skipped['reason']) =>
       skipped.push({ path: project.path, name: project.name, reason, verdict });
 
-    if (verdict !== 'safe') skip('verdict');
+    if (policy.excluded.includes(project.path)) skip('excluded');
+    else if (verdict !== 'safe') skip('verdict');
     else if (bytes === null) skip('unmeasured');
     else if (idleDays === null) skip('unknownActivity');
     else if (idleDays < policy.minIdleDays) skip('tooRecent');

@@ -56,7 +56,30 @@
       "reclaimable": "reclaimable cache",
       "source": "source code"
     },
-    "partial": "Some folders under this project could not be read. Every figure above is the smallest it could be, not the measurement."
+    "partial": "Some folders under this project could not be read. Every figure above is the smallest it could be, not the measurement.",
+    "maintenance": {
+      "excluded": "Maintenance never touches this project.",
+      "included": "Maintenance can clean this project when it matches your policy.",
+      "exclude": "Never touch",
+      "include": "Allow again"
+    },
+    "secrets": {
+      "title": "Secrets Git would publish",
+      "introCommitted": "Git has credentials in its history. Anyone with a clone can read them: revoke or rotate them, then stop tracking the files.",
+      "introUnignored": "Credentials are not in .gitignore, so the next git add . would commit them.",
+      "committed": "Committed",
+      "unignored": "Not ignored",
+      "committedHint": "In the history of this repository. Revoke or rotate what it holds.",
+      "unignoredHint": "Not committed yet. Ignoring it keeps it that way.",
+      "kinds": {
+        "env": "Env file",
+        "privateKey": "Private key",
+        "credentials": "Credentials",
+        "token": "Registry token"
+      },
+      "copy": "Copy the command for {{path}}",
+      "runFromRoot": "Run it in the project folder. Uncached only shows the command."
+    }
   },
   "actions": {
     "done": "{{action}} — done",
@@ -111,7 +134,10 @@
     "noRemote": "No remote configured",
     "lastCommit": "Last commit",
     "unknownDate": "unknown",
-    "notRepository": "Not a git repository. No remote backup tracking available."
+    "notRepository": "Not a git repository. No remote backup tracking available.",
+    "objectStore": "Repository data",
+    "gcHint": "{{size}} is loose or garbage. Git gc would pack it; Uncached only shows the command.",
+    "gcCopy": "Copy the git gc command"
   },
   "activity": {
     "title": "Activity",
@@ -207,7 +233,9 @@
       "several_other": "{{command}} is working inside this project ({{count}} processes). Its artifacts cannot be reclaimed until it stops."
     },
     "running": "running · {{command}}",
-    "measuring": "measuring..."
+    "measuring": "measuring...",
+    "secretsExposed_one": "{{count}} secret exposed",
+    "secretsExposed_other": "{{count}} secrets exposed"
   },
   "menu": {
     "label": "{{name}} actions",

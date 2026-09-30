@@ -11,6 +11,8 @@ import type { Verdict } from "./workspace";
 export type MaintenancePolicy = {
   minIdleDays: number;
   minBytes: number;
+  /** Project paths maintenance never selects. */
+  excluded: string[];
 };
 
 /**
@@ -21,9 +23,11 @@ export type MaintenancePolicy = {
 export const DEFAULT_POLICY: MaintenancePolicy = {
   minIdleDays: 90,
   minBytes: 500 * 1024 * 1024,
+  excluded: [],
 };
 
 export type SkipReason =
+  | "excluded"
   | "verdict"
   | "unmeasured"
   | "unknownActivity"
@@ -71,12 +75,15 @@ export const EMPTY_PREVIEW: MaintenancePreview = {
 export type Schedule = {
   enabled: boolean;
   everyHours: number;
+  /** Also run when the workspace's disk has less than this many GB free; `null` is off. */
+  lowDiskGb: number | null;
 };
 
 /** Off by default. The first unattended deletion on a machine is one the user turned on. */
 export const DEFAULT_SCHEDULE: Schedule = {
   enabled: false,
   everyHours: 24 * 7,
+  lowDiskGb: null,
 };
 
 /** Why a run would not start this minute. */
@@ -112,4 +119,6 @@ export type ScheduleStatus = {
    * product can promise and not deliver.
    */
   keepsRunningInBackground: boolean;
+  /** Least free space across the workspace's volumes, or `null` if unreadable. */
+  freeBytes: number | null;
 };

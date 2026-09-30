@@ -145,7 +145,14 @@
     "scanFinished_other": "{{count}} targets found, {{size}} reclaimable.",
     "maintenanceTitle": "Uncached maintenance",
     "maintenanceBody_one": "{{size}} reclaimed from {{count}} idle project. Everything went to the Trash.",
-    "maintenanceBody_other": "{{size}} reclaimed from {{count}} idle projects. Everything went to the Trash."
+    "maintenanceBody_other": "{{size}} reclaimed from {{count}} idle projects. Everything went to the Trash.",
+    "trayFree": "{{size}} free",
+    "trayReclaimable": "{{size}} reclaimable",
+    "trayRunMaintenance": "Run maintenance now",
+    "digestTitle": "Uncached this week",
+    "digestBoth": "{{freed}} freed this week. {{size}} more can be reclaimed.",
+    "digestFreed": "{{freed}} freed this week.",
+    "digestReclaimable": "{{size}} can be reclaimed. Nothing was cleaned this week."
   },
   "errors": {
     "invalid_workspace": "This folder cannot be scanned.",

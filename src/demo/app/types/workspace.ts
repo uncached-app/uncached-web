@@ -34,6 +34,31 @@ export type GitContext = {
   /** When this repository last spoke to its remote. `null` means never. */
   lastFetchAt: number | null;
   recoverability: Recoverability;
+  /** Credentials Git would publish. Mirrors `src-tauri/src/workspace/secrets.rs`. */
+  exposedSecrets: ExposedSecret[];
+  /** What `.git` holds; `null` when Git would not say. */
+  objectStore: ObjectStore | null;
+};
+
+/** `git count-objects -v`, in bytes. Mirrors `src-tauri/src/workspace/git.rs`. */
+export type ObjectStore = {
+  looseObjects: number;
+  looseBytes: number;
+  packs: number;
+  packBytes: number;
+  garbageBytes: number;
+  /** Past a limit at which Git would repack on its own. */
+  gcRecommended: boolean;
+};
+
+export type SecretKind = "env" | "privateKey" | "credentials" | "token";
+
+export type ExposedSecret = {
+  /** Relative to the repository root, `/`-separated. */
+  path: string;
+  /** In the index, so already in the history of every clone. */
+  committed: boolean;
+  kind: SecretKind;
 };
 
 export type Activity = {
