@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./demo.css";
 
 @theme {
   --color-canvas: var(--canvas);
@@ -47,7 +48,6 @@
   --pro-surface: #efe7fa;
   --pro-border: #d8c9ee;
   --pro-muted: #5b4a78;
-  --stripe-dark: #14140f;
   color-scheme: light;
 }
 
@@ -71,31 +71,16 @@
   --pro-surface: #221c33;
   --pro-border: #3b3052;
   --pro-muted: #b9a8d0;
-  --stripe-dark: #0b0b08;
   color-scheme: dark;
 }
 
-/* Hazard tape: the one decorative mark the site allows itself. */
-.hazard-tape {
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--accent) 0 14px,
-    var(--stripe-dark) 14px 28px
-  );
-}
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1.5rem;
 
-/* Background Grain Noise Overlay */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 999;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  @media (width >= 80rem) {
+    max-width: 80rem;
+  }
 }
 
 /* Scrollbars in the palette */
@@ -124,6 +109,18 @@ body::before {
 ::selection {
   background: var(--accent);
   color: var(--accent-text);
+}
+
+/* Content arriving after a fetch, in place of its skeleton. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+.reveal {
+  animation: reveal 260ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
