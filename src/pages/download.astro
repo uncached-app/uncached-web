@@ -3,13 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import { downloadsEnabled } from '../data/flags';
 
 const title = downloadsEnabled
-  ? 'Download Uncached — free for macOS, Windows, and Linux'
+  ? 'Download Uncached — free for macOS and Linux'
   : 'Download Uncached — opening soon';
 const description = downloadsEnabled
-  ? 'Download the latest Uncached build for macOS, Windows, or Linux. The free tier scans your workspaces and moves regenerable build artifacts to Trash.'
+  ? 'Download the latest Uncached build for macOS or Linux. The free tier scans your workspaces and moves regenerable build artifacts to Trash.'
   : 'Uncached downloads open once the builds are signed. The free tier scans locally and moves regenerable build artifacts to Trash.';
 const keywords =
-  'download uncached, disk cleanup app download, node_modules cleaner download, macos build cache cleaner, windows developer disk cleaner';
+  'download uncached, disk cleanup app download, node_modules cleaner download, macos build cache cleaner, linux developer disk cleaner';
 ---
 
 <Layout title={title} description={description} keywords={keywords} noindex={!downloadsEnabled}>
@@ -91,7 +91,7 @@ const keywords =
           <div class="rounded-2xl border border-border-theme bg-surface p-7 text-center">
             <p class="text-sm leading-6 text-text-secondary">
               Nothing is being held back for a paywall — the free tier is what opens first, and it
-              opens for every platform at once.
+              opens for macOS and Linux at once. Windows follows through the Microsoft Store.
             </p>
             <a
               href="/pricing"
@@ -233,6 +233,8 @@ const keywords =
     if (match) {
       renderPrimary(match);
       showStatus('');
+    } else if (key === 'windows-x86_64') {
+      showStatus('Uncached ships for macOS and Linux for now. Windows comes later, through the Microsoft Store.');
     } else {
       showStatus('Pick the build for your machine.');
     }

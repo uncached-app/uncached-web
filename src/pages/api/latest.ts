@@ -25,7 +25,7 @@ const MACOS_DMG_ARCH: Record<string, string> = {
 
 interface Platform {
   readonly key: string;
-  readonly os: 'macos' | 'windows' | 'linux';
+  readonly os: 'macos' | 'linux';
   readonly label: string;
   readonly detail: string;
 }
@@ -38,7 +38,6 @@ const PLATFORMS: readonly Platform[] = [
     detail: 'Apple Silicon — M1 and later',
   },
   { key: 'darwin-x86_64', os: 'macos', label: 'macOS', detail: 'Intel' },
-  { key: 'windows-x86_64', os: 'windows', label: 'Windows', detail: '64-bit installer' },
   { key: 'linux-x86_64', os: 'linux', label: 'Linux', detail: 'AppImage, 64-bit' },
 ];
 
