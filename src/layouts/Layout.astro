@@ -35,8 +35,8 @@ const authorName = 'Natan Viana';
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- Theme init below forces light unless the visitor opted into dark. -->
-    <meta name="theme-color" content="#f4f6f1" />
+    <meta name="theme-color" content="#f6f4ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14140f" media="(prefers-color-scheme: dark)" />
 
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -88,12 +88,13 @@ const authorName = 'Natan Viana';
     <!-- FOUT Prevention Theme Initializer -->
     <script is:inline>
       (function() {
-        const savedTheme = localStorage.getItem('uncached-theme');
-        if (savedTheme === 'light' || savedTheme === 'dark') {
-          document.documentElement.dataset.theme = savedTheme;
-        } else {
-          document.documentElement.dataset.theme = 'light';
-        }
+        let savedTheme = null;
+        try {
+          savedTheme = localStorage.getItem('uncached-theme');
+        } catch (error) {}
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        document.documentElement.dataset.theme =
+          savedTheme === 'light' || savedTheme === 'dark' ? savedTheme : prefersLight ? 'light' : 'dark';
       })();
     </script>
   </head>

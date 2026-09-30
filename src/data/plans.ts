@@ -7,13 +7,14 @@ export const proFeatures = [
   'Automated background cleanups',
   'Cross-project duplicate insights',
   'Lifetime reclaimed analytics',
+  'Six app icons for the Dock',
 ] as const;
 
 export const freeFeatures = [
   'Every artifact of every project, with no limits',
   'Confidence readings and verdicts before anything moves',
   'The check that runs again at removal, not only at scan',
-  'Trash or Recycle Bin by default',
+  'Trash by default',
 ] as const;
 
 export interface ProPrice {

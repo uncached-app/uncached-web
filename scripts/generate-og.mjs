@@ -20,19 +20,19 @@ import { Resvg } from '@resvg/resvg-js';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'public', 'og-image.png');
 
-// Light theme tokens, mirrored from src/styles/global.css.
-const CANVAS = '#f4f6f1';
-const SURFACE = '#ffffff';
-const BORDER = '#dfe7dc';
-const TEXT_PRIMARY = '#182018';
-const TEXT_MUTED = '#637064';
-const ACCENT = '#6a994e';
+// Dark Garbage Man tokens, mirrored from src/styles/global.css.
+const CANVAS = '#14140f';
+const SURFACE = '#1b1b15';
+const BORDER = '#38382b';
+const TEXT_PRIMARY = '#f5f3e8';
+const TEXT_MUTED = '#99957f';
+const ACCENT = '#f5c518';
 
 const TAGLINE = 'Reclaim disk from build artifacts.';
 // Deliberately shorter than the hero copy: a social card is read at thumbnail
 // size, and the third line always broke to an orphan.
 const SUBTITLE =
-  'Finds regenerable targets in your developer workspaces and moves the ones you select to Trash or Recycle Bin.';
+  'Finds regenerable targets in your developer workspaces and moves the ones you select to the Trash.';
 
 /** The single path from public/brand/UNCACHED-ICON-LIGHT-NOBG.svg. */
 const ICON_PATH =

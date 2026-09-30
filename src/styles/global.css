@@ -11,6 +11,7 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-text: var(--accent-text);
+  --color-accent-ink: var(--accent-ink);
   --color-destructive: var(--destructive);
   --color-destructive-hover: var(--destructive-hover);
   --color-pro: var(--pro);
@@ -19,52 +20,68 @@
   --color-pro-surface: var(--pro-surface);
   --color-pro-muted: var(--pro-muted);
   --color-pro-border: var(--pro-border);
+  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
 }
 
+/* Garbage Man, as in the app. `accent` is the hazard-yellow fill in both
+   modes, with bin-night text on it; `accent-ink` is the same role as text,
+   deepened to amber on paper where yellow fails contrast. */
 :root, [data-theme="light"] {
-  --canvas: #f4f6f1;
-  --surface: #ffffff;
-  --raised: #eef2eb;
-  --border: #dfe7dc;
-  --text-primary: #182018;
-  --text-secondary: #386641;
-  --text-muted: #637064;
-  --accent: #6a994e;
-  --accent-hover: #386641;
-  --accent-text: #ffffff;
-  --destructive: #bc4749;
-  --destructive-hover: #9e393b;
-  /* Pro carries the app's own hue. Green means confirmed and safe in both
-     places, so it cannot also mean paid. */
+  --canvas: #f6f4ea;
+  --surface: #fffdf5;
+  --raised: #ece8d6;
+  --border: #d8d1b8;
+  --text-primary: #1b1b15;
+  --text-secondary: #3d3a2c;
+  --text-muted: #65614b;
+  --accent: #f5c518;
+  --accent-hover: #ffd83d;
+  --accent-text: #14140f;
+  --accent-ink: #765800;
+  --destructive: #ad3d1a;
+  --destructive-hover: #8f3114;
   --pro: #4a2d6f;
   --pro-hover: #5e3d85;
   --pro-text: #ffffff;
   --pro-surface: #efe7fa;
   --pro-border: #d8c9ee;
   --pro-muted: #5b4a78;
+  --stripe-dark: #14140f;
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --canvas: #101311;
-  --surface: #151b17;
-  --raised: #1a211c;
-  --border: #222b24;
-  --text-primary: #edf0eb;
-  --text-secondary: #c7d0c1;
-  --text-muted: #8e998e;
-  --accent: #b9d98d;
-  --accent-hover: #d1eca9;
-  --accent-text: #101311;
-  --destructive: #ffc2b5;
-  --destructive-hover: #ffad9e;
-  --pro: #d9b8ff;
-  --pro-hover: #eee0ff;
-  --pro-text: #211b2b;
-  --pro-surface: #211b2b;
-  --pro-border: #38304a;
+  --canvas: #14140f;
+  --surface: #1b1b15;
+  --raised: #24241c;
+  --border: #38382b;
+  --text-primary: #f5f3e8;
+  --text-secondary: #ccc8b4;
+  --text-muted: #99957f;
+  --accent: #f5c518;
+  --accent-hover: #ffd83d;
+  --accent-text: #14140f;
+  --accent-ink: #ffd83d;
+  --destructive: #ff7a4d;
+  --destructive-hover: #ff9670;
+  --pro: #dcc7ff;
+  --pro-hover: #efe4ff;
+  --pro-text: #221c33;
+  --pro-surface: #221c33;
+  --pro-border: #3b3052;
   --pro-muted: #b9a8d0;
+  --stripe-dark: #0b0b08;
   color-scheme: dark;
+}
+
+/* Hazard tape: the one decorative mark the site allows itself. */
+.hazard-tape {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--accent) 0 14px,
+    var(--stripe-dark) 14px 28px
+  );
 }
 
 /* Background Grain Noise Overlay */
@@ -81,7 +98,7 @@ body::before {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Custom Scrollbars matching Quiet Forest Utility */
+/* Scrollbars in the palette */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

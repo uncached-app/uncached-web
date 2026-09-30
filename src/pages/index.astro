@@ -1,13 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ScanSimulator from '../components/scan-simulator/ScanSimulator';
-import FeaturesSection from '../components/FeaturesSection.astro';
 import FaqSection from '../components/FaqSection.astro';
-import ProTeaser from '../components/ProTeaser.astro';
 import { faqs } from '../data/faqs';
+import { proFeatures, proPrices } from '../data/plans';
 
 const siteTitle = "Uncached — Reclaim gigabytes from the code you ship";
-const siteDescription = "Uncached finds regenerable build artifacts in developer workspaces and safely moves selected targets to your system Trash or Recycle Bin.";
+const siteDescription = "Uncached finds the dependency, build and cache folders your toolchains can rebuild, tells you which projects hold work that exists nowhere else, and moves what you pick to the Trash.";
 const canonicalURL = "https://uncached.app/";
 const siteKeywords = "build cache cleaner, node_modules cleaner, rust target cleaner, developer disk cleanup, reclaim SSD space, macOS cache cleaner, linux build cleaner, tauri developer tool, disk bloat cleaner";
 const authorName = "Natan Viana";
@@ -48,8 +46,9 @@ const schemaJson = JSON.stringify({
       "featureList": [
         "Scans developer workspaces for regenerable build artifacts",
         "Reports measured sizes per target before any removal",
-        "Moves selected targets to the system Trash or Recycle Bin",
-        "Runs locally without uploading project contents"
+        "Moves selected targets to the system Trash",
+        "Runs locally without uploading project contents",
+        "Reports declared dependencies nothing in a project uses"
       ],
       "offers": [
         {
@@ -93,49 +92,177 @@ const schemaJson = JSON.stringify({
     }
   ]
 });
+
+const steps = [
+  {
+    title: 'It knows which projects hold your work.',
+    body: 'Every project gets a verdict from its own git state. Uncommitted files, unpushed commits and forgotten stashes mean Protect, whatever the folder weighs. Beside it: how the dependencies come back, and which lockfile pins them.',
+    image: '/screens/02-project.webp',
+    alt: 'A project page in Uncached: the ledger-api project marked Protect because one file was never committed, with the cargo build command that restores it.',
+  },
+  {
+    title: 'You pick. It goes to the Trash.',
+    body: 'Every target is a real directory with its measured size and the reason it is safe to rebuild. Nothing moves until you select it, each one is checked again at the moment it moves, and it lands in the Trash, where you can put it back.',
+    image: '/screens/03-reclaim.webp',
+    alt: 'The Reclaim review in Uncached: twelve targets totalling 9.80 GB, each with its path, size and confidence, and a Move to Trash button.',
+  },
+  {
+    title: 'And it reads what your code never uses.',
+    body: 'Packages declared in package.json or Cargo.toml that no import, config file or script names, with how sure the reading is and the command your package manager removes them with. Uncached only reports them.',
+    image: '/screens/04-dependencies.webp',
+    alt: 'The Dependencies module in Uncached listing expo-status-bar and regex as declared but unused, with the npm and cargo commands that remove them.',
+  },
+];
+
+const guarantees = [
+  ['Trash, not rm', 'The default is the system Trash. Permanent deletion exists, behind typing its name.'],
+  ['Checked twice', 'A target is verified when it is found and again when it moves.'],
+  ['Your work stays', 'A project with work that is on no remote is marked Protect and never cleaned by a schedule.'],
+  ['Nothing leaves', 'Scanning, verdicts and history run on your machine. No account, no upload.'],
+  ['Signed', 'The macOS build is signed and notarised by Apple; updates are signed separately.'],
+  ['Six languages', 'English, Português, Español, Deutsch, 日本語 and العربية, right to left included.'],
+];
 ---
 
 <Layout title={siteTitle} description={siteDescription} keywords={siteKeywords}>
   <script type="application/ld+json" slot="head" set:html={schemaJson} />
 
-  <main class="flex-1">
-    <section class="mx-auto max-w-4xl px-6 pb-12 pt-14 text-center sm:pt-20">
-      <h1 class="mx-auto max-w-4xl text-pretty text-[2rem] font-semibold leading-[1.1] tracking-tighter text-text-primary sm:text-balance sm:text-5xl sm:leading-[1.05] md:text-6xl">
-        Reclaim disk from build artifacts.
-      </h1>
-      <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-7 text-text-secondary sm:text-lg">
-        Uncached finds regenerable targets in your developer workspaces, shows exactly what can leave, and moves selected targets to Trash or Recycle Bin.
-      </p>
-      <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+  <main class="flex-1 overflow-x-clip">
+    <section class="mx-auto grid w-full max-w-6xl items-center gap-12 px-6 pt-10 pb-16 lg:grid-cols-12 lg:gap-8 lg:pt-16">
+      <div class="lg:col-span-5">
+        <h1 class="text-balance text-[2.5rem] font-bold leading-[1.02] tracking-[-0.045em] text-text-primary sm:text-6xl">
+          Reclaim disk from build artifacts.
+        </h1>
+        <p class="mt-6 max-w-md text-pretty text-base leading-7 text-text-secondary sm:text-lg">
+          Uncached finds the dependency, build and cache folders your toolchains can rebuild, tells you which projects hold work that exists nowhere else, and moves what you pick to the Trash.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="/download"
+            class="inline-flex h-12 items-center justify-center rounded-xl bg-accent px-6 text-sm font-semibold text-accent-text shadow-[0_1px_0_rgb(0_0_0/0.25)] transition-colors hover:bg-accent-hover"
+          >
+            Download free
+          </a>
+          <a
+            href="/pricing"
+            class="inline-flex h-12 items-center justify-center rounded-xl border border-border-theme bg-surface px-6 text-sm font-semibold text-text-primary transition-colors hover:border-accent-ink hover:text-accent-ink"
+          >
+            See pricing
+          </a>
+        </div>
+        <p class="mt-5 font-mono text-[11px] text-text-muted">
+          macOS &middot; Linux &middot; Windows soon &middot; no account
+        </p>
+      </div>
+
+      <div class="relative lg:col-span-7">
+        <div class="hazard-tape absolute -bottom-5 -left-5 h-24 w-40 rounded-xl opacity-90 sm:h-32 sm:w-56" aria-hidden="true"></div>
+        <img
+          src="/screens/01-workspace.webp"
+          width="1112"
+          height="832"
+          alt="The Uncached workspace: seven projects, 9.80 GB reclaimable, grouped by verdict, with ledger-api and design-system marked Protect because they hold uncommitted work and a stash."
+          class="relative w-full max-w-none drop-shadow-[0_24px_48px_rgb(0_0_0/0.35)] lg:w-[118%]"
+          fetchpriority="high"
+        />
+      </div>
+    </section>
+
+    <div class="hazard-tape h-2.5 w-full" aria-hidden="true"></div>
+
+    <section id="how-it-works" class="mx-auto w-full max-w-6xl scroll-mt-16 px-6 py-24">
+      <h2 class="max-w-2xl text-balance text-3xl font-bold tracking-[-0.04em] text-text-primary sm:text-4xl">
+        A cleaner that reads before it deletes.
+      </h2>
+      <div class="mt-16 flex flex-col gap-24">
+        {steps.map((step, index) => (
+          <article class="grid items-center gap-10 lg:grid-cols-12">
+            <div class={`lg:col-span-4 ${index % 2 === 1 ? 'lg:order-2 lg:col-start-9' : ''}`}>
+              <h3 class="text-balance text-2xl font-semibold tracking-[-0.03em] text-text-primary">{step.title}</h3>
+              <p class="mt-4 text-pretty text-sm leading-7 text-text-secondary sm:text-base">{step.body}</p>
+            </div>
+            <div class={`lg:col-span-8 ${index % 2 === 1 ? 'lg:order-1 lg:col-start-1' : ''}`}>
+              <img
+                src={step.image}
+                width="1112"
+                height="832"
+                alt={step.alt}
+                loading="lazy"
+                class="w-full drop-shadow-[0_18px_36px_rgb(0_0_0/0.3)]"
+              />
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="features" class="border-y border-border-theme bg-surface">
+      <div class="mx-auto w-full max-w-6xl px-6 py-20">
+        <h2 class="max-w-xl text-balance text-3xl font-bold tracking-[-0.04em] text-text-primary sm:text-4xl">
+          Built so a mistake costs nothing.
+        </h2>
+        <dl class="mt-12 grid gap-x-12 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+          {guarantees.map(([term, detail]) => (
+            <div class="border-t border-border-theme pt-5">
+              <dt class="flex items-center gap-2.5 text-sm font-semibold text-text-primary">
+                <span class="size-2 shrink-0 rounded-[2px] bg-accent" aria-hidden="true"></span>
+                {term}
+              </dt>
+              <dd class="mt-2 text-sm leading-6 text-text-muted">{detail}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <section class="mx-auto w-full max-w-6xl px-6 py-24">
+      <div class="grid gap-10 rounded-3xl border border-pro-border bg-pro-surface p-8 sm:p-10 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-7">
+          <h2 class="text-balance text-3xl font-bold tracking-[-0.04em] text-text-primary">
+            Free cleans everything. Pro keeps it clean.
+          </h2>
+          <p class="mt-4 max-w-lg text-sm leading-7 text-text-secondary">
+            Every artifact of every project, every safety check and every verdict are free, with no limits. Pro adds what runs and remembers on its own.
+          </p>
+          <ul class="mt-6 grid gap-2.5 text-sm text-text-primary">
+            {proFeatures.map((feature) => (
+              <li class="flex items-center gap-2.5">
+                <span class="size-1.5 shrink-0 rounded-full bg-pro" aria-hidden="true"></span>
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="flex flex-col gap-3 lg:col-span-5">
+          {proPrices.map((price) => (
+            <div class="flex items-baseline justify-between rounded-2xl border border-pro-border bg-surface px-5 py-4">
+              <span class="font-mono text-2xl font-bold tracking-tight text-text-primary">{price.price}</span>
+              <span class="text-sm text-text-muted">{price.cadence}</span>
+            </div>
+          ))}
+          <a
+            href="/pricing"
+            class="mt-1 inline-flex h-11 items-center justify-center rounded-xl bg-pro px-5 text-sm font-semibold text-pro-text transition-colors hover:bg-pro-hover"
+          >
+            See what Pro adds
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FaqSection />
+
+    <section class="relative overflow-hidden border-t border-border-theme">
+      <div class="hazard-tape h-2.5 w-full" aria-hidden="true"></div>
+      <div class="mx-auto flex w-full max-w-6xl flex-col items-start gap-6 px-6 py-20 sm:flex-row sm:items-center sm:justify-between">
+        <h2 class="text-balance text-3xl font-bold tracking-[-0.04em] text-text-primary sm:text-4xl">Get your disk back.</h2>
         <a
           href="/download"
-          class="inline-flex w-full justify-center rounded-xl bg-accent px-6 py-3 text-sm font-semibold text-accent-text transition-colors hover:bg-accent-hover sm:w-auto"
+          class="inline-flex h-12 items-center justify-center rounded-xl bg-accent px-6 text-sm font-semibold text-accent-text transition-colors hover:bg-accent-hover"
         >
           Download free
         </a>
-        <a
-          href="/pricing"
-          class="inline-flex w-full justify-center rounded-xl border border-border-theme bg-surface px-6 py-3 text-sm font-semibold text-text-primary transition-colors hover:border-accent hover:text-accent sm:w-auto"
-        >
-          See pricing
-        </a>
-      </div>
-      <div class="mt-5 flex justify-center gap-5 font-mono text-[11px] text-text-muted">
-        <span>Local-first</span>
-        <span>Trash by default</span>
       </div>
     </section>
-
-    <section id="how-it-works" class="mx-auto max-w-6xl scroll-mt-12 px-6 py-8">
-      <ScanSimulator client:load />
-    </section>
-
-    {/* App Features Section */}
-    <FeaturesSection />
-
-    <ProTeaser />
-
-    {/* Support & FAQ Section */}
-    <FaqSection />
   </main>
 </Layout>

@@ -51,7 +51,7 @@ export default function WindowsWaitlist() {
 
   if (joinedAs) {
     return (
-      <p className="font-mono text-xs text-accent" role="status">
+      <p className="font-mono text-xs text-accent-ink" role="status">
         {joinedAs} is on the list. One email when Windows ships.
       </p>
     );

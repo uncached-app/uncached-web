@@ -10,26 +10,26 @@ export interface Faq {
 export const faqs: Faq[] = [
   {
     question: "What happens when I clean a target?",
-    answer: "Uncached verifies the target against the current scan session, then moves it to your native Trash or Recycle Bin by default. You can restore it there if a build needs it again."
+    answer: "Uncached checks the target again against the scan that found it, then moves it to the system Trash. If a build needs it, put it back from there, or run the restore command the project page shows."
   },
   {
-    question: "Which targets are supported now?",
-    answer: "The current scanner set covers node_modules, Rust target directories, Python caches, .gradle, .next, and .turbo. Coverage will expand as new scanners are implemented."
+    question: "What does it find?",
+    answer: "Dependency, build and cache folders a toolchain can rebuild, each confirmed by the project file beside it, never a folder that only has the right name. Coverage grows with every release, and the app lists exactly what it found."
   },
   {
-    question: "Is Uncached available to download?",
-    answer: "Yes. The free tier is a public download for macOS and Linux, and needs no account. Windows comes later, through the Microsoft Store. Pro adds the deeper cleaners at $4.99 a year or $14.99 once."
+    question: "How does it know a project is safe to clean?",
+    answer: "It reads the project's git state. Uncommitted files, commits on no remote, forgotten stashes and branches with no upstream mark it Protect. A remote on the same disk does not count, because one failure takes both."
   },
   {
-    question: "Does Uncached upload workspace data?",
-    answer: "The scanner is designed to run locally. It works with workspace paths and target data on your machine rather than requiring project contents in the cloud."
+    question: "Does Uncached upload anything?",
+    answer: "No. Scanning, verdicts, dependency readings and history run on your machine, with no account. The only network requests are the update check and, when you ask for one, a git fetch."
   },
   {
-    question: "What is included in the free tier?",
-    answer: "The manual scan and cleanup flow, with measured sizes shown before anything moves and Trash as the default. The safety checks that run before a deletion are free in every tier and always will be."
+    question: "What is free and what is Pro?",
+    answer: "Free reclaims every artifact of every project, with every safety check and verdict, and no limits. Pro adds scheduled maintenance, duplicate insights, lifetime history and Dock icons, at $4.99 a year or $14.99 once."
   },
   {
-    question: "Who is Uncached for?",
-    answer: "Developers maintaining local workspaces who want to reclaim build and dependency artifacts without manually hunting through folders."
+    question: "Which systems does it run on?",
+    answer: "macOS (Apple Silicon and Intel, signed and notarised) and Linux. Windows comes later, through the Microsoft Store."
   }
 ];

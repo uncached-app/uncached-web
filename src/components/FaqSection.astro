@@ -2,28 +2,13 @@
 import { faqs } from '../data/faqs';
 ---
 
-<section id="faq" class="w-full max-w-5xl mx-auto px-6 py-20 scroll-mt-12">
-  <div class="text-center max-w-2xl mx-auto mb-14">
-    <span class="text-xs font-mono text-text-muted uppercase tracking-widest block mb-2">
-      Support
-    </span>
-    <h2 class="text-3xl md:text-4xl font-semibold tracking-[-0.04em] text-text-primary">
-      Questions before you install
-    </h2>
-    <p class="mt-2.5 text-xs text-text-muted leading-relaxed">
-      Straight answers about availability, safety, and the current free tier.
-    </p>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<section id="faq" class="mx-auto w-full max-w-6xl scroll-mt-16 px-6 pb-24">
+  <h2 class="text-3xl font-bold tracking-[-0.04em] text-text-primary sm:text-4xl">Questions before you install</h2>
+  <div class="mt-10 grid gap-x-12 md:grid-cols-2">
     {faqs.map((faq) => (
-      <div class="p-5 rounded-2xl bg-surface border border-border-theme transition-colors">
-        <h3 class="text-sm font-semibold text-text-primary mb-2 leading-snug">
-          {faq.question}
-        </h3>
-        <p class="text-xs text-text-muted leading-relaxed">
-          {faq.answer}
-        </p>
+      <div class="border-t border-border-theme py-6">
+        <h3 class="text-sm font-semibold leading-snug text-text-primary">{faq.question}</h3>
+        <p class="mt-2 text-sm leading-6 text-text-muted">{faq.answer}</p>
       </div>
     ))}
   </div>
