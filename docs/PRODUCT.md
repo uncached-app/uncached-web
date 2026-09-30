@@ -48,7 +48,7 @@ Step 2 covers two overlapping backend phases, and the interface names both. Whil
 - Preserve existing Uncached logo and icon assets in `public/brand`.
 - Preserve desktop-first Tauri architecture.
 - Current distribution state: public download from cdn.uncached.app; Paddle checkout on /pricing.
-- Current commercial state: free tier plus Pro at $19.90/year or $89.90 once. Pro capabilities ship progressively.
+- Current commercial state: free tier plus Pro at $4.99/year or $14.99 once. Pro capabilities ship progressively.
 
 ## Evidence on Hand
 

@@ -18,7 +18,7 @@ export const faqs: Faq[] = [
   },
   {
     question: "Is Uncached available to download?",
-    answer: "Yes. The free tier is a public download for macOS and Linux, and needs no account. Windows comes later, through the Microsoft Store. Pro adds the deeper cleaners at $19.90 a year or $89.90 once."
+    answer: "Yes. The free tier is a public download for macOS and Linux, and needs no account. Windows comes later, through the Microsoft Store. Pro adds the deeper cleaners at $4.99 a year or $14.99 once."
   },
   {
     question: "Does Uncached upload workspace data?",

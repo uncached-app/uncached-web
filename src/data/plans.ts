@@ -29,7 +29,7 @@ export interface ProPrice {
 export const proPrices: readonly ProPrice[] = [
   {
     id: 'annual',
-    price: '$19.90',
+    price: '$4.99',
     cadence: 'a year',
     note: 'A fresh key arrives by email on every renewal.',
     cta: 'Buy annual',
@@ -37,7 +37,7 @@ export const proPrices: readonly ProPrice[] = [
   },
   {
     id: 'lifetime',
-    price: '$89.90',
+    price: '$14.99',
     cadence: 'once',
     note: 'The key never expires.',
     cta: 'Buy lifetime',
